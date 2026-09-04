@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111827">
+<title>JUREMA</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f4f6;
+  color:#111827;
+}
+
+header{
+  background:#111827;
+  color:white;
+  text-align:center;
+  padding:22px 15px;
+}
+
+header h1{
+  margin:0;
+  font-size:28px;
+}
+
+header p{
+  margin:5px 0 0;
+  color:#d1d5db;
+}
+
+main{
+  max-width:650px;
+  margin:auto;
+  padding:18px;
+}
+
+.card{
+  background:white;
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:16px;
+  box-shadow:0 3px 12px #0002;
+}
+
+h2{
+  margin-top:0;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin-top:14px;
+  margin-bottom:6px;
+}
+
+input,textarea,select{
+  width:100%;
+  padding:13px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  font-size:16px;
+}
+
+textarea{
+  min-height:90px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  margin-top:12px;
+  border:0;
+  border-radius:11px;
+  font-size:17px;
+  font-weight:bold;
+}
+
+.btn{
+  background:#111827;
+  color:white;
+}
+
+.green{
+  background:#15803d;
+  color:white;
+}
+
+.gray{
+  background:#e5e7eb;
+  color:#111827;
+}
+
+.hidden{
+  display:none;
+}
+
+.foto{
+  margin-top:10px;
+}
+
+.comprobante{
+  background:white;
+  padding:25px;
+  border-radius:12px;
+}
+
+.linea{
+  border-top:1px solid #ddd;
+  margin:18px 0;
+}
+
+.total{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.nota{
+  font-size:12px;
+  color:#666;
+}
+
+@media print{
+  body{background:white}
+  .no-print{display:none!important}
+  .comprobante{
+    box-shadow:none;
+    border-radius:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>JUREMA</h1>
+<p>Gestión de clientes</p>
+</header>
+
+<main>
+
+<!-- INICIO -->
+
+<section id="inicio" class="card">
+
+<h2>¿Qué querés registrar?</h2>
+
+<button class="btn" onclick="mostrar('servicio')">
+🖨️ SERVICIO TÉCNICO
+</button>
+
+<button class="btn" onclick="mostrar('mdf')">
+🪵 PEDIDO MDF
+</button>
+
+</section>
+
+
+<!-- SERVICIO TECNICO -->
+
+<section id="servicio" class="card hidden">
+
+<h2>🖨️ Recepción de equipo</h2>
+
+<label>Cliente</label>
+<input id="cliente">
+
+<label>Teléfono</label>
+<input id="telefono" type="tel">
+
+<label>Domicilio</label>
+<input id="domicilio">
+
+<div class="row">
+
+<div>
+<label>Marca</label>
+<input id="marca">
+</div>
+
+<div>
+<label>Modelo</label>
+<input id="modelo">
+</div>
+
+</div>
+
+<label>Número de serie</label>
+<input id="serie">
+
+<label>Problema informado por el cliente</label>
+<textarea id="problema"></textarea>
+
+<label>Estado exterior del equipo</label>
+<textarea id="estado"></textarea>
+
+<label>Accesorios entregados</label>
+<input id="accesorios"
+placeholder="Ej.: fuente, cable USB, bandeja">
+
+<label>Fotos del equipo</label>
+
+<input
+class="foto"
+id="fotos"
+type="file"
+accept="image/*"
+capture="environment"
+multiple
+>
+
+<p class="nota">
+Podés sacar una o varias fotos del equipo al momento de recibirlo.
+</p>
+
+<div class="row">
+
+<div>
+<label>Costo aproximado</label>
+<input id="costo" type="number" value="0">
+</div>
+
+<div>
+<label>Seña</label>
+<input id="sena" type="number" value="0">
+</div>
+
+</div>
+
+<label>Observaciones</label>
+<textarea id="observaciones"></textarea>
+
+<button class="green" onclick="generarServicio()">
+🧾 GENERAR COMPROBANTE
+</button>
+
+<button class="gray" onclick="inicio()">
+VOLVER
+</button>
+
+</section>
+
+
+<!-- MDF -->
+
+<section id="mdf" class="card hidden">
+
+<h2>🪵 Pedido MDF</h2>
+
+<label>Cliente</label>
+<input id="mcliente">
+
+<label>Teléfono</label>
+<input id="mtelefono" type="tel">
+
+<label>Producto</label>
+<input id="mproducto" value="MDF">
+
+<div class="row">
+
+<div>
+<label>Cantidad</label>
+<input id="mcantidad" type="number" value="1">
+</div>
+
+<div>
+<label>Importe total</label>
+<input id="mtotal" type="number" value="0">
+</div>
+
+</div>
+
+<label>Seña</label>
+<input id="msena" type="number" value="0">
+
+<label>Fecha de entrega</label>
+<input id="mentrega" type="date">
+
+<label>Observaciones</label>
+<textarea id="mobservaciones"></textarea>
+
+<button class="green" onclick="generarMDF()">
+🧾 GENERAR COMPROBANTE
+</button>
+
+<button class="gray" onclick="inicio()">
+VOLVER
+</button>
+
+</section>
+
+
+<!-- RESULTADO -->
+
+<section id="resultado" class="hidden">
+
+<div id="comprobante" class="comprobante"></div>
+
+<div class="no-print">
+
+<button class="green" onclick="window.print()">
+📄 GUARDAR COMO PDF
+</button>
+
+<button class="btn" onclick="enviarWhatsApp()">
+📲 ENVIAR POR WHATSAPP
+</button>
+
+<button class="gray" onclick="inicio()">
+➕ NUEVA OPERACIÓN
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+
+<script>
+
+let telefonoActual="";
+let mensajeActual="";
+
+
+function mostrar(seccion){
+
+document.getElementById("inicio").classList.add("hidden");
+document.getElementById("servicio").classList.add("hidden");
+document.getElementById("mdf").classList.add("hidden");
+document.getElementById("resultado").classList.add("hidden");
+
+document.getElementById(seccion).classList.remove("hidden");
+
+window.scrollTo(0,0);
+
+}
+
+
+function inicio(){
+
+document.getElementById("inicio").classList.remove("hidden");
+document.getElementById("servicio").classList.add("hidden");
+document.getElementById("mdf").classList.add("hidden");
+document.getElementById("resultado").classList.add("hidden");
+
+window.scrollTo(0,0);
+
+}
+
+
+function numeroOrden(){
+
+let numero =
+parseInt(localStorage.getItem("jurema_numero") || "0") + 1;
+
+localStorage.setItem("jurema_numero",numero);
+
+return String(numero).padStart(5,"0");
+
+}
+
+
+function dinero(valor){
+
+return "$ " +
+Number(valor || 0).toLocaleString("es-AR");
+
+}
+
+
+function fecha(){
+
+return new Date().toLocaleDateString("es-AR");
+
+}
+
+
+function generarServicio(){
+
+let numero=numeroOrden();
+
+let cliente=document.getElementById("cliente").value || "Sin especificar";
+let telefono=document.getElementById("telefono").value;
+let domicilio=document.getElementById("domicilio").value;
+let marca=document.getElementById("marca").value;
+let modelo=document.getElementById("modelo").value;
+let serie=document.getElementById("serie").value;
+let problema=document.getElementById("problema").value;
+let estado=document.getElementById("estado").value;
+let accesorios=document.getElementById("accesorios").value;
+let costo=Number(document.getElementById("costo").value || 0);
+let sena=Number(document.getElementById("sena").value || 0);
+let saldo=Math.max(0,costo-sena);
+let observaciones=document.getElementById("observaciones").value;
+
+telefonoActual=telefono;
+
+document.getElementById("comprobante").innerHTML=`
+
+<h1 style="text-align:center">JUREMA</h1>
+
+<p style="text-align:center">
+<b>SERVICIO TÉCNICO</b><br>
+Comprobante Nº <b>${numero}</b><br>
+Fecha: ${fecha()}
+</p>
+
+<div class="linea"></div>
+
+<b>CLIENTE</b><br>
+${cliente}<br>
+Teléfono: ${telefono || "-"}<br>
+Domicilio: ${domicilio || "-"}
+
+<div class="linea"></div>
+
+<b>EQUIPO</b><br>
+Marca: ${marca || "-"}<br>
+Modelo: ${modelo || "-"}<br>
+Nº de serie: ${serie || "-"}
+
+<div class="linea"></div>
+
+<b>PROBLEMA INFORMADO</b><br>
+${problema || "-"}
+
+<br><br>
+
+<b>ESTADO EXTERIOR</b><br>
+${estado || "-"}
+
+<br><br>
+
+<b>ACCESORIOS</b><br>
+${accesorios || "-"}
+
+<div class="linea"></div>
+
+<b>COSTO APROXIMADO:</b> ${dinero(costo)}<br>
+<b>SEÑA:</b> ${dinero(sena)}<br>
+<span class="total">SALDO ESTIMADO: ${dinero(saldo)}</span>
+
+<br><br>
+
+<b>OBSERVACIONES</b><br>
+${observaciones || "-"}
+
+<div class="linea"></div>
+
+<p class="nota">
+El costo indicado es aproximado y puede modificarse
+luego del diagnóstico del equipo y/o autorización del cliente.
+</p>
+
+<p style="margin-top:45px">
+Firma del cliente: ______________________________
+</p>
+
+`;
+
+mensajeActual=
+"JUREMA - SERVICIO TÉCNICO\n\n"+
+"Comprobante Nº "+numero+"\n"+
+"Cliente: "+cliente+"\n"+
+"Equipo: "+marca+" "+modelo+"\n"+
+"Problema: "+problema+"\n"+
+"Costo aproximado: "+dinero(costo)+"\n"+
+"Seña: "+dinero(sena)+"\n"+
+"Saldo estimado: "+dinero(saldo);
+
+mostrar("resultado");
+
+}
+
+
+function generarMDF(){
+
+let numero=numeroOrden();
+
+let cliente=document.getElementById("mcliente").value || "Sin especificar";
+let telefono=document.getElementById("mtelefono").value;
+let producto=document.getElementById("mproducto").value || "MDF";
+let cantidad=document.getElementById("mcantidad").value || 1;
+let total=Number(document.getElementById("mtotal").value || 0);
+let sena=Number(document.getElementById("msena").value || 0);
+let saldo=Math.max(0,total-sena);
+let entrega=document.getElementById("mentrega").value;
+let observaciones=document.getElementById("mobservaciones").value;
+
+if(entrega){
+
+entrega=new Date(entrega+"T12:00:00")
+.toLocaleDateString("es-AR");
+
+}else{
+
+entrega="A confirmar";
+
+}
+
+telefonoActual=telefono;
+
+document.getElementById("comprobante").innerHTML=`
+
+<h1 style="text-align:center">
+JUREMA CORTE LÁSER
+</h1>
+
+<p style="text-align:center">
+<b>PEDIDO MDF</b><br>
+Pedido Nº <b>${numero}</b><br>
+Fecha: ${fecha()}
+</p>
+
+<div class="linea"></div>
+
+<b>CLIENTE</b><br>
+${cliente}<br>
+Teléfono: ${telefono || "-"}
+
+<div class="linea"></div>
+
+<b>PRODUCTO:</b> ${producto}<br>
+<b>CANTIDAD:</b> ${cantidad}<br><br>
+
+<b>IMPORTE TOTAL:</b> ${dinero(total)}<br>
+<b>SEÑA:</b> ${dinero(sena)}<br>
+
+<span class="total">
+SALDO: ${dinero(saldo)}
+</span>
+
+<br><br>
+
+<b>FECHA DE ENTREGA:</b><br>
+${entrega}
+
+<br><br>
+
+<b>OBSERVACIONES</b><br>
+${observaciones || "-"}
+
+<div class="linea"></div>
+
+<p class="nota">
+Este comprobante acredita el pedido y el importe recibido.
+La fecha de entrega indicada es estimada.
+</p>
+
+`;
+
+mensajeActual=
+"JUREMA CORTE LÁSER\n\n"+
+"Pedido MDF Nº "+numero+"\n"+
+"Cliente: "+cliente+"\n"+
+"Producto: "+producto+"\n"+
+"Cantidad: "+cantidad+"\n"+
+"Importe total: "+dinero(total)+"\n"+
+"Seña: "+dinero(sena)+"\n"+
+"Saldo: "+dinero(saldo)+"\n"+
+"Entrega: "+entrega;
+
+mostrar("resultado");
+
+}
+
+
+function enviarWhatsApp(){
+
+let numero=telefonoActual.replace(/\D/g,"");
+
+if(!numero){
+
+alert("No se cargó un número de teléfono.");
+
+return;
+
+}
+
+if(!numero.startsWith("54")){
+
+numero="54"+numero;
+
+}
+
+let url=
+"https://wa.me/"+numero+
+"?text="+encodeURIComponent(mensajeActual);
+
+window.open(url,"_blank");
+
+}
+
+</script>
+
+</body>
+</html>
