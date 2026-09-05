@@ -2,270 +2,303 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#111827">
-<title>JUREMA V2.1.1</title>
+<title>JUREMA</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
 body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f3f4f6;
- color:#111827;
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f3f4f6;
+  color:#111827;
 }
 
 header{
- background:#111827;
- color:white;
- text-align:center;
- padding:18px 15px;
+  background:#111827;
+  color:white;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
 header h1{
- margin:0;
- font-size:28px;
+  margin:0;
+  font-size:20px;
 }
 
-header p{
- margin:5px 0 0;
- color:#d1d5db;
+.back{
+  border:0;
+  background:transparent;
+  color:white;
+  font-size:26px;
+  width:35px;
+  height:35px;
+  display:none;
+  padding:0;
 }
 
 main{
- max-width:700px;
- margin:auto;
- padding:15px;
+  max-width:700px;
+  margin:auto;
+  padding:15px;
 }
 
-.card{
- background:white;
- border-radius:16px;
- padding:18px;
- margin-bottom:15px;
- box-shadow:0 3px 12px #0002;
+.screen{
+  display:none;
 }
 
-h2{
- margin-top:0;
+.screen.active{
+  display:block;
 }
 
-label{
- display:block;
- font-weight:bold;
- margin-top:12px;
- margin-bottom:5px;
-}
-
-input,textarea,select{
- width:100%;
- padding:12px;
- border:1px solid #d1d5db;
- border-radius:10px;
- font-size:16px;
- background:white;
-}
-
-textarea{
- min-height:80px;
- resize:vertical;
+.menu{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:10px;
 }
 
 button{
- width:100%;
- padding:13px;
- margin-top:10px;
- border:0;
- border-radius:10px;
- font-size:16px;
- font-weight:bold;
- cursor:pointer;
+  border:0;
+  border-radius:10px;
+  padding:13px 15px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.btn{
- background:#111827;
- color:white;
+.menu button{
+  min-height:75px;
+  background:white;
+  color:#111827;
+  box-shadow:0 2px 8px #0002;
 }
 
-.green{
- background:#15803d;
- color:white;
+.menu button:active{
+  transform:scale(.98);
 }
 
-.blue{
- background:#2563eb;
- color:white;
+.primary{
+  background:#111827;
+  color:white;
 }
 
-.red{
- background:#dc2626;
- color:white;
+.secondary{
+  background:#e5e7eb;
+  color:#111827;
 }
 
-.gray{
- background:#e5e7eb;
- color:#111827;
+.danger{
+  background:#dc2626;
+  color:white;
 }
 
-.orange{
- background:#ea580c;
- color:white;
+.success{
+  background:#16a34a;
+  color:white;
 }
 
-.hidden{
- display:none!important;
+.info{
+  background:#2563eb;
+  color:white;
+}
+
+.card{
+  background:white;
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:12px;
+  box-shadow:0 2px 8px #0001;
+}
+
+h2{
+  margin-top:5px;
+}
+
+h3{
+  margin:5px 0 10px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin-top:12px;
+  margin-bottom:5px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:11px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  font-size:16px;
+  background:white;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
 }
 
 .row{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
-.item{
- border:1px solid #ddd;
- border-radius:12px;
- padding:12px;
- margin-top:10px;
- background:#fafafa;
+.row3{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
 }
 
-.item b{
- font-size:17px;
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:15px;
 }
 
-.badge{
- display:inline-block;
- padding:5px 8px;
- border-radius:8px;
- background:#e5e7eb;
- font-size:12px;
- margin-top:5px;
-}
-
-.total{
- font-size:21px;
- font-weight:bold;
-}
-
-.linea{
- border-top:1px solid #ddd;
- margin:15px 0;
-}
-
-.nota{
- font-size:12px;
- color:#666;
-}
-
-.fotos{
- display:flex;
- flex-wrap:wrap;
- gap:8px;
- margin-top:10px;
-}
-
-.fotos img{
- width:90px;
- height:90px;
- object-fit:cover;
- border-radius:8px;
-}
-
-.top-back{
- background:#e5e7eb;
- color:#111827;
- margin-bottom:15px;
-}
-
-.filter-row{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:8px;
- margin-top:10px;
-}
-
-.filter-row button{
- font-size:14px;
- padding:11px 5px;
- margin-top:0;
-}
-
-.filter-active{
- background:#111827!important;
- color:white!important;
-}
-
-.producto{
- border:2px solid #e5e7eb;
- border-radius:12px;
- padding:12px;
- margin-top:12px;
- background:#fafafa;
-}
-
-.producto-header{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
-}
-
-.producto-header strong{
- font-size:16px;
-}
-
-.producto-header button{
- width:auto;
- padding:8px 12px;
- margin:0;
- font-size:13px;
-}
-
-.producto-grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
-}
-
-.item-subtotal{
- font-size:18px;
- font-weight:bold;
- margin-top:10px;
+.actions button{
+  flex:1;
+  min-width:120px;
 }
 
 .small{
- font-size:13px;
- color:#666;
+  font-size:13px;
+  color:#6b7280;
+}
+
+.total{
+  font-size:22px;
+  font-weight:bold;
+}
+
+.balance{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.search{
+  margin-bottom:12px;
+}
+
+.list-item{
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:10px;
+  background:#fff;
+}
+
+.list-title{
+  font-weight:bold;
+  font-size:17px;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  background:#e5e7eb;
+  font-size:12px;
+  font-weight:bold;
+  margin-top:5px;
+}
+
+.item-line{
+  border:1px solid #e5e7eb;
+  border-radius:8px;
+  padding:10px;
+  margin-top:8px;
+}
+
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:10px;
+}
+
+.photo-grid img{
+  width:100%;
+  aspect-ratio:1;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.preview{
+  max-width:100%;
+  border-radius:10px;
+  margin-top:10px;
 }
 
 .empty{
- text-align:center;
- padding:20px;
- color:#666;
+  text-align:center;
+  color:#6b7280;
+  padding:25px 10px;
+}
+
+.receipt{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+}
+
+.receipt hr{
+  border:0;
+  border-top:1px dashed #999;
+  margin:15px 0;
 }
 
 @media(max-width:480px){
- .row,
- .producto-grid{
-  grid-template-columns:1fr;
- }
+  .menu{
+    grid-template-columns:1fr;
+  }
+
+  .row3{
+    grid-template-columns:1fr;
+  }
 }
 
 @media print{
- body{
-  background:white;
- }
+  body{
+    background:white;
+  }
 
- .no-print{
-  display:none!important;
- }
+  header,
+  .no-print{
+    display:none !important;
+  }
 
- .comprobante{
-  box-shadow:none!important;
-  margin:0!important;
- }
+  main{
+    padding:0;
+  }
+
+  .screen{
+    display:none !important;
+  }
+
+  #resultScreen{
+    display:block !important;
+  }
+
+  .receipt{
+    box-shadow:none;
+    padding:0;
+  }
 }
 </style>
 </head>
@@ -273,3315 +306,5119 @@ button{
 <body>
 
 <header>
-<h1>JUREMA</h1>
-<p>Gestión de clientes y trabajos — V2.1.1</p>
+  <button class="back" id="backBtn" onclick="goBack()">‹</button>
+  <h1>JUREMA</h1>
 </header>
 
 <main>
 
 <!-- INICIO -->
+<section id="home" class="screen active">
 
-<section id="inicio" class="card">
+  <div class="card">
+    <h2>JUREMA</h2>
+    <div class="small">
+      Gestión de Servicio Técnico y Pedidos MDF
+    </div>
+  </div>
 
-<h2>¿Qué querés hacer?</h2>
+  <div class="menu">
 
-<button class="btn" onclick="mostrar('servicio')">
-🖨️ SERVICIO TÉCNICO
-</button>
+    <button onclick="openScreen('service')">
+      🔧<br>
+      Servicio Técnico
+    </button>
 
-<button class="btn" onclick="mostrar('mdf')">
-🪵 PEDIDO MDF / CORTE LÁSER
-</button>
+    <button onclick="openScreen('mdf')">
+      🪵<br>
+      Pedido MDF
+    </button>
 
-<button class="blue" onclick="mostrar('clientes')">
-👥 CLIENTES
-</button>
+    <button onclick="openScreen('clients')">
+      👤<br>
+      Clientes
+    </button>
 
-<button class="blue" onclick="mostrar('ordenes')">
-📋 ÓRDENES
-</button>
+    <button onclick="openScreen('orders')">
+      📋<br>
+      Órdenes
+    </button>
 
-<button class="blue" onclick="mostrar('equipos')">
-🖨️ EQUIPOS / IMPRESORAS
-</button>
+    <button onclick="openScreen('equipment')">
+      🖨️<br>
+      Equipos / Impresoras
+    </button>
 
-<button class="green" onclick="mostrar('caja')">
-💰 CAJA JUREMA
-</button>
+    <button onclick="openScreen('cash')">
+      💰<br>
+      Caja JUREMA
+    </button>
 
-<button class="gray" onclick="mostrar('backup')">
-💾 COPIA DE SEGURIDAD
-</button>
+    <button onclick="openScreen('backup')">
+      💾<br>
+      Copia de Seguridad
+    </button>
 
-</section>
-
-
-<!-- SERVICIO -->
-
-<section id="servicio" class="card hidden">
-
-<button class="top-back" onclick="volver()">⬅️ VOLVER</button>
-
-<h2 id="tituloServicio">🖨️ Servicio técnico</h2>
-
-<input id="servicioEditId" type="hidden">
-
-<label>Cliente guardado</label>
-<select id="scliente" onchange="cargarClienteServicio()">
-<option value="">-- Nuevo cliente --</option>
-</select>
-
-<label>Nombre del cliente</label>
-<input id="cliente">
-
-<label>Teléfono</label>
-<input id="telefono" type="tel">
-
-<label>Domicilio</label>
-<input id="domicilio">
-
-<label>Marca</label>
-<input id="marca">
-
-<label>Modelo</label>
-<input id="modelo">
-
-<label>Número de serie</label>
-<input id="serie">
-
-<label>Problema informado</label>
-<textarea id="problema"></textarea>
-
-<label>Estado exterior del equipo</label>
-<textarea id="estado"></textarea>
-
-<label>Accesorios entregados</label>
-<input id="accesorios">
-
-<label>Fotos del equipo</label>
-<input id="fotos" type="file" accept="image/*" capture="environment" multiple>
-
-<div id="fotosExistentes" class="fotos"></div>
-
-<label>Estado del trabajo</label>
-<select id="estadoTrabajo">
-<option>Recibido</option>
-<option>En diagnóstico</option>
-<option>Esperando repuesto</option>
-<option>En reparación</option>
-<option>Listo</option>
-<option>Entregado</option>
-</select>
-
-<div class="row">
-
-<div>
-<label>Costo</label>
-<input id="costo" type="number" value="0" min="0"
-oninput="calcularServicio()">
-</div>
-
-<div>
-<label>Seña / pago</label>
-<input id="sena" type="number" value="0" min="0"
-oninput="calcularServicio()">
-</div>
-
-</div>
-
-<p class="total">
-Saldo: $ <span id="saldoServicio">0</span>
-</p>
-
-<label>Observaciones</label>
-<textarea id="observaciones"></textarea>
-
-<button class="green" onclick="guardarServicio()">
-🧾 GUARDAR ORDEN
-</button>
-
-<button class="gray" onclick="limpiarServicio()">
-🧹 LIMPIAR FORMULARIO
-</button>
+  </div>
 
 </section>
 
 
-<!-- MDF -->
+<!-- SERVICIO TECNICO -->
+<section id="service" class="screen">
 
-<section id="mdf" class="card hidden">
+  <div class="card">
 
-<button class="top-back" onclick="volver()">⬅️ VOLVER</button>
+    <h2 id="serviceTitle">Servicio Técnico</h2>
 
-<h2 id="tituloMDF">🪵 Pedido MDF / Corte láser</h2>
+    <input type="hidden" id="serviceId">
 
-<input id="mdfEditId" type="hidden">
+    <label>Cliente</label>
 
-<label>Cliente guardado</label>
-<select id="mcliente" onchange="cargarClienteMDF()">
-<option value="">-- Nuevo cliente --</option>
-</select>
+    <div class="row">
 
-<label>Nombre del cliente</label>
-<input id="mnombre">
+      <select id="sClient">
+        <option value="">Seleccionar cliente</option>
+      </select>
 
-<label>Teléfono</label>
-<input id="mtelefono" type="tel">
+      <button
+        type="button"
+        class="secondary"
+        onclick="quickClient()">
+        + Nuevo
+      </button>
 
-<label>Domicilio</label>
-<input id="mdomicilio">
+    </div>
 
-<div class="linea"></div>
+    <button
+      type="button"
+      class="info"
+      style="width:100%;margin-top:8px"
+      onclick="pickContact('service')">
+      📱 Importar contacto del teléfono
+    </button>
 
-<h3>🪵 Productos del pedido</h3>
 
-<div id="listaProductos"></div>
+    <label>Teléfono</label>
+    <input id="sPhone" type="tel">
 
-<button class="blue" onclick="agregarProducto()">
-➕ AGREGAR PRODUCTO
-</button>
 
-<div class="linea"></div>
+    <label>Dirección</label>
+    <input id="sAddress">
 
-<p class="total">
-TOTAL DEL PEDIDO: $<span id="mdfTotal">0</span>
-</p>
 
-<label>Seña / pagos recibidos</label>
-<input id="msena" type="number" value="0" min="0"
-oninput="calcularMDF()">
+    <div class="row">
 
-<p class="total">
-SALDO: $<span id="saldoMDF">0</span>
-</p>
+      <div>
+        <label>Marca</label>
+        <input id="sBrand">
+      </div>
 
-<label>Fecha de entrega</label>
-<input id="mentrega" type="date">
+      <div>
+        <label>Modelo</label>
+        <input id="sModel">
+      </div>
 
-<label>Estado del pedido</label>
-<select id="mestado">
-<option>Pedido recibido</option>
-<option>En producción</option>
-<option>Listo</option>
-<option>Entregado</option>
-</select>
+    </div>
 
-<label>Observaciones</label>
-<textarea id="mobservaciones"></textarea>
 
-<button class="green" onclick="guardarMDF()">
-🧾 GUARDAR PEDIDO
-</button>
+    <label>Número de serie</label>
+    <input id="sSerial">
 
-<button class="gray" onclick="limpiarMDF()">
-🧹 LIMPIAR PEDIDO
-</button>
+
+    <label>Problema / Falla</label>
+    <textarea id="sProblem"></textarea>
+
+
+    <label>Estado exterior</label>
+    <textarea id="sCondition"></textarea>
+
+
+    <label>Accesorios entregados</label>
+    <textarea id="sAccessories"></textarea>
+
+
+    <label>Fotos</label>
+
+    <input
+      id="sPhotos"
+      type="file"
+      accept="image/*"
+      multiple
+      onchange="handlePhotos(this)">
+
+    <div
+      id="sPhotoPreview"
+      class="photo-grid">
+    </div>
+
+
+    <div class="row">
+
+      <div>
+        <label>Costo total</label>
+        <input
+          id="sTotal"
+          type="number"
+          min="0"
+          step="0.01"
+          oninput="calcService()">
+      </div>
+
+      <div>
+        <label>Seña / Entrega</label>
+        <input
+          id="sDeposit"
+          type="number"
+          min="0"
+          step="0.01"
+          oninput="calcService()">
+      </div>
+
+    </div>
+
+
+    <label>Saldo</label>
+
+    <div
+      id="sBalance"
+      class="balance">
+      $0
+    </div>
+
+
+    <label>Estado</label>
+
+    <select id="sStatus">
+
+      <option value="Pendiente">
+        Pendiente
+      </option>
+
+      <option value="En reparación">
+        En reparación
+      </option>
+
+      <option value="Listo">
+        Listo
+      </option>
+
+      <option value="Entregado">
+        Entregado
+      </option>
+
+    </select>
+
+
+    <label>Observaciones</label>
+    <textarea id="sNotes"></textarea>
+
+
+    <div class="actions">
+
+      <button
+        class="primary"
+        onclick="saveService()">
+        💾 Guardar orden
+      </button>
+
+      <button
+        class="secondary"
+        onclick="resetService()">
+        Limpiar
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PEDIDO MDF -->
+<section id="mdf" class="screen">
+
+  <div class="card">
+
+    <h2 id="mdfTitle">Pedido MDF</h2>
+
+    <input type="hidden" id="mdfId">
+
+
+    <label>Cliente</label>
+
+    <div class="row">
+
+      <select id="mClient">
+        <option value="">Seleccionar cliente</option>
+      </select>
+
+      <button
+        type="button"
+        class="secondary"
+        onclick="quickClient()">
+        + Nuevo
+      </button>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="info"
+      style="width:100%;margin-top:8px"
+      onclick="pickContact('mdf')">
+      📱 Importar contacto del teléfono
+    </button>
+
+
+    <label>Teléfono</label>
+    <input id="mPhone" type="tel">
+
+
+    <label>Dirección</label>
+    <input id="mAddress">
+
+
+    <h3 style="margin-top:20px">
+      Productos
+    </h3>
+
+    <div id="mdfItems"></div>
+
+
+    <button
+      type="button"
+      class="secondary"
+      style="width:100%;margin-top:10px"
+      onclick="addMdfItem()">
+      ➕ Agregar producto
+    </button>
+
+
+    <div class="row">
+
+      <div>
+        <label>Total</label>
+        <div id="mTotal" class="total">
+          $0
+        </div>
+      </div>
+
+      <div>
+        <label>Seña / Entrega</label>
+
+        <input
+          id="mDeposit"
+          type="number"
+          min="0"
+          step="0.01"
+          oninput="calcMdf()">
+
+      </div>
+
+    </div>
+
+
+    <label>Saldo</label>
+
+    <div
+      id="mBalance"
+      class="balance">
+      $0
+    </div>
+
+
+    <label>Fecha de entrega</label>
+    <input id="mDelivery" type="date">
+
+
+    <label>Estado</label>
+
+    <select id="mStatus">
+
+      <option value="Pendiente">
+        Pendiente
+      </option>
+
+      <option value="En producción">
+        En producción
+      </option>
+
+      <option value="Listo">
+        Listo
+      </option>
+
+      <option value="Entregado">
+        Entregado
+      </option>
+
+    </select>
+
+
+    <label>Observaciones</label>
+    <textarea id="mNotes"></textarea>
+
+
+    <div class="actions">
+
+      <button
+        class="primary"
+        onclick="saveMdf()">
+        💾 Guardar pedido
+      </button>
+
+      <button
+        class="secondary"
+        onclick="resetMdf()">
+        Limpiar
+      </button>
+
+    </div>
+
+  </div>
 
 </section>
 
 
 <!-- CLIENTES -->
+<section id="clients" class="screen">
 
-<section id="clientes" class="card hidden">
+  <div class="card">
 
-<button class="top-back" onclick="volver()">⬅️ VOLVER</button>
+    <h2>Clientes</h2>
 
-<h2>👥 Clientes</h2>
+    <input
+      id="clientSearch"
+      class="search"
+      placeholder="🔎 Buscar cliente..."
+      oninput="renderClients()">
 
-<label>Buscar cliente</label>
 
-<input id="buscarCliente"
-oninput="mostrarClientes()"
-placeholder="Nombre o teléfono">
+    <button
+      class="primary"
+      style="width:100%"
+      onclick="newClient()">
+      ➕ Agregar cliente
+    </button>
 
-<div id="listaClientes"></div>
+  </div>
 
-<button class="green" onclick="nuevoCliente()">
-➕ AGREGAR CLIENTE
-</button>
+
+  <div id="clientForm"
+       class="card"
+       style="display:none">
+
+    <h3 id="clientFormTitle">
+      Nuevo cliente
+    </h3>
+
+    <input type="hidden" id="clientId">
+
+
+    <label>Nombre</label>
+    <input id="clientName">
+
+
+    <label>Teléfono</label>
+    <input id="clientPhone" type="tel">
+
+
+    <label>Dirección</label>
+    <input id="clientAddress">
+
+
+    <label>Observaciones</label>
+    <textarea id="clientNotes"></textarea>
+
+
+    <div class="actions">
+
+      <button
+        class="primary"
+        onclick="saveClient()">
+        💾 Guardar
+      </button>
+
+      <button
+        class="secondary"
+        onclick="closeClientForm()">
+        Cancelar
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div id="clientsList"></div>
 
 </section>
 
 
 <!-- ORDENES -->
+<section id="orders" class="screen">
 
-<section id="ordenes" class="card hidden">
+  <div class="card">
 
-<button class="top-back" onclick="volver()">⬅️ VOLVER</button>
+    <h2>Órdenes</h2>
 
-<h2>📋 Órdenes</h2>
+    <input
+      id="orderSearch"
+      class="search"
+      placeholder="🔎 Buscar orden, cliente, equipo..."
+      oninput="renderOrders()">
 
-<label>Buscar orden</label>
 
-<input id="buscarOrden"
-oninput="mostrarOrdenes()"
-placeholder="Número, cliente o serie">
+    <div class="row">
 
-<div class="filter-row">
+      <select
+        id="orderStatusFilter"
+        onchange="renderOrders()">
 
-<button id="fPendientes"
-onclick="filtroOrdenes='pendientes';actualizarFiltros();mostrarOrdenes()">
-⏳ PENDIENTES
-</button>
+        <option value="Todas">
+          Todas
+        </option>
 
-<button id="fTerminadas"
-onclick="filtroOrdenes='terminadas';actualizarFiltros();mostrarOrdenes()">
-✅ TERMINADAS
-</button>
+        <option value="Pendientes">
+          Pendientes
+        </option>
 
-<button id="fEntregadas"
-onclick="filtroOrdenes='entregadas';actualizarFiltros();mostrarOrdenes()">
-📦 ENTREGADAS
-</button>
+        <option value="Terminadas">
+          Terminadas
+        </option>
 
-<button id="fTodas"
-onclick="filtroOrdenes='todas';actualizarFiltros();mostrarOrdenes()">
-📋 TODAS
-</button>
+        <option value="Entregadas">
+          Entregadas
+        </option>
 
-</div>
+      </select>
 
-<div id="listaOrdenes"></div>
+
+      <select
+        id="orderTypeFilter"
+        onchange="renderOrders()">
+
+        <option value="Todas">
+          Todos los tipos
+        </option>
+
+        <option value="Servicio">
+          Servicio Técnico
+        </option>
+
+        <option value="MDF">
+          Pedido MDF
+        </option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <div id="ordersList"></div>
 
 </section>
 
 
 <!-- EQUIPOS -->
+<section id="equipment" class="screen">
 
-<section id="equipos" class="card hidden">
+  <div class="card">
 
-<button class="top-back" onclick="volver()">⬅️ VOLVER</button>
+    <h2>Equipos / Impresoras</h2>
 
-<h2>🖨️ Equipos / Impresoras</h2>
+    <input
+      id="equipmentSearch"
+      class="search"
+      placeholder="🔎 Buscar marca, modelo, serie..."
+      oninput="renderEquipment()">
 
-<label>Buscar equipo</label>
+  </div>
 
-<input id="buscarEquipo"
-oninput="mostrarEquipos()"
-placeholder="Marca, modelo, serie o cliente">
-
-<div id="listaEquipos"></div>
+  <div id="equipmentList"></div>
 
 </section>
 
 
 <!-- CAJA -->
+<section id="cash" class="screen">
 
-<section id="caja" class="card hidden">
+  <div class="card">
 
-<button class="top-back" onclick="volver()">⬅️ VOLVER</button>
+    <h2>Caja JUREMA</h2>
 
-<h2>💰 Caja JUREMA</h2>
+    <div class="small">
+      Ingresos registrados mediante señas y pagos
+      de Servicio Técnico y Pedidos MDF.
+    </div>
 
-<div class="item">
-<b>Total facturado</b>
-<p class="total" id="cajaTotal">$0</p>
-</div>
+  </div>
 
-<div class="item">
-<b>Servicio técnico</b>
-<p id="cajaServicio">$0</p>
-</div>
 
-<div class="item">
-<b>Corte láser / MDF</b>
-<p id="cajaMDF">$0</p>
-</div>
-
-<div class="item">
-<b>Total cobrado</b>
-<p id="cajaCobrado">$0</p>
-</div>
-
-<div class="item">
-<b>Saldo pendiente</b>
-<p id="cajaPendiente">$0</p>
-</div>
-
-<div class="linea"></div>
-
-<h3>Movimientos actuales</h3>
-
-<div id="movimientosCaja"></div>
+  <div id="cashContent"></div>
 
 </section>
 
 
 <!-- BACKUP -->
+<section id="backup" class="screen">
 
-<section id="backup" class="card hidden">
+  <div class="card">
 
-<button class="top-back" onclick="volver()">⬅️ VOLVER</button>
+    <h2>Copia de Seguridad</h2>
 
-<h2>💾 Copia de seguridad</h2>
+    <p class="small">
+      Guardá una copia de todos tus clientes,
+      órdenes, fotos y datos.
+    </p>
 
-<p>
-Guardá periódicamente una copia de JUREMA para no perder
-clientes, órdenes, equipos y datos.
-</p>
 
-<button class="green" onclick="exportarDatos()">
-📥 EXPORTAR COPIA
-</button>
+    <button
+      class="primary"
+      style="width:100%;margin-top:10px"
+      onclick="exportBackup()">
+      💾 Exportar copia
+    </button>
 
-<label>Restaurar copia</label>
 
-<input type="file" id="archivoBackup" accept=".json">
+    <label style="margin-top:18px">
+      Restaurar copia
+    </label>
 
-<button class="blue" onclick="importarDatos()">
-📤 RESTAURAR COPIA
-</button>
+    <input
+      id="backupFile"
+      type="file"
+      accept=".json"
+      onchange="importBackup(this)">
 
-<p class="nota">
-La información se guarda en el navegador del dispositivo.
-La copia de seguridad es muy importante.
-</p>
+
+    <button
+      class="danger"
+      style="width:100%;margin-top:18px"
+      onclick="clearAllData()">
+      ⚠️ Borrar todos los datos
+    </button>
+
+  </div>
 
 </section>
 
 
-<!-- RESULTADO -->
+<!-- RESULTADO / COMPROBANTE -->
+<section id="resultScreen" class="screen">
 
-<section id="resultado" class="hidden">
-
-<div id="comprobante" class="card comprobante"></div>
-
-<div class="no-print">
-
-<button class="green" onclick="window.print()">
-📄 GUARDAR / IMPRIMIR PDF
-</button>
-
-<button class="blue" onclick="compartirComprobante()">
-📲 COMPARTIR COMPROBANTE
-</button>
-
-<button class="blue" onclick="compartirFotos()">
-📸 COMPARTIR FOTOS
-</button>
-
-<button class="orange" onclick="editarOrdenActual()">
-✏️ MODIFICAR ORDEN
-</button>
-
-<button class="gray" onclick="volver()">
-⬅️ VOLVER
-</button>
-
-<button class="gray" onclick="inicioDirecto()">
-🏠 INICIO
-</button>
-
-</div>
+  <div
+    id="resultContent"
+    class="receipt">
+  </div>
 
 </section>
 
 </main>
 
+
 <script>
 
-/* DATOS SEGUROS */
+(function(){
 
-var datos = {
- clientes:[],
- ordenes:[],
- equipos:[],
- caja:[]
+"use strict";
+
+
+/* =========================
+   BASE DE DATOS
+========================= */
+
+var KEY = "jurema_v2";
+
+var db = {
+  clients:[],
+  orders:[],
+  next:5
 };
 
-var datosCargados = true;
 
-try{
+var navStack = [];
 
- var guardado = localStorage.getItem("jurema_v2");
+var currentScreen = "home";
 
- if(guardado){
-  var datosTemp = JSON.parse(guardado);
+var editingOrderId = null;
 
-  if(datosTemp && typeof datosTemp === "object"){
-   datos = datosTemp;
+var servicePhotos = [];
+
+
+
+/* =========================
+   ID SEGURO
+========================= */
+
+function uid(){
+
+  if(
+    window.crypto &&
+    typeof window.crypto.randomUUID === "function"
+  ){
+    return window.crypto.randomUUID();
   }
- }
 
-}catch(error){
-
- datosCargados = false;
-
-}
-
-
-/* ASEGURAR ESTRUCTURA */
-
-if(!Array.isArray(datos.clientes))datos.clientes=[];
-if(!Array.isArray(datos.ordenes))datos.ordenes=[];
-if(!Array.isArray(datos.equipos))datos.equipos=[];
-if(!Array.isArray(datos.caja))datos.caja=[];
-
-
-/* VARIABLES */
-
-var ordenActual = null;
-var fotosActuales = [];
-var filtroOrdenes = "todas";
-var historial = [];
-var productosMDF = [];
-
-
-/* GUARDAR DATOS */
-
-function guardarDatos(){
-
- try{
-
-  localStorage.setItem(
-   "jurema_v2",
-   JSON.stringify(datos)
-  );
-
-  return true;
-
- }catch(error){
-
-  alert(
-   "JUREMA no pudo guardar los datos. " +
-   "Si tenés muchas fotos, hacé una copia de seguridad."
-  );
-
-  return false;
-
- }
+  return "id_" +
+    Date.now().toString(36) +
+    "_" +
+    Math.random().toString(36).substring(2);
 
 }
 
 
-/* MIGRAR DATOS MDF */
 
-function migrarDatos(){
+/* =========================
+   ESCAPE HTML
+========================= */
 
- var cambio = false;
+function esc(value){
 
- datos.ordenes.forEach(function(o){
+  if(value === null || value === undefined){
+    return "";
+  }
 
-  if(o.tipo === "Pedido MDF"){
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
 
-   if(!Array.isArray(o.items)){
 
-    o.items=[{
-     id:"item_"+Date.now()+"_"+Math.random(),
-     descripcion:o.producto || "MDF",
-     cantidad:Number(o.cantidad || 1),
-     precio:Number(o.total || 0),
-     subtotal:Number(o.total || 0)
+
+/* =========================
+   FORMATO DINERO
+========================= */
+
+function money(value){
+
+  var n = Number(value) || 0;
+
+  return "$" + n.toLocaleString(
+    "es-AR",
+    {
+      minimumFractionDigits:0,
+      maximumFractionDigits:2
+    }
+  );
+
+}
+
+
+
+/* =========================
+   FECHA
+========================= */
+
+function dateNow(){
+
+  var d = new Date();
+
+  return d.toISOString();
+
+}
+
+
+function dateText(value){
+
+  if(!value){
+    return "";
+  }
+
+  var d = new Date(value);
+
+  if(isNaN(d.getTime())){
+    return "";
+  }
+
+  return d.toLocaleDateString("es-AR");
+
+}
+
+
+
+/* =========================
+   NORMALIZAR CLIENTE
+========================= */
+
+function normalizeClient(c){
+
+  c = c || {};
+
+  return {
+    id: c.id || uid(),
+    name: c.name || c.nombre || "",
+    phone: c.phone || c.telefono || "",
+    address: c.address || c.direccion || "",
+    notes: c.notes || c.observaciones || "",
+    createdAt: c.createdAt || dateNow()
+  };
+
+}
+
+
+
+/* =========================
+   NORMALIZAR PEDIDO
+========================= */
+
+function normalizeOrder(o){
+
+  o = o || {};
+
+  var type =
+    o.type ||
+    o.tipo ||
+    "Servicio";
+
+  var items = [];
+
+  if(
+    Array.isArray(o.items)
+  ){
+    items = o.items.map(function(item){
+
+      item = item || {};
+
+      return {
+        id:item.id || uid(),
+        description:
+          item.description ||
+          item.product ||
+          item.descripcion ||
+          "",
+        qty:Number(
+          item.qty ||
+          item.quantity ||
+          item.cantidad ||
+          1
+        ),
+        price:Number(
+          item.price ||
+          item.unitPrice ||
+          item.precio ||
+          0
+        )
+      };
+
+    });
+
+  }else if(
+    o.product ||
+    o.descripcion
+  ){
+
+    items = [{
+      id:uid(),
+      description:
+        o.product ||
+        o.descripcion ||
+        "",
+      qty:Number(o.qty || 1),
+      price:Number(
+        o.price ||
+        o.unitPrice ||
+        o.precio ||
+        o.total ||
+        0
+      )
     }];
 
-    cambio=true;
-   }
-
-   if(typeof o.total !== "number"){
-
-    o.total=o.items.reduce(function(s,i){
-     return s + Number(i.subtotal || 0);
-    },0);
-
-    cambio=true;
-   }
-
-   o.sena=Number(o.sena || 0);
-   o.saldo=Math.max(0,o.total-o.sena);
-
   }
 
- });
 
- if(cambio)guardarDatos();
+  var total = Number(o.total || 0);
 
-}
+  if(!total && items.length){
 
-migrarDatos();
+    total = items.reduce(
+      function(sum,item){
 
+        return sum +
+          (
+            Number(item.qty) *
+            Number(item.price)
+          );
 
-/* NAVEGACIÓN */
-
-function ocultarTodo(){
-
- var ids=[
-  "inicio",
-  "servicio",
-  "mdf",
-  "clientes",
-  "ordenes",
-  "equipos",
-  "caja",
-  "backup",
-  "resultado"
- ];
-
- ids.forEach(function(id){
-
-  var el=document.getElementById(id);
-
-  if(el)el.classList.add("hidden");
-
- });
-
-}
-
-
-function mostrar(id,guardarHistorial){
-
- if(typeof guardarHistorial === "undefined"){
-  guardarHistorial=true;
- }
-
- var actual=document.querySelector(
-  "main > section:not(.hidden)"
- );
-
- if(
-  guardarHistorial &&
-  actual &&
-  actual.id !== id
- ){
-
-  if(
-   historial.length===0 ||
-   historial[historial.length-1]!==actual.id
-  ){
-
-   historial.push(actual.id);
-
-  }
-
- }
-
- ocultarTodo();
-
- var destino=document.getElementById(id);
-
- if(!destino)return;
-
- destino.classList.remove("hidden");
-
- if(id==="servicio"){
-  actualizarSelectClientes("scliente");
- }
-
- if(id==="mdf"){
-
-  actualizarSelectClientes("mcliente");
-
-  if(
-   document.getElementById("mdfEditId").value==="" &&
-   productosMDF.length===0
-  ){
-
-   agregarProducto();
-
-  }
-
- }
-
- if(id==="clientes")mostrarClientes();
-
- if(id==="ordenes"){
-
-  actualizarFiltros();
-  mostrarOrdenes();
-
- }
-
- if(id==="equipos")mostrarEquipos();
-
- if(id==="caja")mostrarCaja();
-
- window.scrollTo(0,0);
-
-}
-
-
-function volver(){
-
- if(historial.length>0){
-
-  var destino=historial.pop();
-
-  mostrar(destino,false);
-
- }else{
-
-  inicioDirecto();
-
- }
-
-}
-
-
-function inicioDirecto(){
-
- historial=[];
-
- ocultarTodo();
-
- var inicio=document.getElementById("inicio");
-
- if(inicio){
-  inicio.classList.remove("hidden");
- }
-
- window.scrollTo(0,0);
-
-}
-
-
-/* NÚMERO DE ORDEN */
-
-function numeroOrden(){
-
- var ultimo=0;
-
- try{
-  ultimo=parseInt(
-   localStorage.getItem("jurema_numero") || "0",
-   10
-  ) || 0;
- }catch(e){}
-
- var nuevo=ultimo+5;
-
- try{
-  localStorage.setItem(
-   "jurema_numero",
-   String(nuevo)
-  );
- }catch(e){}
-
- return String(nuevo).padStart(5,"0");
-
-}
-
-
-/* DINERO */
-
-function dinero(valor){
-
- return Number(valor || 0).toLocaleString(
-  "es-AR",
-  {
-   minimumFractionDigits:0,
-   maximumFractionDigits:0
-  }
- );
-
-}
-
-
-/* FECHA */
-
-function fecha(){
-
- return new Date().toLocaleDateString("es-AR");
-
-}
-
-
-/* ESCAPE HTML */
-
-function escapeHTML(text){
-
- return String(text || "")
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
-
-}
-
-
-/* AVISO SI LOS DATOS NO PUDIERON CARGARSE */
-
-if(!datosCargados){
-
- setTimeout(function(){
-
-  alert(
-   "JUREMA detectó un problema al leer los datos guardados. " +
-   "NO se borraron los datos. Hacé una copia de seguridad antes de continuar."
-  );
-
- },500);
-
-}
-/* =========================================================
-   CLIENTES
-========================================================= */
-
-function actualizarSelectClientes(id){
-
- var select=document.getElementById(id);
-
- if(!select)return;
-
- var valorActual=select.value;
-
- select.innerHTML=
-  '<option value="">-- Nuevo cliente --</option>';
-
- datos.clientes.forEach(function(c){
-
-  var op=document.createElement("option");
-
-  op.value=c.id;
-
-  op.textContent=
-   (c.nombre || "")+
-   " - "+
-   (c.telefono || "");
-
-  select.appendChild(op);
-
- });
-
- if(
-  valorActual &&
-  datos.clientes.some(function(c){
-   return c.id===valorActual;
-  })
- ){
-
-  select.value=valorActual;
-
- }
-
-}
-
-
-function guardarCliente(nombre,telefono,domicilio){
-
- nombre=(nombre || "").trim();
- telefono=telefono || "";
- domicilio=domicilio || "";
-
- if(!nombre)return null;
-
- var existente=datos.clientes.find(function(c){
-
-  return(
-   (c.nombre || "").toLowerCase()===
-   nombre.toLowerCase() &&
-   (c.telefono || "")===telefono
-  );
-
- });
-
- if(existente){
-
-  existente.nombre=nombre;
-  existente.telefono=telefono;
-  existente.domicilio=domicilio;
-
-  guardarDatos();
-
-  return existente.id;
-
- }
-
- var cliente={
-  id:Date.now().toString(),
-  nombre:nombre,
-  telefono:telefono,
-  domicilio:domicilio
- };
-
- datos.clientes.push(cliente);
-
- guardarDatos();
-
- return cliente.id;
-
-}
-
-
-function cargarClienteServicio(){
-
- var select=document.getElementById("scliente");
-
- if(!select)return;
-
- var id=select.value;
-
- if(!id)return;
-
- var c=datos.clientes.find(function(x){
-  return x.id===id;
- });
-
- if(!c)return;
-
- document.getElementById("cliente").value=c.nombre || "";
- document.getElementById("telefono").value=c.telefono || "";
- document.getElementById("domicilio").value=c.domicilio || "";
-
-}
-
-
-function cargarClienteMDF(){
-
- var select=document.getElementById("mcliente");
-
- if(!select)return;
-
- var id=select.value;
-
- if(!id)return;
-
- var c=datos.clientes.find(function(x){
-  return x.id===id;
- });
-
- if(!c)return;
-
- document.getElementById("mnombre").value=c.nombre || "";
- document.getElementById("mtelefono").value=c.telefono || "";
- document.getElementById("mdomicilio").value=c.domicilio || "";
-
-}
-
-
-function nuevoCliente(){
-
- var nombre=prompt("Nombre del cliente:");
-
- if(nombre===null || !nombre.trim())return;
-
- var telefono=prompt("Teléfono:");
-
- if(telefono===null)telefono="";
-
- var domicilio=prompt("Domicilio:");
-
- if(domicilio===null)domicilio="";
-
- guardarCliente(
-  nombre,
-  telefono,
-  domicilio
- );
-
- mostrarClientes();
-
-}
-
-
-function mostrarClientes(){
-
- var buscar=document.getElementById("buscarCliente");
-
- var texto=
-  buscar ?
-  String(buscar.value || "").toLowerCase() :
-  "";
-
- var lista=document.getElementById("listaClientes");
-
- if(!lista)return;
-
- lista.innerHTML="";
-
- var clientes=datos.clientes.filter(function(c){
-
-  return(
-   String(c.nombre || "").toLowerCase().indexOf(texto)!==-1 ||
-   String(c.telefono || "").toLowerCase().indexOf(texto)!==-1
-  );
-
- });
-
- if(clientes.length===0){
-
-  lista.innerHTML=
-   '<div class="empty">No hay clientes.</div>';
-
-  return;
-
- }
-
- clientes.forEach(function(c){
-
-  var cantidad=datos.ordenes.filter(function(o){
-   return o.clienteId===c.id;
-  }).length;
-
-  lista.innerHTML+=`
-
-  <div class="item">
-
-   <b>${escapeHTML(c.nombre)}</b><br>
-
-   📞 ${escapeHTML(c.telefono || "-")}<br>
-
-   🏠 ${escapeHTML(c.domicilio || "-")}<br>
-
-   📋 ${cantidad} orden(es)
-
-   <button class="blue"
-   onclick="editarCliente('${c.id}')">
-   ✏️ EDITAR
-   </button>
-
-   <button class="red"
-   onclick="borrarCliente('${c.id}')">
-   🗑️ BORRAR
-   </button>
-
-  </div>
-
-  `;
-
- });
-
-}
-
-
-function editarCliente(id){
-
- var c=datos.clientes.find(function(x){
-  return x.id===id;
- });
-
- if(!c)return;
-
- var nombre=prompt(
-  "Nombre:",
-  c.nombre || ""
- );
-
- if(nombre===null)return;
-
- var telefono=prompt(
-  "Teléfono:",
-  c.telefono || ""
- );
-
- if(telefono===null)return;
-
- var domicilio=prompt(
-  "Domicilio:",
-  c.domicilio || ""
- );
-
- if(domicilio===null)return;
-
- c.nombre=nombre.trim();
- c.telefono=telefono;
- c.domicilio=domicilio;
-
- datos.ordenes.forEach(function(o){
-
-  if(o.clienteId===id){
-
-   o.cliente=c.nombre;
-   o.telefono=c.telefono;
-   o.domicilio=c.domicilio;
-
-  }
-
- });
-
- guardarDatos();
-
- mostrarClientes();
-
-}
-
-
-function borrarCliente(id){
-
- var tieneOrdenes=datos.ordenes.some(function(o){
-  return o.clienteId===id;
- });
-
- var mensaje=tieneOrdenes
-  ? "Este cliente tiene órdenes registradas. ¿Querés borrar igualmente el cliente?"
-  : "¿Borrar este cliente?";
-
- if(!confirm(mensaje))return;
-
- datos.clientes=
-  datos.clientes.filter(function(c){
-   return c.id!==id;
-  });
-
- guardarDatos();
-
- mostrarClientes();
-
-}
-
-
-/* =========================================================
-   SERVICIO TÉCNICO
-========================================================= */
-
-function calcularServicio(){
-
- var costo=Number(
-  document.getElementById("costo").value || 0
- );
-
- var sena=Number(
-  document.getElementById("sena").value || 0
- );
-
- var saldo=Math.max(0,costo-sena);
-
- document.getElementById(
-  "saldoServicio"
- ).textContent=dinero(saldo);
-
-}
-
-
-function leerArchivo(file){
-
- return new Promise(function(resolve,reject){
-
-  var reader=new FileReader();
-
-  reader.onload=function(e){
-   resolve(e.target.result);
-  };
-
-  reader.onerror=function(){
-   reject(new Error("No se pudo leer la foto"));
-  };
-
-  reader.readAsDataURL(file);
-
- });
-
-}
-
-
-async function cargarFotos(){
-
- var input=document.getElementById("fotos");
-
- if(!input || !input.files || !input.files.length)return;
-
- try{
-
-  var nuevas=[];
-
-  for(var i=0;i<input.files.length;i++){
-
-   var data=await leerArchivo(input.files[i]);
-
-   nuevas.push(data);
-
-  }
-
-  fotosActuales=fotosActuales.concat(nuevas);
-
-  mostrarFotosExistentes();
-
- }catch(error){
-
-  alert("No se pudo cargar una de las fotos.");
-
- }
-
-}
-
-
-function mostrarFotosExistentes(){
-
- var cont=document.getElementById("fotosExistentes");
-
- if(!cont)return;
-
- cont.innerHTML="";
-
- fotosActuales.forEach(function(f,i){
-
-  cont.innerHTML+=`
-
-   <div style="display:inline-block;position:relative">
-
-    <img src="${f}">
-
-    <button
-     style="position:absolute;right:2px;top:2px;width:auto;margin:0;padding:5px"
-     class="red"
-     onclick="eliminarFoto(${i})">
-     ✕
-    </button>
-
-   </div>
-
-  `;
-
- });
-
-}
-
-
-function eliminarFoto(index){
-
- fotosActuales.splice(index,1);
-
- mostrarFotosExistentes();
-
-}
-
-
-function limpiarServicio(){
-
- document.getElementById("servicioEditId").value="";
-
- document.getElementById("tituloServicio").textContent=
-  "🖨️ Servicio técnico";
-
- document.getElementById("scliente").value="";
- document.getElementById("cliente").value="";
- document.getElementById("telefono").value="";
- document.getElementById("domicilio").value="";
- document.getElementById("marca").value="";
- document.getElementById("modelo").value="";
- document.getElementById("serie").value="";
- document.getElementById("problema").value="";
- document.getElementById("estado").value="";
- document.getElementById("accesorios").value="";
- document.getElementById("fotos").value="";
- document.getElementById("estadoTrabajo").value="Recibido";
- document.getElementById("costo").value="0";
- document.getElementById("sena").value="0";
- document.getElementById("observaciones").value="";
-
- fotosActuales=[];
-
- mostrarFotosExistentes();
-
- calcularServicio();
-
-}
-
-
-function guardarServicio(){
-
- var nombre=document.getElementById(
-  "cliente"
- ).value.trim();
-
- if(!nombre){
-
-  alert("Ingresá el nombre del cliente.");
-
-  return;
-
- }
-
- var telefono=document.getElementById(
-  "telefono"
- ).value;
-
- var domicilio=document.getElementById(
-  "domicilio"
- ).value;
-
- var clienteId=guardarCliente(
-  nombre,
-  telefono,
-  domicilio
- );
-
- var costo=Number(
-  document.getElementById("costo").value || 0
- );
-
- var sena=Number(
-  document.getElementById("sena").value || 0
- );
-
- if(sena>costo){
-
-  if(!confirm(
-   "La seña es mayor que el costo. ¿Querés continuar?"
-  ))return;
-
- }
-
- var saldo=Math.max(0,costo-sena);
-
- var editId=document.getElementById(
-  "servicioEditId"
- ).value;
-
- var orden=null;
-
- if(editId){
-
-  orden=datos.ordenes.find(function(o){
-   return o.id===editId;
-  });
-
-  if(!orden){
-
-   alert("No se encontró la orden para modificar.");
-
-   return;
-
-  }
-
- }else{
-
-  orden={
-   id:Date.now().toString(),
-   numero:numeroOrden(),
-   tipo:"Servicio técnico",
-   fecha:fecha()
-  };
-
-  datos.ordenes.push(orden);
-
- }
-
- orden.clienteId=clienteId;
- orden.cliente=nombre;
- orden.telefono=telefono;
- orden.domicilio=domicilio;
- orden.marca=document.getElementById("marca").value;
- orden.modelo=document.getElementById("modelo").value;
- orden.serie=document.getElementById("serie").value;
- orden.problema=document.getElementById("problema").value;
- orden.estado=document.getElementById("estado").value;
- orden.accesorios=document.getElementById("accesorios").value;
- orden.fotos=fotosActuales.slice();
- orden.costo=costo;
- orden.total=costo;
- orden.sena=sena;
- orden.saldo=saldo;
- orden.estadoTrabajo=
-  document.getElementById("estadoTrabajo").value;
- orden.observaciones=
-  document.getElementById("observaciones").value;
-
- actualizarEquipoDesdeOrden(orden);
-
- if(!guardarDatos())return;
-
- ordenActual=orden;
-
- generarComprobanteServicio(orden);
-
-}
-
-
-function actualizarEquipoDesdeOrden(o){
-
- if(
-  !o.marca &&
-  !o.modelo &&
-  !o.serie
- )return;
-
- var equipo=datos.equipos.find(function(e){
-
-  return(
-   e.clienteId===o.clienteId &&
-   String(e.serie || "")===
-   String(o.serie || "") &&
-   String(e.serie || "")!==""
-  );
-
- });
-
- if(equipo){
-
-  equipo.cliente=o.cliente;
-  equipo.marca=o.marca;
-  equipo.modelo=o.modelo;
-  equipo.serie=o.serie;
-
- }else{
-
-  datos.equipos.push({
-
-   id:"eq_"+Date.now()+"_"+Math.random(),
-
-   clienteId:o.clienteId,
-
-   cliente:o.cliente,
-
-   marca:o.marca,
-
-   modelo:o.modelo,
-
-   serie:o.serie
-
-  });
-
- }
-
-}
-
-
-/* =========================================================
-   EDITAR SERVICIO
-========================================================= */
-
-function cargarServicioParaEditar(o){
-
- limpiarServicio();
-
- document.getElementById(
-  "servicioEditId"
- ).value=o.id;
-
- document.getElementById(
-  "tituloServicio"
- ).textContent=
-  "✏️ Modificar servicio — Orden "+o.numero;
-
- actualizarSelectClientes("scliente");
-
- document.getElementById("scliente").value=
-  o.clienteId || "";
-
- document.getElementById("cliente").value=
-  o.cliente || "";
-
- document.getElementById("telefono").value=
-  o.telefono || "";
-
- document.getElementById("domicilio").value=
-  o.domicilio || "";
-
- document.getElementById("marca").value=
-  o.marca || "";
-
- document.getElementById("modelo").value=
-  o.modelo || "";
-
- document.getElementById("serie").value=
-  o.serie || "";
-
- document.getElementById("problema").value=
-  o.problema || "";
-
- document.getElementById("estado").value=
-  o.estado || "";
-
- document.getElementById("accesorios").value=
-  o.accesorios || "";
-
- document.getElementById("estadoTrabajo").value=
-  o.estadoTrabajo || "Recibido";
-
- document.getElementById("costo").value=
-  Number(o.costo || o.total || 0);
-
- document.getElementById("sena").value=
-  Number(o.sena || 0);
-
- document.getElementById("observaciones").value=
-  o.observaciones || "";
-
- fotosActuales=
-  Array.isArray(o.fotos) ?
-  o.fotos.slice() :
-  [];
-
- mostrarFotosExistentes();
-
- calcularServicio();
-
- mostrar("servicio");
-
-}
-
-
-/* =========================================================
-   MDF — PRODUCTOS
-========================================================= */
-
-function agregarProducto(item){
-
- if(!item)item=null;
-
- var id=
-  item && item.id ?
-  item.id :
-  "item_"+Date.now()+"_"+Math.random();
-
- var producto={
-
-  id:id,
-
-  descripcion:
-   item && item.descripcion ?
-   item.descripcion :
-   "",
-
-  cantidad:
-   item && item.cantidad ?
-   Number(item.cantidad) :
-   1,
-
-  precio:
-   item && item.precio ?
-   Number(item.precio) :
-   0,
-
-  subtotal:
-   item && item.subtotal ?
-   Number(item.subtotal) :
-   0
-
- };
-
- if(producto.cantidad<1){
-  producto.cantidad=1;
- }
-
- if(producto.precio<0){
-  producto.precio=0;
- }
-
- producto.subtotal=
-  producto.cantidad*producto.precio;
-
- productosMDF.push(producto);
-
- renderProductosMDF();
-
-}
-
-
-function eliminarProducto(id){
-
- if(productosMDF.length<=1){
-
-  alert(
-   "El pedido debe tener al menos un producto."
-  );
-
-  return;
-
- }
-
- productosMDF=
-  productosMDF.filter(function(x){
-   return x.id!==id;
-  });
-
- renderProductosMDF();
-
-}
-
-
-function renderProductosMDF(){
-
- var cont=document.getElementById(
-  "listaProductos"
- );
-
- if(!cont)return;
-
- cont.innerHTML="";
-
- productosMDF.forEach(function(p,index){
-
-  cont.innerHTML+=`
-
-  <div class="producto">
-
-   <div class="producto-header">
-
-    <strong>
-    Producto ${index+1}
-    </strong>
-
-    <button
-     class="red"
-     onclick="eliminarProducto('${p.id}')">
-     🗑️ Quitar
-    </button>
-
-   </div>
-
-   <label>Descripción / producto</label>
-
-   <input
-    value="${escapeHTML(p.descripcion)}"
-    oninput="actualizarProducto('${p.id}','descripcion',this.value)"
-    placeholder="Ej.: Nombre personalizado">
-
-   <div class="producto-grid">
-
-    <div>
-
-     <label>Cantidad</label>
-
-     <input
-      type="number"
-      min="1"
-      value="${p.cantidad}"
-      oninput="actualizarProducto('${p.id}','cantidad',this.value)">
-
-    </div>
-
-    <div>
-
-     <label>Precio unitario</label>
-
-     <input
-      type="number"
-      min="0"
-      value="${p.precio}"
-      oninput="actualizarProducto('${p.id}','precio',this.value)">
-
-    </div>
-
-   </div>
-
-   <div class="item-subtotal">
-
-    Subtotal:
-    $<span id="subtotal_${p.id}">
-    ${dinero(p.subtotal)}
-    </span>
-
-   </div>
-
-  </div>
-
-  `;
-
- });
-
- calcularMDF();
-
-}
-
-
-function actualizarProducto(id,campo,valor){
-
- var p=productosMDF.find(function(x){
-  return x.id===id;
- });
-
- if(!p)return;
-
- if(campo==="cantidad"){
-
-  p.cantidad=Math.max(
-   1,
-   Number(valor || 1)
-  );
-
- }
-
- if(campo==="precio"){
-
-  p.precio=Math.max(
-   0,
-   Number(valor || 0)
-  );
-
- }
-
- if(campo==="descripcion"){
-  p.descripcion=valor;
- }
-
- p.subtotal=
-  p.cantidad*p.precio;
-
- var subtotal=document.getElementById(
-  "subtotal_"+id
- );
-
- if(subtotal){
-
-  subtotal.textContent=
-   dinero(p.subtotal);
-
- }
-
- calcularMDF();
-
-}
-
-
-function calcularMDF(){
-
- var total=productosMDF.reduce(
-  function(s,p){
-   return s+Number(p.subtotal || 0);
-  },
-  0
- );
-
- document.getElementById(
-  "mdfTotal"
- ).textContent=dinero(total);
-
- var sena=Number(
-  document.getElementById("msena").value || 0
- );
-
- var saldo=Math.max(0,total-sena);
-
- document.getElementById(
-  "saldoMDF"
- ).textContent=dinero(saldo);
-
- return{
-  total:total,
-  sena:sena,
-  saldo:saldo
- };
-
-}
-
-
-function limpiarMDF(){
-
- document.getElementById(
-  "mdfEditId"
- ).value="";
-
- document.getElementById(
-  "tituloMDF"
- ).textContent=
-  "🪵 Pedido MDF / Corte láser";
-
- document.getElementById("mcliente").value="";
- document.getElementById("mnombre").value="";
- document.getElementById("mtelefono").value="";
- document.getElementById("mdomicilio").value="";
- document.getElementById("msena").value="0";
- document.getElementById("mentrega").value="";
- document.getElementById("mestado").value=
-  "Pedido recibido";
- document.getElementById("mobservaciones").value="";
-
- productosMDF=[];
-
- agregarProducto();
-
-}
-function guardarMDF(){
-  var cliente=document.getElementById("clienteMDF").value;
-  var telefono=document.getElementById("telefonoMDF").value;
-  var direccion=document.getElementById("direccionMDF").value;
-  var observaciones=document.getElementById("observacionesMDF").value;
-
-  if(!cliente){
-    alert("Seleccioná un cliente.");
-    return;
-  }
-
-  if(productsMDF.length===0){
-    alert("Agregá al menos un producto.");
-    return;
-  }
-
-  calcularMDF();
-
-  var total=Number(document.getElementById("mdfTotal").value)||0;
-  var adelanto=Number(document.getElementById("adelantoMDF").value)||0;
-
-  if(adelanto<0) adelanto=0;
-  if(adelanto>total) adelanto=total;
-
-  var saldo=total-adelanto;
-
-  var fecha=new Date().toISOString();
-
-  if(editandoMDF){
-    var existente=buscarOrden(editandoMDF);
-
-    if(existente){
-      existente.cliente=cliente;
-      existente.telefono=telefono;
-      existente.direccion=direccion;
-      existente.observaciones=observaciones;
-      existente.productos=JSON.parse(JSON.stringify(productsMDF));
-      existente.total=total;
-      existente.adelanto=adelanto;
-      existente.saldo=saldo;
-
-      guardarDatos();
-
-      alert("Pedido MDF actualizado correctamente.");
-      mostrarComprobante(existente.id);
-      editandoMDF=null;
-      limpiarMDF();
-      return;
-    }
-  }
-
-  var nueva={
-    id:nuevoNumero(),
-    tipo:"MDF",
-    fecha:fecha,
-    cliente:cliente,
-    telefono:telefono,
-    direccion:direccion,
-    observaciones:observaciones,
-    productos:JSON.parse(JSON.stringify(productsMDF)),
-    total:total,
-    adelanto:adelanto,
-    saldo:saldo,
-    estado:saldo>0?"Pendiente":"Terminada"
-  };
-
-  datos.ordenes.push(nueva);
-
-  guardarDatos();
-
-  alert("Pedido MDF guardado correctamente.");
-
-  mostrarComprobante(nueva.id);
-
-  limpiarMDF();
-}
-
-
-/* =========================
-   BUSCAR ORDEN
-========================= */
-
-function buscarOrden(id){
-  var i;
-
-  for(i=0;i<datos.ordenes.length;i++){
-    if(String(datos.ordenes[i].id)===String(id)){
-      return datos.ordenes[i];
-    }
-  }
-
-  return null;
-}
-
-
-/* =========================
-   EDITAR ORDEN
-========================= */
-
-function editarOrden(id){
-  var o=buscarOrden(id);
-
-  if(!o){
-    alert("No se encontró la orden.");
-    return;
-  }
-
-  if(o.tipo==="Servicio"){
-    editandoServicio=o.id;
-
-    mostrar("servicio");
-
-    document.getElementById("cliente").value=o.cliente||"";
-    document.getElementById("telefono").value=o.telefono||"";
-    document.getElementById("direccion").value=o.direccion||"";
-    document.getElementById("marca").value=o.marca||"";
-    document.getElementById("modelo").value=o.modelo||"";
-    document.getElementById("serie").value=o.serie||"";
-    document.getElementById("problema").value=o.problema||"";
-    document.getElementById("estado").value=o.estado||"";
-    document.getElementById("condicion").value=o.condicion||"";
-    document.getElementById("accesorios").value=o.accesorios||"";
-    document.getElementById("costo").value=o.costo||0;
-    document.getElementById("adelanto").value=o.adelanto||0;
-    document.getElementById("observaciones").value=o.observaciones||"";
-
-    fotosServicio=o.fotos?o.fotos.slice():[];
-
-    actualizarVistaFotos();
-
-    calcularServicio();
-
-    window.scrollTo(0,0);
-
-    return;
-  }
-
-  if(o.tipo==="MDF"){
-    editandoMDF=o.id;
-
-    mostrar("mdf");
-
-    document.getElementById("clienteMDF").value=o.cliente||"";
-    document.getElementById("telefonoMDF").value=o.telefono||"";
-    document.getElementById("direccionMDF").value=o.direccion||"";
-    document.getElementById("observacionesMDF").value=o.observaciones||"";
-    document.getElementById("adelantoMDF").value=o.adelanto||0;
-
-    productsMDF=o.productos?JSON.parse(JSON.stringify(o.productos)):[ ];
-
-    renderProductosMDF();
-    calcularMDF();
-
-    window.scrollTo(0,0);
-  }
-}
-
-
-/* =========================
-   COMPROBANTE
-========================= */
-
-function mostrarComprobante(id){
-  var o=buscarOrden(id);
-
-  if(!o){
-    alert("No se encontró la orden.");
-    return;
-  }
-
-  var html="";
-
-  html+="<div class='ticket'>";
-
-  html+="<div class='ticket-title'>JUREMA</div>";
-  html+="<div class='ticket-subtitle'>Servicio Técnico / MDF</div>";
-
-  html+="<hr>";
-
-  html+="<div><b>Orden:</b> "+escapeHTML(String(o.id))+"</div>";
-  html+="<div><b>Fecha:</b> "+formatearFecha(o.fecha)+"</div>";
-
-  html+="<hr>";
-
-  html+="<div><b>Cliente:</b> "+escapeHTML(o.cliente||"")+"</div>";
-
-  if(o.telefono){
-    html+="<div><b>Teléfono:</b> "+escapeHTML(o.telefono)+"</div>";
-  }
-
-  if(o.direccion){
-    html+="<div><b>Dirección:</b> "+escapeHTML(o.direccion)+"</div>";
-  }
-
-  html+="<hr>";
-
-  if(o.tipo==="Servicio"){
-
-    html+="<div><b>Tipo:</b> Servicio Técnico</div>";
-
-    if(o.marca) html+="<div><b>Marca:</b> "+escapeHTML(o.marca)+"</div>";
-    if(o.modelo) html+="<div><b>Modelo:</b> "+escapeHTML(o.modelo)+"</div>";
-    if(o.serie) html+="<div><b>N° Serie:</b> "+escapeHTML(o.serie)+"</div>";
-
-    if(o.problema){
-      html+="<div><b>Problema:</b><br>"+escapeHTML(o.problema)+"</div>";
-    }
-
-    if(o.condicion){
-      html+="<div><b>Condición exterior:</b><br>"+escapeHTML(o.condicion)+"</div>";
-    }
-
-    if(o.accesorios){
-      html+="<div><b>Accesorios:</b><br>"+escapeHTML(o.accesorios)+"</div>";
-    }
-
-    if(o.estado){
-      html+="<div><b>Estado:</b> "+escapeHTML(o.estado)+"</div>";
-    }
-
-  }else{
-
-    html+="<div><b>Tipo:</b> Pedido MDF</div>";
-
-    html+="<br>";
-
-    if(o.productos && o.productos.length){
-
-      var i;
-
-      for(i=0;i<o.productos.length;i++){
-
-        var p=o.productos[i];
-
-        html+="<div class='producto-ticket'>";
-
-        html+="<b>"+escapeHTML(p.descripcion||"Producto")+"</b><br>";
-
-        html+=String(p.cantidad||0)+" x $"+formatearDinero(p.precio||0);
-
-        html+=" = $"+formatearDinero((Number(p.cantidad)||0)*(Number(p.precio)||0));
-
-        html+="</div>";
-      }
-    }
-  }
-
-  html+="<hr>";
-
-  html+="<div><b>Total:</b> $"+formatearDinero(o.total||0)+"</div>";
-  html+="<div><b>Adelanto:</b> $"+formatearDinero(o.adelanto||0)+"</div>";
-  html+="<div><b>Saldo:</b> $"+formatearDinero(o.saldo||0)+"</div>";
-
-  if(o.observaciones){
-    html+="<hr>";
-    html+="<div><b>Observaciones:</b><br>"+escapeHTML(o.observaciones)+"</div>";
-  }
-
-  html+="<hr>";
-
-  html+="<div class='ticket-footer'>Gracias por confiar en JUREMA</div>";
-
-  html+="</div>";
-
-  html+="<div class='ticket-buttons'>";
-  html+="<button onclick=\"imprimirComprobante('"+o.id+"')\">🖨️ Imprimir</button>";
-  html+="<button onclick=\"compartirComprobante('"+o.id+"')\">📤 Compartir</button>";
-  html+="<button onclick=\"mostrar('ordenes')\">↩ Volver</button>";
-  html+="</div>";
-
-  document.getElementById("comprobante").innerHTML=html;
-
-  mostrar("comprobante");
-}
-
-
-/* =========================
-   IMPRIMIR
-========================= */
-
-function imprimirComprobante(id){
-  var o=buscarOrden(id);
-
-  if(!o){
-    alert("No se encontró la orden.");
-    return;
-  }
-
-  var contenido=document.getElementById("comprobante").innerHTML;
-
-  var ventana=window.open("","_blank");
-
-  if(!ventana){
-    alert("El navegador bloqueó la ventana de impresión. Probá nuevamente.");
-    return;
-  }
-
-  ventana.document.open();
-
-  ventana.document.write(
-    "<!DOCTYPE html>"+
-    "<html><head>"+
-    "<meta charset='UTF-8'>"+
-    "<title>Orden "+escapeHTML(String(o.id))+"</title>"+
-    "<style>"+
-    "body{font-family:Arial,sans-serif;padding:20px;max-width:500px;margin:auto;}"+
-    ".ticket-title{text-align:center;font-size:28px;font-weight:bold;}"+
-    ".ticket-subtitle{text-align:center;margin-bottom:10px;}"+
-    ".ticket-footer{text-align:center;margin-top:20px;}"+
-    ".ticket-buttons{display:none;}"+
-    ".producto-ticket{margin:8px 0;}"+
-    "hr{border:0;border-top:1px solid #999;margin:12px 0;}"+
-    "</style>"+
-    "</head><body>"+
-    contenido+
-    "</body></html>"
-  );
-
-  ventana.document.close();
-
-  setTimeout(function(){
-    ventana.focus();
-    ventana.print();
-  },500);
-}
-
-
-/* =========================
-   COMPARTIR COMPROBANTE
-========================= */
-
-function compartirComprobante(id){
-  var o=buscarOrden(id);
-
-  if(!o){
-    alert("No se encontró la orden.");
-    return;
-  }
-
-  var texto="JUREMA\n";
-  texto+="Orden: "+o.id+"\n";
-  texto+="Cliente: "+(o.cliente||"")+"\n";
-
-  if(o.tipo==="Servicio"){
-    texto+="Servicio Técnico\n";
-
-    if(o.marca) texto+="Marca: "+o.marca+"\n";
-    if(o.modelo) texto+="Modelo: "+o.modelo+"\n";
-
-    if(o.problema){
-      texto+="Problema: "+o.problema+"\n";
-    }
-
-  }else{
-    texto+="Pedido MDF\n";
-
-    if(o.productos){
-      var i;
-
-      for(i=0;i<o.productos.length;i++){
-        var p=o.productos[i];
-
-        texto+=
-          (p.descripcion||"Producto")+
-          " x"+(p.cantidad||0)+
-          " - $"+formatearDinero(
-            (Number(p.cantidad)||0)*(Number(p.precio)||0)
-          )+
-          "\n";
-      }
-    }
-  }
-
-  texto+="Total: $"+formatearDinero(o.total||0)+"\n";
-  texto+="Adelanto: $"+formatearDinero(o.adelanto||0)+"\n";
-  texto+="Saldo: $"+formatearDinero(o.saldo||0);
-
-  if(navigator.share){
-
-    navigator.share({
-      title:"JUREMA - Orden "+o.id,
-      text:texto
-    }).catch(function(){});
-
-  }else{
-
-    if(navigator.clipboard){
-
-      navigator.clipboard.writeText(texto).then(function(){
-        alert("Comprobante copiado. Ya podés pegarlo en WhatsApp.");
-      }).catch(function(){
-        alert(texto);
-      });
-
-    }else{
-
-      alert(texto);
-
-    }
-  }
-}
-
-
-/* =========================
-   ÓRDENES
-========================= */
-
-function mostrarOrdenes(){
-
-  var cont=document.getElementById("listaOrdenes");
-
-  if(!cont) return;
-
-  var filtro=document.getElementById("filtroOrdenes").value;
-  var busqueda=document.getElementById("buscarOrdenes").value.toLowerCase().trim();
-
-  var lista=datos.ordenes.slice();
-
-  lista.sort(function(a,b){
-    return Number(b.id)-Number(a.id);
-  });
-
-  var filtradas=[];
-  var i;
-
-  for(i=0;i<lista.length;i++){
-
-    var o=lista[i];
-
-    if(filtro!=="Todas" && o.estado!==filtro){
-      continue;
-    }
-
-    var texto=
-      String(o.id)+" "+
-      String(o.cliente||"")+" "+
-      String(o.telefono||"")+" "+
-      String(o.marca||"")+" "+
-      String(o.modelo||"");
-
-    if(busqueda && texto.toLowerCase().indexOf(busqueda)===-1){
-      continue;
-    }
-
-    filtradas.push(o);
-  }
-
-  if(filtradas.length===0){
-
-    cont.innerHTML=
-      "<div class='vacio'>No hay órdenes para mostrar.</div>";
-
-    return;
-  }
-
-  var html="";
-
-  for(i=0;i<filtradas.length;i++){
-
-    var ord=filtradas[i];
-
-    html+="<div class='card orden-card'>";
-
-    html+="<div class='orden-header'>";
-
-    html+="<b>Orden "+escapeHTML(String(ord.id))+"</b>";
-
-    html+="<span class='badge'>"+
-      escapeHTML(ord.estado||"Pendiente")+
-      "</span>";
-
-    html+="</div>";
-
-    html+="<div><b>"+escapeHTML(ord.cliente||"")+"</b></div>";
-
-    html+="<div class='small'>"+
-      (ord.tipo==="Servicio"?"🔧 Servicio Técnico":"🪵 Pedido MDF")+
-      "</div>";
-
-    if(ord.tipo==="Servicio"){
-
-      if(ord.marca || ord.modelo){
-
-        html+="<div>"+
-          escapeHTML((ord.marca||"")+" "+(ord.modelo||""))+
-          "</div>";
-      }
-
-      if(ord.problema){
-        html+="<div class='small'>"+
-          escapeHTML(ord.problema)+
-          "</div>";
-      }
-
-    }else{
-
-      if(ord.productos){
-
-        html+="<div class='small'>"+
-          ord.productos.length+
-          (ord.productos.length===1?" producto":" productos")+
-          "</div>";
-      }
-    }
-
-    html+="<div class='orden-dinero'>";
-
-    html+="Total: <b>$"+formatearDinero(ord.total||0)+"</b>";
-
-    html+=" &nbsp; Saldo: <b>$"+
-      formatearDinero(ord.saldo||0)+
-      "</b>";
-
-    html+="</div>";
-
-    html+="<div class='acciones'>";
-
-    html+="<button onclick=\"mostrarComprobante('"+ord.id+"')\">🧾</button>";
-
-    html+="<button onclick=\"editarOrden('"+ord.id+"')\">✏️</button>";
-
-    if(ord.estado!=="Entregada"){
-      html+="<button onclick=\"cambiarEstado('"+ord.id+"')\">🔄</button>";
-    }
-
-    html+="<button class='danger' onclick=\"eliminarOrden('"+ord.id+"')\">🗑️</button>";
-
-    html+="</div>";
-
-    html+="</div>";
-  }
-
-  cont.innerHTML=html;
-}
-
-
-/* =========================
-   CAMBIAR ESTADO
-========================= */
-
-function cambiarEstado(id){
-
-  var o=buscarOrden(id);
-
-  if(!o) return;
-
-  var estados=[
-    "Pendiente",
-    "Terminada",
-    "Entregada"
-  ];
-
-  var actual=estados.indexOf(o.estado);
-
-  if(actual<0) actual=0;
-
-  var siguiente=actual+1;
-
-  if(siguiente>=estados.length){
-    siguiente=0;
-  }
-
-  o.estado=estados[siguiente];
-
-  guardarDatos();
-
-  mostrarOrdenes();
-}
-
-
-/* =========================
-   ELIMINAR ORDEN
-========================= */
-
-function eliminarOrden(id){
-
-  var o=buscarOrden(id);
-
-  if(!o) return;
-
-  var confirmar=confirm(
-    "¿Seguro que querés eliminar la orden "+id+" de "+(o.cliente||"")+"?"
-  );
-
-  if(!confirmar) return;
-
-  var nuevas=[];
-  var i;
-
-  for(i=0;i<datos.ordenes.length;i++){
-
-    if(String(datos.ordenes[i].id)!==String(id)){
-      nuevas.push(datos.ordenes[i]);
-    }
-  }
-
-  datos.ordenes=nuevas;
-
-  guardarDatos();
-
-  mostrarOrdenes();
-}
-
-
-/* =========================
-   EQUIPOS / IMPRESORAS
-========================= */
-
-function mostrarEquipos(){
-
-  var cont=document.getElementById("listaEquipos");
-
-  if(!cont) return;
-
-  var busqueda=document.getElementById("buscarEquipos").value.toLowerCase().trim();
-
-  var equipos=[];
-
-  var i;
-
-  for(i=0;i<datos.ordenes.length;i++){
-
-    var o=datos.ordenes[i];
-
-    if(o.tipo!=="Servicio") continue;
-
-    var texto=
-      String(o.cliente||"")+" "+
-      String(o.marca||"")+" "+
-      String(o.modelo||"")+" "+
-      String(o.serie||"")+" "+
-      String(o.telefono||"");
-
-    if(busqueda && texto.toLowerCase().indexOf(busqueda)===-1){
-      continue;
-    }
-
-    equipos.push(o);
-  }
-
-  equipos.sort(function(a,b){
-    return Number(b.id)-Number(a.id);
-  });
-
-  if(equipos.length===0){
-
-    cont.innerHTML=
-      "<div class='vacio'>No hay equipos registrados.</div>";
-
-    return;
-  }
-
-  var html="";
-
-  for(i=0;i<equipos.length;i++){
-
-    var e=equipos[i];
-
-    html+="<div class='card'>";
-
-    html+="<b>"+escapeHTML(e.marca||"")+" "+
-      escapeHTML(e.modelo||"")+
-      "</b>";
-
-    if(e.serie){
-      html+="<div>Serie: "+
-        escapeHTML(e.serie)+
-        "</div>";
-    }
-
-    html+="<div>Cliente: "+
-      escapeHTML(e.cliente||"")+
-      "</div>";
-
-    if(e.telefono){
-      html+="<div>Teléfono: "+
-        escapeHTML(e.telefono)+
-        "</div>";
-    }
-
-    if(e.direccion){
-      html+="<div>Dirección: "+
-        escapeHTML(e.direccion)+
-        "</div>";
-    }
-
-    html+="<div class='small'>Última orden: "+
-      escapeHTML(String(e.id))+
-      "</div>";
-
-    html+="<div class='acciones'>";
-
-    html+="<button onclick=\"mostrarComprobante('"+e.id+"')\">🧾</button>";
-
-    html+="<button onclick=\"editarOrden('"+e.id+"')\">✏️</button>";
-
-    html+="</div>";
-
-    html+="</div>";
-  }
-
-  cont.innerHTML=html;
-}
-/* =========================
-   CAJA JUREMA
-========================= */
-
-function mostrarCaja(){
-
-  var cont=document.getElementById("listaCaja");
-
-  if(!cont) return;
-
-  var totalServicios=0;
-  var totalMDF=0;
-  var cobradoServicios=0;
-  var cobradoMDF=0;
-  var pendienteServicios=0;
-  var pendienteMDF=0;
-
-  var i;
-
-  for(i=0;i<datos.ordenes.length;i++){
-
-    var o=datos.ordenes[i];
-
-    var total=Number(o.total)||0;
-    var adelanto=Number(o.adelanto)||0;
-    var saldo=Number(o.saldo)||0;
-
-    if(o.tipo==="Servicio"){
-
-      totalServicios+=total;
-      cobradoServicios+=adelanto;
-      pendienteServicios+=saldo;
-
-    }else if(o.tipo==="MDF"){
-
-      totalMDF+=total;
-      cobradoMDF+=adelanto;
-      pendienteMDF+=saldo;
-    }
-  }
-
-  var totalGeneral=totalServicios+totalMDF;
-  var cobradoGeneral=cobradoServicios+cobradoMDF;
-  var pendienteGeneral=pendienteServicios+pendienteMDF;
-
-  var html="";
-
-  html+="<div class='resumen-caja'>";
-
-  html+="<div class='caja-total'>";
-  html+="<span>Total vendido</span>";
-  html+="<b>$"+formatearDinero(totalGeneral)+"</b>";
-  html+="</div>";
-
-  html+="<div class='caja-total'>";
-  html+="<span>Total cobrado</span>";
-  html+="<b>$"+formatearDinero(cobradoGeneral)+"</b>";
-  html+="</div>";
-
-  html+="<div class='caja-total'>";
-  html+="<span>Total pendiente</span>";
-  html+="<b>$"+formatearDinero(pendienteGeneral)+"</b>";
-  html+="</div>";
-
-  html+="</div>";
-
-  html+="<hr>";
-
-  html+="<div class='card'>";
-
-  html+="<h3>🔧 Servicio Técnico</h3>";
-
-  html+="<div>Total: <b>$"+
-    formatearDinero(totalServicios)+
-    "</b></div>";
-
-  html+="<div>Cobrado: <b>$"+
-    formatearDinero(cobradoServicios)+
-    "</b></div>";
-
-  html+="<div>Pendiente: <b>$"+
-    formatearDinero(pendienteServicios)+
-    "</b></div>";
-
-  html+="</div>";
-
-  html+="<div class='card'>";
-
-  html+="<h3>🪵 Pedidos MDF</h3>";
-
-  html+="<div>Total: <b>$"+
-    formatearDinero(totalMDF)+
-    "</b></div>";
-
-  html+="<div>Cobrado: <b>$"+
-    formatearDinero(cobradoMDF)+
-    "</b></div>";
-
-  html+="<div>Pendiente: <b>$"+
-    formatearDinero(pendienteMDF)+
-    "</b></div>";
-
-  html+="</div>";
-
-  html+="<h3>Últimas operaciones</h3>";
-
-  var ordenadas=datos.ordenes.slice();
-
-  ordenadas.sort(function(a,b){
-    return Number(b.id)-Number(a.id);
-  });
-
-  var limite=Math.min(ordenadas.length,20);
-
-  if(limite===0){
-
-    html+="<div class='vacio'>Todavía no hay movimientos.</div>";
-
-  }else{
-
-    for(i=0;i<limite;i++){
-
-      var mov=ordenadas[i];
-
-      html+="<div class='card'>";
-
-      html+="<b>Orden "+escapeHTML(String(mov.id))+"</b>";
-
-      html+=" - "+escapeHTML(mov.cliente||"");
-
-      html+="<div class='small'>";
-
-      html+=mov.tipo==="Servicio"
-        ?"🔧 Servicio Técnico"
-        :"🪵 Pedido MDF";
-
-      html+="</div>";
-
-      html+="<div>";
-
-      html+="Cobrado: <b>$"+
-        formatearDinero(mov.adelanto||0)+
-        "</b>";
-
-      html+="</div>";
-
-      html+="</div>";
-    }
-  }
-
-  cont.innerHTML=html;
-}
-
-
-/* =========================
-   CLIENTES
-========================= */
-
-function mostrarClientes(){
-
-  var cont=document.getElementById("listaClientes");
-
-  if(!cont) return;
-
-  var busqueda=document.getElementById("buscarClientes").value.toLowerCase().trim();
-
-  var clientes=datos.clientes.slice();
-
-  clientes.sort(function(a,b){
-
-    return String(a.nombre||"").localeCompare(
-      String(b.nombre||"")
+      },
+      0
     );
 
-  });
-
-  var filtrados=[];
-  var i;
-
-  for(i=0;i<clientes.length;i++){
-
-    var c=clientes[i];
-
-    var texto=
-      String(c.nombre||"")+" "+
-      String(c.telefono||"")+" "+
-      String(c.direccion||"");
-
-    if(busqueda &&
-       texto.toLowerCase().indexOf(busqueda)===-1){
-
-      continue;
-    }
-
-    filtrados.push(c);
   }
 
-  if(filtrados.length===0){
 
-    cont.innerHTML=
-      "<div class='vacio'>No hay clientes registrados.</div>";
+  var deposit = Number(
+    o.deposit ||
+    o.seña ||
+    o.sena ||
+    0
+  );
 
+
+  return {
+
+    id:o.id || uid(),
+
+    number:
+      Number(
+        o.number ||
+        o.numero ||
+        0
+      ),
+
+    type:type,
+
+    clientId:
+      o.clientId ||
+      o.clienteId ||
+      "",
+
+    clientName:
+      o.clientName ||
+      o.cliente ||
+      "",
+
+    phone:
+      o.phone ||
+      o.telefono ||
+      "",
+
+    address:
+      o.address ||
+      o.direccion ||
+      "",
+
+    brand:
+      o.brand ||
+      o.marca ||
+      "",
+
+    model:
+      o.model ||
+      o.modelo ||
+      "",
+
+    serial:
+      o.serial ||
+      o.serie ||
+      "",
+
+    problem:
+      o.problem ||
+      o.problema ||
+      "",
+
+    condition:
+      o.condition ||
+      o.estadoExterior ||
+      "",
+
+    accessories:
+      o.accessories ||
+      o.accesorios ||
+      "",
+
+    photos:
+      Array.isArray(o.photos)
+        ? o.photos
+        : [],
+
+    items:items,
+
+    total:total,
+
+    deposit:deposit,
+
+    balance:
+      Math.max(
+        0,
+        total - deposit
+      ),
+
+    status:
+      o.status ||
+      o.estado ||
+      "Pendiente",
+
+    notes:
+      o.notes ||
+      o.observaciones ||
+      "",
+
+    delivery:
+      o.delivery ||
+      o.fechaEntrega ||
+      "",
+
+    createdAt:
+      o.createdAt ||
+      dateNow(),
+
+    updatedAt:
+      o.updatedAt ||
+      dateNow()
+
+  };
+
+}
+
+
+
+/* =========================
+   NORMALIZAR BASE
+========================= */
+
+function normalizeDb(data){
+
+  data = data || {};
+
+  var clients =
+    Array.isArray(data.clients)
+      ? data.clients
+      : Array.isArray(data.clientes)
+        ? data.clientes
+        : [];
+
+  var orders =
+    Array.isArray(data.orders)
+      ? data.orders
+      : Array.isArray(data.ordenes)
+        ? data.ordenes
+        : [];
+
+
+  var next =
+    Number(
+      data.next ||
+      data.proximoNumero ||
+      5
+    );
+
+
+  db = {
+
+    clients:clients.map(
+      normalizeClient
+    ),
+
+    orders:orders.map(
+      normalizeOrder
+    ),
+
+    next:next
+
+  };
+
+
+  if(
+    !db.next ||
+    db.next < 5
+  ){
+    db.next = 5;
+  }
+
+}
+
+
+
+/* =========================
+   CARGAR BASE
+========================= */
+
+function loadDb(){
+
+  var raw = null;
+
+  try{
+
+    raw =
+      localStorage.getItem(KEY);
+
+    if(!raw){
+      raw =
+        localStorage.getItem("jurema");
+    }
+
+    if(!raw){
+      raw =
+        localStorage.getItem("jurema_v1");
+    }
+
+    if(!raw){
+      raw =
+        localStorage.getItem("jurema_data");
+    }
+
+
+    if(raw){
+
+      normalizeDb(
+        JSON.parse(raw)
+      );
+
+    }
+
+  }catch(e){
+
+    console.error(e);
+
+    alert(
+      "No se pudieron cargar los datos guardados."
+    );
+
+  }
+
+}
+
+
+
+/* =========================
+   GUARDAR BASE
+========================= */
+
+function persist(){
+
+  try{
+
+    localStorage.setItem(
+      KEY,
+      JSON.stringify(db)
+    );
+
+    return true;
+
+  }catch(e){
+
+    console.error(e);
+
+    alert(
+      "No se pudieron guardar los datos. " +
+      "Es posible que el almacenamiento del teléfono esté lleno."
+    );
+
+    return false;
+
+  }
+
+}
+
+
+
+/* =========================
+   INICIAR
+========================= */
+
+loadDb();
+
+
+
+/* =========================
+   ABRIR PANTALLA
+========================= */
+
+window.openScreen = function(
+  id,
+  push
+){
+
+  if(push === undefined){
+    push = true;
+  }
+
+
+  if(
+    push &&
+    currentScreen !== id
+  ){
+
+    navStack.push(
+      currentScreen
+    );
+
+  }
+
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(function(el){
+
+      el.classList.remove("active");
+
+    });
+
+
+  var target =
+    document.getElementById(id);
+
+
+  if(!target){
     return;
   }
 
-  var html="";
 
-  for(i=0;i<filtrados.length;i++){
+  target.classList.add("active");
 
-    var cliente=filtrados[i];
+  currentScreen = id;
 
-    html+="<div class='card'>";
 
-    html+="<b>"+escapeHTML(cliente.nombre||"")+"</b>";
+  var backBtn =
+    document.getElementById("backBtn");
 
-    if(cliente.telefono){
 
-      html+="<div>📞 "+
-        escapeHTML(cliente.telefono)+
-        "</div>";
-    }
+  if(id === "home"){
 
-    if(cliente.direccion){
+    backBtn.style.display = "none";
 
-      html+="<div>📍 "+
-        escapeHTML(cliente.direccion)+
-        "</div>";
-    }
+  }else{
 
-    html+="<div class='acciones'>";
+    backBtn.style.display = "block";
 
-    html+="<button onclick=\"editarCliente('"+
-      cliente.id+
-      "')\">✏️</button>";
-
-    html+="<button class='danger' onclick=\"eliminarCliente('"+
-      cliente.id+
-      "')\">🗑️</button>";
-
-    html+="</div>";
-
-    html+="</div>";
   }
 
-  cont.innerHTML=html;
+
+  if(id === "clients"){
+    renderClients();
+  }
+
+  if(id === "orders"){
+    renderOrders();
+  }
+
+  if(id === "equipment"){
+    renderEquipment();
+  }
+
+  if(id === "cash"){
+    renderCash();
+  }
+
+
+  if(id === "service"){
+    populateClientSelects();
+
+    if(!editingOrderId){
+      resetService();
+    }
+
+  }
+
+
+  if(id === "mdf"){
+    populateClientSelects();
+
+    if(!editingOrderId){
+      resetMdf();
+    }
+
+  }
+
+};
+
+
+
+/* =========================
+   VOLVER
+========================= */
+
+window.goBack = function(){
+
+  if(navStack.length){
+
+    var previous =
+      navStack.pop();
+
+    openScreen(
+      previous,
+      false
+    );
+
+  }else{
+
+    openScreen(
+      "home",
+      false
+    );
+
+  }
+
+};
+
+
+
+/* =========================
+   CLIENTES SELECT
+========================= */
+
+function populateClientSelects(){
+
+  var selects = [
+    document.getElementById("sClient"),
+    document.getElementById("mClient")
+  ];
+
+
+  selects.forEach(function(select){
+
+    if(!select){
+      return;
+    }
+
+
+    var current =
+      select.value;
+
+
+    select.innerHTML =
+      '<option value="">Seleccionar cliente</option>';
+
+
+    db.clients
+      .slice()
+      .sort(function(a,b){
+
+        return a.name.localeCompare(
+          b.name,
+          "es"
+        );
+
+      })
+      .forEach(function(client){
+
+        var option =
+          document.createElement("option");
+
+        option.value =
+          client.id;
+
+        option.textContent =
+          client.name +
+          (
+            client.phone
+              ? " - " + client.phone
+              : ""
+          );
+
+        select.appendChild(option);
+
+      });
+
+
+    if(current){
+      select.value = current;
+    }
+
+  });
+
 }
+
+
+
+/* =========================
+   CLIENTE SELECCIONADO
+========================= */
+
+document.addEventListener(
+  "change",
+  function(e){
+
+    if(
+      e.target &&
+      (
+        e.target.id === "sClient" ||
+        e.target.id === "mClient"
+      )
+    ){
+
+      var client =
+        db.clients.find(
+          function(c){
+            return c.id === e.target.value;
+          }
+        );
+
+
+      if(!client){
+        return;
+      }
+
+
+      if(e.target.id === "sClient"){
+
+        document.getElementById(
+          "sPhone"
+        ).value =
+          client.phone || "";
+
+        document.getElementById(
+          "sAddress"
+        ).value =
+          client.address || "";
+
+      }
+
+
+      if(e.target.id === "mClient"){
+
+        document.getElementById(
+          "mPhone"
+        ).value =
+          client.phone || "";
+
+        document.getElementById(
+          "mAddress"
+        ).value =
+          client.address || "";
+
+      }
+
+    }
+
+  }
+);
+
+
+
+/* =========================
+   CLIENTE RAPIDO
+========================= */
+
+window.quickClient = function(){
+
+  var name =
+    prompt(
+      "Nombre del cliente:"
+    );
+
+  if(!name){
+    return;
+  }
+
+
+  var phone =
+    prompt(
+      "Teléfono:"
+    ) || "";
+
+
+  var address =
+    prompt(
+      "Dirección:"
+    ) || "";
+
+
+  var client = {
+
+    id:uid(),
+
+    name:name.trim(),
+
+    phone:phone.trim(),
+
+    address:address.trim(),
+
+    notes:"",
+
+    createdAt:dateNow()
+
+  };
+
+
+  db.clients.push(client);
+
+
+  if(!persist()){
+    return;
+  }
+
+
+  populateClientSelects();
+
+
+  var service =
+    document.getElementById("service");
+
+  var mdf =
+    document.getElementById("mdf");
+
+
+  if(
+    service &&
+    service.classList.contains("active")
+  ){
+
+    document.getElementById(
+      "sClient"
+    ).value =
+      client.id;
+
+    document.getElementById(
+      "sPhone"
+    ).value =
+      client.phone;
+
+    document.getElementById(
+      "sAddress"
+    ).value =
+      client.address;
+
+  }else if(
+    mdf &&
+    mdf.classList.contains("active")
+  ){
+
+    document.getElementById(
+      "mClient"
+    ).value =
+      client.id;
+
+    document.getElementById(
+      "mPhone"
+    ).value =
+      client.phone;
+
+    document.getElementById(
+      "mAddress"
+    ).value =
+      client.address;
+
+  }
+
+
+  alert(
+    "Cliente agregado correctamente."
+  );
+
+};
+
+
+
+/* =========================
+   CONTACTOS DEL TELEFONO
+========================= */
+
+function findClientByPhone(phone){
+
+  var clean =
+    String(phone || "")
+      .replace(/\D/g,"");
+
+
+  if(!clean){
+    return null;
+  }
+
+
+  return db.clients.find(
+    function(c){
+
+      var p =
+        String(c.phone || "")
+          .replace(/\D/g,"");
+
+      return p === clean;
+
+    }
+  ) || null;
+
+}
+
+
+window.pickContact = async function(type){
+
+  if(
+    !navigator.contacts ||
+    !navigator.contacts.select
+  ){
+
+    alert(
+      "Tu navegador no permite importar contactos directamente. " +
+      "Podés usar Nuevo cliente para cargarlo manualmente."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    var contacts =
+      await navigator.contacts.select(
+        ["name","tel"],
+        {
+          multiple:false
+        }
+      );
+
+
+    if(
+      !contacts ||
+      !contacts.length
+    ){
+      return;
+    }
+
+
+    var contact =
+      contacts[0];
+
+
+    var name =
+      contact.name &&
+      contact.name.length
+        ? contact.name[0]
+        : "";
+
+
+    var phone =
+      contact.tel &&
+      contact.tel.length
+        ? contact.tel[0]
+        : "";
+
+
+    if(!name && !phone){
+      return;
+    }
+
+
+    var client =
+      findClientByPhone(phone);
+
+
+    if(!client){
+
+      client = {
+
+        id:uid(),
+
+        name:name || "Sin nombre",
+
+        phone:phone || "",
+
+        address:"",
+
+        notes:"",
+
+        createdAt:dateNow()
+
+      };
+
+
+      db.clients.push(client);
+
+
+      if(!persist()){
+        return;
+      }
+
+    }
+
+
+    populateClientSelects();
+
+
+    if(type === "service"){
+
+      document.getElementById(
+        "sClient"
+      ).value =
+        client.id;
+
+      document.getElementById(
+        "sPhone"
+      ).value =
+        client.phone || "";
+
+      document.getElementById(
+        "sAddress"
+      ).value =
+        client.address || "";
+
+    }
+
+
+    if(type === "mdf"){
+
+      document.getElementById(
+        "mClient"
+      ).value =
+        client.id;
+
+      document.getElementById(
+        "mPhone"
+      ).value =
+        client.phone || "";
+
+      document.getElementById(
+        "mAddress"
+      ).value =
+        client.address || "";
+
+    }
+
+  }catch(e){
+
+    console.error(e);
+
+    alert(
+      "No se pudo importar el contacto."
+    );
+
+  }
+
+};
+
+
+
+/* =========================
+   NUEVO CLIENTE
+========================= */
+
+window.newClient = function(){
+
+  document.getElementById(
+    "clientForm"
+  ).style.display =
+    "block";
+
+
+  document.getElementById(
+    "clientFormTitle"
+  ).textContent =
+    "Nuevo cliente";
+
+
+  document.getElementById(
+    "clientId"
+  ).value = "";
+
+
+  document.getElementById(
+    "clientName"
+  ).value = "";
+
+
+  document.getElementById(
+    "clientPhone"
+  ).value = "";
+
+
+  document.getElementById(
+    "clientAddress"
+  ).value = "";
+
+
+  document.getElementById(
+    "clientNotes"
+  ).value = "";
+
+};
+
+
+
+/* =========================
+   CERRAR FORM CLIENTE
+========================= */
+
+window.closeClientForm = function(){
+
+  document.getElementById(
+    "clientForm"
+  ).style.display =
+    "none";
+
+};
+
 
 
 /* =========================
    GUARDAR CLIENTE
 ========================= */
 
-function guardarCliente(){
+window.saveClient = function(){
 
-  var nombre=document.getElementById("nombreCliente").value.trim();
-  var telefono=document.getElementById("telefonoCliente").value.trim();
-  var direccion=document.getElementById("direccionCliente").value.trim();
+  var id =
+    document.getElementById(
+      "clientId"
+    ).value;
 
-  if(!nombre){
 
-    alert("Ingresá el nombre del cliente.");
+  var name =
+    document.getElementById(
+      "clientName"
+    ).value.trim();
+
+
+  var phone =
+    document.getElementById(
+      "clientPhone"
+    ).value.trim();
+
+
+  var address =
+    document.getElementById(
+      "clientAddress"
+    ).value.trim();
+
+
+  var notes =
+    document.getElementById(
+      "clientNotes"
+    ).value.trim();
+
+
+  if(!name){
+
+    alert(
+      "Ingresá el nombre del cliente."
+    );
 
     return;
+
   }
 
-  if(editandoCliente){
 
-    var encontrado=null;
-    var i;
+  if(id){
 
-    for(i=0;i<datos.clientes.length;i++){
+    var existing =
+      db.clients.find(
+        function(c){
+          return c.id === id;
+        }
+      );
 
-      if(String(datos.clientes[i].id)===String(editandoCliente)){
 
-        encontrado=datos.clientes[i];
+    if(existing){
 
-        break;
-      }
+      existing.name =
+        name;
+
+      existing.phone =
+        phone;
+
+      existing.address =
+        address;
+
+      existing.notes =
+        notes;
+
     }
-
-    if(encontrado){
-
-      encontrado.nombre=nombre;
-      encontrado.telefono=telefono;
-      encontrado.direccion=direccion;
-
-      guardarDatos();
-
-      alert("Cliente actualizado.");
-
-    }
-
-    editandoCliente=null;
 
   }else{
 
-    datos.clientes.push({
+    db.clients.push({
 
-      id:String(Date.now()),
+      id:uid(),
 
-      nombre:nombre,
+      name:name,
 
-      telefono:telefono,
+      phone:phone,
 
-      direccion:direccion
+      address:address,
+
+      notes:notes,
+
+      createdAt:dateNow()
 
     });
 
-    guardarDatos();
-
-    alert("Cliente guardado.");
-
   }
 
-  document.getElementById("nombreCliente").value="";
-  document.getElementById("telefonoCliente").value="";
-  document.getElementById("direccionCliente").value="";
 
-  mostrarClientes();
+  if(!persist()){
+    return;
+  }
 
-  actualizarSelectClientes();
-}
+
+  closeClientForm();
+
+  populateClientSelects();
+
+  renderClients();
+
+  alert(
+    "Cliente guardado correctamente."
+  );
+
+};
+
 
 
 /* =========================
    EDITAR CLIENTE
 ========================= */
 
-function editarCliente(id){
+window.editClient = function(id){
 
-  var cliente=null;
-  var i;
+  var client =
+    db.clients.find(
+      function(c){
+        return c.id === id;
+      }
+    );
 
-  for(i=0;i<datos.clientes.length;i++){
 
-    if(String(datos.clientes[i].id)===String(id)){
-
-      cliente=datos.clientes[i];
-
-      break;
-    }
+  if(!client){
+    return;
   }
 
-  if(!cliente) return;
 
-  editandoCliente=cliente.id;
+  document.getElementById(
+    "clientForm"
+  ).style.display =
+    "block";
 
-  document.getElementById("nombreCliente").value=
-    cliente.nombre||"";
 
-  document.getElementById("telefonoCliente").value=
-    cliente.telefono||"";
+  document.getElementById(
+    "clientFormTitle"
+  ).textContent =
+    "Editar cliente";
 
-  document.getElementById("direccionCliente").value=
-    cliente.direccion||"";
 
-  mostrar("clientes");
+  document.getElementById(
+    "clientId"
+  ).value =
+    client.id;
 
-  window.scrollTo(0,0);
-}
+
+  document.getElementById(
+    "clientName"
+  ).value =
+    client.name || "";
+
+
+  document.getElementById(
+    "clientPhone"
+  ).value =
+    client.phone || "";
+
+
+  document.getElementById(
+    "clientAddress"
+  ).value =
+    client.address || "";
+
+
+  document.getElementById(
+    "clientNotes"
+  ).value =
+    client.notes || "";
+
+};
+
 
 
 /* =========================
    ELIMINAR CLIENTE
 ========================= */
 
-function eliminarCliente(id){
+window.deleteClient = function(id){
 
-  var cliente=null;
-  var i;
+  var used =
+    db.orders.some(
+      function(o){
+        return o.clientId === id;
+      }
+    );
 
-  for(i=0;i<datos.clientes.length;i++){
 
-    if(String(datos.clientes[i].id)===String(id)){
+  if(used){
 
-      cliente=datos.clientes[i];
+    alert(
+      "No se puede eliminar este cliente porque tiene órdenes asociadas."
+    );
 
-      break;
-    }
+    return;
+
   }
 
-  if(!cliente) return;
 
-  var confirmar=confirm(
-    "¿Eliminar al cliente "+(cliente.nombre||"")+"?"
-  );
-
-  if(!confirmar) return;
-
-  var nuevaLista=[];
-
-  for(i=0;i<datos.clientes.length;i++){
-
-    if(String(datos.clientes[i].id)!==String(id)){
-
-      nuevaLista.push(datos.clientes[i]);
-
-    }
+  if(
+    !confirm(
+      "¿Eliminar este cliente?"
+    )
+  ){
+    return;
   }
 
-  datos.clientes=nuevaLista;
 
-  guardarDatos();
+  db.clients =
+    db.clients.filter(
+      function(c){
+        return c.id !== id;
+      }
+    );
 
-  mostrarClientes();
 
-  actualizarSelectClientes();
-}
+  if(!persist()){
+    return;
+  }
+
+
+  renderClients();
+
+  populateClientSelects();
+
+};
+
 
 
 /* =========================
-   SELECCIONAR CLIENTE
+   RENDER CLIENTES
 ========================= */
 
-function clienteSeleccionado(){
+window.renderClients = function(){
 
-  var id=document.getElementById("cliente").value;
+  var container =
+    document.getElementById(
+      "clientsList"
+    );
 
-  var cliente=null;
 
-  var i;
-
-  for(i=0;i<datos.clientes.length;i++){
-
-    if(String(datos.clientes[i].id)===String(id)){
-
-      cliente=datos.clientes[i];
-
-      break;
-    }
+  if(!container){
+    return;
   }
 
-  if(!cliente) return;
 
-  document.getElementById("telefono").value=
-    cliente.telefono||"";
+  var q =
+    (
+      document.getElementById(
+        "clientSearch"
+      ).value || ""
+    )
+    .toLowerCase()
+    .trim();
 
-  document.getElementById("direccion").value=
-    cliente.direccion||"";
-}
+
+  var list =
+    db.clients.filter(
+      function(c){
+
+        return (
+          !q ||
+          String(c.name || "")
+            .toLowerCase()
+            .includes(q) ||
+          String(c.phone || "")
+            .toLowerCase()
+            .includes(q) ||
+          String(c.address || "")
+            .toLowerCase()
+            .includes(q)
+        );
+
+      }
+    );
 
 
-function clienteSeleccionadoMDF(){
+  if(!list.length){
 
-  var id=document.getElementById("clienteMDF").value;
+    container.innerHTML =
+      '<div class="card empty">' +
+      'No hay clientes cargados.' +
+      '</div>';
 
-  var cliente=null;
+    return;
 
-  var i;
-
-  for(i=0;i<datos.clientes.length;i++){
-
-    if(String(datos.clientes[i].id)===String(id)){
-
-      cliente=datos.clientes[i];
-
-      break;
-    }
   }
 
-  if(!cliente) return;
 
-  document.getElementById("telefonoMDF").value=
-    cliente.telefono||"";
+  container.innerHTML =
+    list
+      .map(function(c){
 
-  document.getElementById("direccionMDF").value=
-    cliente.direccion||"";
-}
+        var count =
+          db.orders.filter(
+            function(o){
+              return o.clientId === c.id;
+            }
+          ).length;
+
+
+        return (
+
+          '<div class="list-item">' +
+
+            '<div class="list-title">' +
+              esc(c.name) +
+            '</div>' +
+
+            (
+              c.phone
+                ? '<div>📞 ' +
+                  esc(c.phone) +
+                  '</div>'
+                : ''
+            ) +
+
+            (
+              c.address
+                ? '<div>📍 ' +
+                  esc(c.address) +
+                  '</div>'
+                : ''
+            ) +
+
+            '<div class="small">' +
+              count +
+              ' orden(es)' +
+            '</div>' +
+
+            '<div class="actions">' +
+
+              '<button class="info" ' +
+                'onclick="editClient(\'' +
+                c.id +
+                '\')">' +
+                '✏️ Editar' +
+              '</button>' +
+
+              '<button class="danger" ' +
+                'onclick="deleteClient(\'' +
+                c.id +
+                '\')">' +
+                '🗑️ Eliminar' +
+              '</button>' +
+
+            '</div>' +
+
+          '</div>'
+
+        );
+
+      })
+      .join("");
+
+};
+
 
 
 /* =========================
-   COPIA DE SEGURIDAD
+   CALCULAR SERVICIO
 ========================= */
 
-function exportarBackup(){
+window.calcService = function(){
 
-  var copia={
-    version:2,
-    fecha:new Date().toISOString(),
-    datos:datos
-  };
+  var total =
+    Number(
+      document.getElementById(
+        "sTotal"
+      ).value
+    ) || 0;
 
-  var texto=JSON.stringify(copia,null,2);
 
-  var blob=new Blob(
-    [texto],
-    {type:"application/json"}
+  var deposit =
+    Number(
+      document.getElementById(
+        "sDeposit"
+      ).value
+    ) || 0;
+
+
+  var balance =
+    Math.max(
+      0,
+      total - deposit
+    );
+
+
+  document.getElementById(
+    "sBalance"
+  ).textContent =
+    money(balance);
+
+};
+
+
+
+/* =========================
+   RESET SERVICIO
+========================= */
+
+window.resetService = function(){
+
+  editingOrderId = null;
+
+  servicePhotos = [];
+
+
+  document.getElementById(
+    "serviceId"
+  ).value = "";
+
+
+  document.getElementById(
+    "serviceTitle"
+  ).textContent =
+    "Servicio Técnico";
+
+
+  [
+    "sPhone",
+    "sAddress",
+    "sBrand",
+    "sModel",
+    "sSerial",
+    "sProblem",
+    "sCondition",
+    "sAccessories",
+    "sNotes",
+    "sTotal",
+    "sDeposit"
+  ].forEach(function(id){
+
+    var el =
+      document.getElementById(id);
+
+    if(el){
+      el.value = "";
+    }
+
+  });
+
+
+  document.getElementById(
+    "sClient"
+  ).value = "";
+
+
+  document.getElementById(
+    "sStatus"
+  ).value =
+    "Pendiente";
+
+
+  document.getElementById(
+    "sPhotos"
+  ).value = "";
+
+
+  document.getElementById(
+    "sPhotoPreview"
+  ).innerHTML = "";
+
+
+  calcService();
+
+};
+
+
+
+/* =========================
+   COMPRESION DE FOTOS
+========================= */
+
+function resizeImage(file){
+
+  return new Promise(
+    function(resolve,reject){
+
+      var reader =
+        new FileReader();
+
+
+      reader.onload =
+        function(e){
+
+          var img =
+            new Image();
+
+
+          img.onload =
+            function(){
+
+              var max =
+                1280;
+
+              var width =
+                img.width;
+
+              var height =
+                img.height;
+
+
+              if(
+                width > max ||
+                height > max
+              ){
+
+                if(width > height){
+
+                  height =
+                    Math.round(
+                      height *
+                      max /
+                      width
+                    );
+
+                  width = max;
+
+                }else{
+
+                  width =
+                    Math.round(
+                      width *
+                      max /
+                      height
+                    );
+
+                  height = max;
+
+                }
+
+              }
+
+
+              var canvas =
+                document.createElement(
+                  "canvas"
+                );
+
+
+              canvas.width =
+                width;
+
+              canvas.height =
+                height;
+
+
+              var ctx =
+                canvas.getContext(
+                  "2d"
+                );
+
+
+              ctx.drawImage(
+                img,
+                0,
+                0,
+                width,
+                height
+              );
+
+
+              resolve(
+                canvas.toDataURL(
+                  "image/jpeg",
+                  .78
+                )
+              );
+
+            };
+
+
+          img.onerror =
+            reject;
+
+
+          img.src =
+            e.target.result;
+
+        };
+
+
+      reader.onerror =
+        reject;
+
+
+      reader.readAsDataURL(file);
+
+    }
   );
 
-  var url=URL.createObjectURL(blob);
-
-  var enlace=document.createElement("a");
-
-  enlace.href=url;
-
-  enlace.download=
-    "JUREMA_BACKUP_"+
-    fechaArchivo()+
-    ".json";
-
-  document.body.appendChild(enlace);
-
-  enlace.click();
-
-  document.body.removeChild(enlace);
-
-  setTimeout(function(){
-
-    URL.revokeObjectURL(url);
-
-  },1000);
 }
 
 
-function importarBackup(event){
 
-  var archivo=event.target.files[0];
+/* =========================
+   MANEJO DE FOTOS
+========================= */
 
-  if(!archivo) return;
+window.handlePhotos = async function(input){
 
-  var lector=new FileReader();
+  if(
+    !input.files ||
+    !input.files.length
+  ){
+    return;
+  }
 
-  lector.onload=function(e){
 
-    try{
+  try{
 
-      var copia=JSON.parse(e.target.result);
+    for(
+      var i=0;
+      i<input.files.length;
+      i++
+    ){
 
-      var nuevosDatos=null;
+      var data =
+        await resizeImage(
+          input.files[i]
+        );
 
-      if(copia && copia.datos){
+      servicePhotos.push(data);
 
-        nuevosDatos=copia.datos;
+    }
 
-      }else if(copia && copia.ordenes){
 
-        nuevosDatos=copia;
+    renderServicePhotos();
+
+    input.value = "";
+
+  }catch(e){
+
+    console.error(e);
+
+    alert(
+      "No se pudo cargar una de las fotos."
+    );
+
+  }
+
+};
+
+
+
+function renderServicePhotos(){
+
+  var box =
+    document.getElementById(
+      "sPhotoPreview"
+    );
+
+
+  box.innerHTML =
+    servicePhotos
+      .map(function(src,index){
+
+        return (
+
+          '<div style="position:relative">' +
+
+            '<img src="' +
+              src +
+              '">' +
+
+            '<button ' +
+              'type="button" ' +
+              'class="danger" ' +
+              'style="position:absolute;top:4px;right:4px;padding:5px 8px" ' +
+              'onclick="removeServicePhoto(' +
+              index +
+              ')">' +
+              '×' +
+            '</button>' +
+
+          '</div>'
+
+        );
+
+      })
+      .join("");
+
+}
+
+
+
+window.removeServicePhoto = function(index){
+
+  servicePhotos.splice(
+    index,
+    1
+  );
+
+  renderServicePhotos();
+
+};
+
+
+
+/* =========================
+   GUARDAR SERVICIO
+========================= */
+
+window.saveService = function(){
+
+  try{
+
+    var clientId =
+      document.getElementById(
+        "sClient"
+      ).value;
+
+
+    if(!clientId){
+
+      alert(
+        "Seleccioná un cliente."
+      );
+
+      return;
+
+    }
+
+
+    var client =
+      db.clients.find(
+        function(c){
+          return c.id === clientId;
+        }
+      );
+
+
+    var total =
+      Number(
+        document.getElementById(
+          "sTotal"
+        ).value
+      ) || 0;
+
+
+    var deposit =
+      Number(
+        document.getElementById(
+          "sDeposit"
+        ).value
+      ) || 0;
+
+
+    var data = {
+
+      clientId:clientId,
+
+      clientName:
+        client
+          ? client.name
+          : "",
+
+      phone:
+        document.getElementById(
+          "sPhone"
+        ).value.trim(),
+
+      address:
+        document.getElementById(
+          "sAddress"
+        ).value.trim(),
+
+      brand:
+        document.getElementById(
+          "sBrand"
+        ).value.trim(),
+
+      model:
+        document.getElementById(
+          "sModel"
+        ).value.trim(),
+
+      serial:
+        document.getElementById(
+          "sSerial"
+        ).value.trim(),
+
+      problem:
+        document.getElementById(
+          "sProblem"
+        ).value.trim(),
+
+      condition:
+        document.getElementById(
+          "sCondition"
+        ).value.trim(),
+
+      accessories:
+        document.getElementById(
+          "sAccessories"
+        ).value.trim(),
+
+      photos:
+        servicePhotos.slice(),
+
+      total:total,
+
+      deposit:deposit,
+
+      balance:
+        Math.max(
+          0,
+          total - deposit
+        ),
+
+      status:
+        document.getElementById(
+          "sStatus"
+        ).value,
+
+      notes:
+        document.getElementById(
+          "sNotes"
+        ).value.trim(),
+
+      type:"Servicio",
+
+      updatedAt:dateNow()
+
+    };
+
+
+    var existingId =
+      document.getElementById(
+        "serviceId"
+      ).value;
+
+
+    if(existingId){
+
+      var existing =
+        db.orders.find(
+          function(o){
+            return o.id === existingId;
+          }
+        );
+
+
+      if(!existing){
+
+        alert(
+          "No se encontró la orden para editar."
+        );
+
+        return;
 
       }
 
-      if(!nuevosDatos ||
-         !Array.isArray(nuevosDatos.ordenes) ||
-         !Array.isArray(nuevosDatos.clientes)){
 
-        alert("El archivo no parece ser una copia de JUREMA.");
+      Object.keys(data)
+        .forEach(function(key){
 
+          existing[key] =
+            data[key];
+
+        });
+
+
+      existing.updatedAt =
+        dateNow();
+
+
+      if(!persist()){
         return;
       }
 
-      var confirmar=confirm(
-        "La importación reemplazará los datos actuales de JUREMA. ¿Continuar?"
-      );
-
-      if(!confirmar) return;
-
-      datos=nuevosDatos;
-
-      if(!Array.isArray(datos.clientes)){
-        datos.clientes=[];
-      }
-
-      if(!Array.isArray(datos.ordenes)){
-        datos.ordenes=[];
-      }
-
-      guardarDatos();
-
-      actualizarSelectClientes();
-
-      mostrarOrdenes();
-
-      mostrarClientes();
-
-      mostrarEquipos();
-
-      mostrarCaja();
-
-      alert("Copia restaurada correctamente.");
-
-    }catch(error){
 
       alert(
-        "No se pudo leer la copia de seguridad."
+        "Orden actualizada correctamente."
+      );
+
+
+      renderReceipt(
+        existing.id
+      );
+
+
+      return;
+
+    }
+
+
+    var number =
+      db.next;
+
+
+    db.next += 5;
+
+
+    var order = normalizeOrder({
+
+      id:uid(),
+
+      number:number,
+
+      type:"Servicio",
+
+      clientId:data.clientId,
+
+      clientName:data.clientName,
+
+      phone:data.phone,
+
+      address:data.address,
+
+      brand:data.brand,
+
+      model:data.model,
+
+      serial:data.serial,
+
+      problem:data.problem,
+
+      condition:data.condition,
+
+      accessories:data.accessories,
+
+      photos:data.photos,
+
+      total:data.total,
+
+      deposit:data.deposit,
+
+      balance:data.balance,
+
+      status:data.status,
+
+      notes:data.notes,
+
+      createdAt:dateNow(),
+
+      updatedAt:dateNow()
+
+    });
+
+
+    db.orders.push(order);
+
+
+    if(!persist()){
+      return;
+    }
+
+
+    alert(
+      "Orden " +
+      formatOrderNumber(number) +
+      " guardada correctamente."
+    );
+
+
+    renderReceipt(
+      order.id
+    );
+
+  }catch(e){
+
+    console.error(e);
+
+    alert(
+      "Ocurrió un error al guardar la orden."
+    );
+
+  }
+
+};
+
+
+
+function formatOrderNumber(number){
+
+  var n =
+    Number(number) || 0;
+
+  return String(n)
+    .padStart(5,"0");
+
+}
+
+
+
+/* =========================
+   INICIO DE MDF
+========================= */
+
+function ensureMdfItems(){
+
+  var box =
+    document.getElementById(
+      "mdfItems"
+    );
+
+
+  if(
+    !box.children.length
+  ){
+
+    addMdfItem();
+
+  }
+
+}
+
+
+
+/* =========================
+   AGREGAR ITEM MDF
+========================= */
+
+window.addMdfItem = function(
+  item
+){
+
+  var box =
+    document.getElementById(
+      "mdfItems"
+    );
+
+
+  item =
+    item || {
+
+      id:uid(),
+
+      description:"",
+
+      qty:1,
+
+      price:0
+
+    };
+
+
+  var div =
+    document.createElement(
+      "div"
+    );
+
+
+  div.className =
+    "item-line";
+
+
+  div.dataset.id =
+    item.id;
+
+
+  div.innerHTML =
+
+    '<label>Produto / Descripción</label>' +
+
+    '<input ' +
+      'class="mdf-desc" ' +
+      'value="' +
+      esc(item.description) +
+      '">' +
+
+    '<div class="row">' +
+
+      '<div>' +
+
+        '<label>Cantidad</label>' +
+
+        '<input ' +
+          'class="mdf-qty" ' +
+          'type="number" ' +
+          'min="1" ' +
+          'step="1" ' +
+          'value="' +
+          Number(item.qty || 1) +
+          '" ' +
+          'oninput="calcMdf()">' +
+
+      '</div>' +
+
+      '<div>' +
+
+        '<label>Precio unitario</label>' +
+
+        '<input ' +
+          'class="mdf-price" ' +
+          'type="number" ' +
+          'min="0" ' +
+          'step="0.01" ' +
+          'value="' +
+          Number(item.price || 0) +
+          '" ' +
+          'oninput="calcMdf()">' +
+
+      '</div>' +
+
+    '</div>' +
+
+    '<div class="small mdf-subtotal">' +
+      'Subtotal: ' +
+      money(
+        Number(item.qty || 1) *
+        Number(item.price || 0)
+      ) +
+    '</div>' +
+
+    '<button ' +
+      'type="button" ' +
+      'class="danger" ' +
+      'style="margin-top:8px;width:100%" ' +
+      'onclick="removeMdfItem(this)">' +
+      '🗑️ Quitar producto' +
+    '</button>';
+
+
+  box.appendChild(div);
+
+  calcMdf();
+
+};
+
+
+
+/* =========================
+   ELIMINAR ITEM MDF
+========================= */
+
+window.removeMdfItem = function(button){
+
+  var item =
+    button.closest(
+      ".item-line"
+    );
+
+
+  if(item){
+
+    item.remove();
+
+  }
+
+
+  if(
+    !document.getElementById(
+      "mdfItems"
+    ).children.length
+  ){
+
+    addMdfItem();
+
+  }
+
+
+  calcMdf();
+
+};
+
+
+
+/* =========================
+   LEER ITEMS MDF
+========================= */
+
+function getMdfItems(){
+
+  var result = [];
+
+
+  document
+    .querySelectorAll(
+      "#mdfItems .item-line"
+    )
+    .forEach(function(row){
+
+      var desc =
+        row.querySelector(
+          ".mdf-desc"
+        ).value.trim();
+
+
+      var qty =
+        Number(
+          row.querySelector(
+            ".mdf-qty"
+          ).value
+        ) || 0;
+
+
+      var price =
+        Number(
+          row.querySelector(
+            ".mdf-price"
+          ).value
+        ) || 0;
+
+
+      result.push({
+
+        id:
+          row.dataset.id ||
+          uid(),
+
+        description:desc,
+
+        qty:qty,
+
+        price:price
+
+      });
+
+    });
+
+
+  return result;
+
+};
+
+
+
+/* =========================
+   CALCULAR MDF
+========================= */
+
+window.calcMdf = function(){
+
+  var rows =
+    document.querySelectorAll(
+      "#mdfItems .item-line"
+    );
+
+
+  var total = 0;
+
+
+  rows.forEach(function(row){
+
+    var qty =
+      Number(
+        row.querySelector(
+          ".mdf-qty"
+        ).value
+      ) || 0;
+
+
+    var price =
+      Number(
+        row.querySelector(
+          ".mdf-price"
+        ).value
+      ) || 0;
+
+
+    var subtotal =
+      qty * price;
+
+
+    total += subtotal;
+
+
+    var sub =
+      row.querySelector(
+        ".mdf-subtotal"
+      );
+
+
+    if(sub){
+
+      sub.textContent =
+        "Subtotal: " +
+        money(subtotal);
+
+    }
+
+  });
+
+
+  var deposit =
+    Number(
+      document.getElementById(
+        "mDeposit"
+      ).value
+    ) || 0;
+
+
+  var balance =
+    Math.max(
+      0,
+      total - deposit
+    );
+
+
+  document.getElementById(
+    "mTotal"
+  ).textContent =
+    money(total);
+
+
+  document.getElementById(
+    "mBalance"
+  ).textContent =
+    money(balance);
+
+};
+
+
+
+/* =========================
+   RESET MDF
+========================= */
+
+window.resetMdf = function(){
+
+  editingOrderId = null;
+
+
+  document.getElementById(
+    "mdfId"
+  ).value = "";
+
+
+  document.getElementById(
+    "mdfTitle"
+  ).textContent =
+    "Pedido MDF";
+
+
+  document.getElementById(
+    "mClient"
+  ).value = "";
+
+
+  document.getElementById(
+    "mPhone"
+  ).value = "";
+
+
+  document.getElementById(
+    "mAddress"
+  ).value = "";
+
+
+  document.getElementById(
+    "mDeposit"
+  ).value = "";
+
+
+  document.getElementById(
+    "mDelivery"
+  ).value = "";
+
+
+  document.getElementById(
+    "mStatus"
+  ).value =
+    "Pendiente";
+
+
+  document.getElementById(
+    "mNotes"
+  ).value = "";
+
+
+  document.getElementById(
+    "mdfItems"
+  ).innerHTML = "";
+
+
+  addMdfItem();
+
+  calcMdf();
+
+};
+
+
+
+/* =========================
+   GUARDAR MDF
+========================= */
+
+window.saveMdf = function(){
+
+  try{
+
+    var clientId =
+      document.getElementById(
+        "mClient"
+      ).value;
+
+
+    if(!clientId){
+
+      alert(
+        "Seleccioná un cliente."
+      );
+
+      return;
+
+    }
+
+
+    var client =
+      db.clients.find(
+        function(c){
+          return c.id === clientId;
+        }
+      );
+
+
+    var items =
+      getMdfItems();
+
+
+    items =
+      items.filter(
+        function(item){
+
+          return (
+            item.description ||
+            item.qty ||
+            item.price
+          );
+
+        }
+      );
+
+
+    if(!items.length){
+
+      alert(
+        "Agregá al menos un producto."
+      );
+
+      return;
+
+    }
+
+
+    var total =
+      items.reduce(
+        function(sum,item){
+
+          return sum +
+            (
+              Number(item.qty) *
+              Number(item.price)
+            );
+
+        },
+        0
+      );
+
+
+    var deposit =
+      Number(
+        document.getElementById(
+          "mDeposit"
+        ).value
+      ) || 0;
+
+
+    var data = {
+
+      type:"MDF",
+
+      clientId:clientId,
+
+      clientName:
+        client
+          ? client.name
+          : "",
+
+      phone:
+        document.getElementById(
+          "mPhone"
+        ).value.trim(),
+
+      address:
+        document.getElementById(
+          "mAddress"
+        ).value.trim(),
+
+      items:items,
+
+      total:total,
+
+      deposit:deposit,
+
+      balance:
+        Math.max(
+          0,
+          total - deposit
+        ),
+
+      delivery:
+        document.getElementById(
+          "mDelivery"
+        ).value,
+
+      status:
+        document.getElementById(
+          "mStatus"
+        ).value,
+
+      notes:
+        document.getElementById(
+          "mNotes"
+        ).value.trim(),
+
+      updatedAt:dateNow()
+
+    };
+
+
+    var existingId =
+      document.getElementById(
+        "mdfId"
+      ).value;
+
+
+    if(existingId){
+
+      var existing =
+        db.orders.find(
+          function(o){
+            return o.id === existingId;
+          }
+        );
+
+
+      if(!existing){
+
+        alert(
+          "No se encontró el pedido para editar."
+        );
+
+        return;
+
+      }
+
+
+      Object.keys(data)
+        .forEach(function(key){
+
+          existing[key] =
+            data[key];
+
+        });
+
+
+      existing.updatedAt =
+        dateNow();
+
+
+      if(!persist()){
+        return;
+      }
+
+
+      alert(
+        "Pedido MDF actualizado correctamente."
+      );
+
+
+      renderReceipt(
+        existing.id
+      );
+
+
+      return;
+
+    }
+
+
+    var number =
+      db.next;
+
+
+    db.next += 5;
+
+
+    var order =
+      normalizeOrder({
+
+        id:uid(),
+
+        number:number,
+
+        type:"MDF",
+
+        clientId:data.clientId,
+
+        clientName:data.clientName,
+
+        phone:data.phone,
+
+        address:data.address,
+
+        items:data.items,
+
+        total:data.total,
+
+        deposit:data.deposit,
+
+        balance:data.balance,
+
+        delivery:data.delivery,
+
+        status:data.status,
+
+        notes:data.notes,
+
+        createdAt:dateNow(),
+
+        updatedAt:dateNow()
+
+      });
+
+
+    db.orders.push(order);
+
+
+    if(!persist()){
+      return;
+    }
+
+
+    alert(
+      "Pedido " +
+      formatOrderNumber(number) +
+      " guardado correctamente."
+    );
+
+
+    renderReceipt(
+      order.id
+    );
+
+  }catch(e){
+
+    console.error(e);
+
+    alert(
+      "Ocurrió un error al guardar el pedido MDF."
+    );
+
+  }
+
+};
+
+
+
+/* =========================
+   EDITAR ORDEN
+========================= */
+
+window.editOrder = function(id){
+
+  var order =
+    db.orders.find(
+      function(o){
+        return o.id === id;
+      }
+    );
+
+
+  if(!order){
+    return;
+  }
+
+
+  editingOrderId =
+    order.id;
+
+
+  navStack.push(
+    "orders"
+  );
+
+
+  if(order.type === "Servicio"){
+
+    openScreen(
+      "service",
+      false
+    );
+
+
+    document.getElementById(
+      "serviceId"
+    ).value =
+      order.id;
+
+
+    document.getElementById(
+      "serviceTitle"
+    ).textContent =
+      "Editar Servicio " +
+      formatOrderNumber(order.number);
+
+
+    populateClientSelects();
+
+
+    document.getElementById(
+      "sClient"
+    ).value =
+      order.clientId || "";
+
+
+    document.getElementById(
+      "sPhone"
+    ).value =
+      order.phone || "";
+
+
+    document.getElementById(
+      "sAddress"
+    ).value =
+      order.address || "";
+
+
+    document.getElementById(
+      "sBrand"
+    ).value =
+      order.brand || "";
+
+
+    document.getElementById(
+      "sModel"
+    ).value =
+      order.model || "";
+
+
+    document.getElementById(
+      "sSerial"
+    ).value =
+      order.serial || "";
+
+
+    document.getElementById(
+      "sProblem"
+    ).value =
+      order.problem || "";
+
+
+    document.getElementById(
+      "sCondition"
+    ).value =
+      order.condition || "";
+
+
+    document.getElementById(
+      "sAccessories"
+    ).value =
+      order.accessories || "";
+
+
+    document.getElementById(
+      "sTotal"
+    ).value =
+      order.total || "";
+
+
+    document.getElementById(
+      "sDeposit"
+    ).value =
+      order.deposit || "";
+
+
+    document.getElementById(
+      "sStatus"
+    ).value =
+      order.status || "Pendiente";
+
+
+    document.getElementById(
+      "sNotes"
+    ).value =
+      order.notes || "";
+
+
+    servicePhotos =
+      Array.isArray(order.photos)
+        ? order.photos.slice()
+        : [];
+
+
+    renderServicePhotos();
+
+    calcService();
+
+  }else{
+
+    openScreen(
+      "mdf",
+      false
+    );
+
+
+    document.getElementById(
+      "mdfId"
+    ).value =
+      order.id;
+
+
+    document.getElementById(
+      "mdfTitle"
+    ).textContent =
+      "Editar Pedido " +
+      formatOrderNumber(order.number);
+
+
+    populateClientSelects();
+
+
+    document.getElementById(
+      "mClient"
+    ).value =
+      order.clientId || "";
+
+
+    document.getElementById(
+      "mPhone"
+    ).value =
+      order.phone || "";
+
+
+    document.getElementById(
+      "mAddress"
+    ).value =
+      order.address || "";
+
+
+    document.getElementById(
+      "mDeposit"
+    ).value =
+      order.deposit || "";
+
+
+    document.getElementById(
+      "mDelivery"
+    ).value =
+      order.delivery || "";
+
+
+    document.getElementById(
+      "mStatus"
+    ).value =
+      order.status || "Pendiente";
+
+
+    document.getElementById(
+      "mNotes"
+    ).value =
+      order.notes || "";
+
+
+    document.getElementById(
+      "mdfItems"
+    ).innerHTML = "";
+
+
+    if(
+      order.items &&
+      order.items.length
+    ){
+
+      order.items.forEach(
+        function(item){
+
+          addMdfItem(item);
+
+        }
+      );
+
+    }else{
+
+      addMdfItem();
+
+    }
+
+
+    calcMdf();
+
+  }
+
+};
+
+
+
+/* =========================
+   ELIMINAR ORDEN
+========================= */
+
+window.deleteOrder = function(id){
+
+  var order =
+    db.orders.find(
+      function(o){
+        return o.id === id;
+      }
+    );
+
+
+  if(!order){
+    return;
+  }
+
+
+  if(
+    !confirm(
+      "¿Eliminar la orden " +
+      formatOrderNumber(order.number) +
+      "?"
+    )
+  ){
+    return;
+  }
+
+
+  db.orders =
+    db.orders.filter(
+      function(o){
+        return o.id !== id;
+      }
+    );
+
+
+  if(!persist()){
+    return;
+  }
+
+
+  renderOrders();
+
+};
+
+
+
+/* =========================
+   RENDER ORDENES
+========================= */
+
+window.renderOrders = function(){
+
+  var container =
+    document.getElementById(
+      "ordersList"
+    );
+
+
+  if(!container){
+    return;
+  }
+
+
+  var q =
+    (
+      document.getElementById(
+        "orderSearch"
+      ).value || ""
+    )
+    .toLowerCase()
+    .trim();
+
+
+  var statusFilter =
+    document.getElementById(
+      "orderStatusFilter"
+    ).value;
+
+
+  var typeFilter =
+    document.getElementById(
+      "orderTypeFilter"
+    ).value;
+
+
+  var list =
+    db.orders
+      .slice()
+      .sort(
+        function(a,b){
+
+          return (
+            Number(b.number || 0) -
+            Number(a.number || 0)
+          );
+
+        }
+      );
+
+
+  list =
+    list.filter(
+      function(o){
+
+        var client =
+          db.clients.find(
+            function(c){
+              return c.id === o.clientId;
+            }
+          );
+
+
+        var text = (
+
+          String(
+            o.number || ""
+          ) +
+
+          " " +
+
+          String(
+            o.clientName || ""
+          ) +
+
+          " " +
+
+          String(
+            o.brand || ""
+          ) +
+
+          " " +
+
+          String(
+            o.model || ""
+          ) +
+
+          " " +
+
+          String(
+            o.serial || ""
+          ) +
+
+          " " +
+
+          String(
+            o.problem || ""
+          ) +
+
+          " " +
+
+          String(
+            client
+              ? client.name
+              : ""
+          )
+
+        )
+        .toLowerCase();
+
+
+        if(
+          q &&
+          !text.includes(q)
+        ){
+          return false;
+        }
+
+
+        if(
+          typeFilter !== "Todas" &&
+          o.type !== typeFilter
+        ){
+          return false;
+        }
+
+
+        if(
+          statusFilter === "Pendientes" &&
+          (
+            o.status === "Entregado" ||
+            o.status === "Listo"
+          )
+        ){
+          return false;
+        }
+
+
+        if(
+          statusFilter === "Terminadas" &&
+          o.status !== "Listo"
+        ){
+          return false;
+        }
+
+
+        if(
+          statusFilter === "Entregadas" &&
+          o.status !== "Entregado"
+        ){
+          return false;
+        }
+
+
+        return true;
+
+      }
+    );
+
+
+  if(!list.length){
+
+    container.innerHTML =
+      '<div class="card empty">' +
+      'No hay órdenes para mostrar.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    list
+      .map(function(o){
+
+        var typeIcon =
+          o.type === "MDF"
+            ? "🪵"
+            : "🔧";
+
+
+        var details = "";
+
+
+        if(o.type === "Servicio"){
+
+          details =
+            (
+              o.brand ||
+              o.model
+            )
+              ? "<div>" +
+                esc(
+                  [
+                    o.brand,
+                    o.model
+                  ]
+                  .filter(Boolean)
+                  .join(" ")
+                ) +
+                "</div>"
+              : "";
+
+
+          if(o.serial){
+
+            details +=
+              "<div>Serie: " +
+              esc(o.serial) +
+              "</div>";
+
+          }
+
+        }else{
+
+          details =
+            "<div>" +
+            (
+              o.items || []
+            )
+            .map(function(item){
+
+              return (
+                esc(
+                  item.description
+                ) +
+                " × " +
+                Number(
+                  item.qty
+                )
+              );
+
+            })
+            .join("<br>") +
+            "</div>";
+
+        }
+
+
+        return (
+
+          '<div class="list-item">' +
+
+            '<div class="list-title">' +
+              typeIcon +
+              " Orden " +
+              formatOrderNumber(
+                o.number
+              ) +
+            '</div>' +
+
+            '<div>' +
+              esc(
+                o.clientName ||
+                "Sin cliente"
+              ) +
+            '</div>' +
+
+            details +
+
+            '<span class="badge">' +
+              esc(
+                o.status
+              ) +
+            '</span>' +
+
+            '<div style="margin-top:8px">' +
+
+              '<b>Total:</b> ' +
+              money(o.total) +
+
+              ' &nbsp; ' +
+
+              '<b>Saldo:</b> ' +
+              money(o.balance) +
+
+            '</div>' +
+
+            '<div class="small">' +
+              dateText(
+                o.createdAt
+              ) +
+            '</div>' +
+
+            '<div class="actions">' +
+
+              '<button class="info" ' +
+                'onclick="renderReceipt(\'' +
+                o.id +
+                '\')">' +
+                '👁️ Ver' +
+              '</button>' +
+
+              '<button class="secondary" ' +
+                'onclick="editOrder(\'' +
+                o.id +
+                '\')">' +
+                '✏️ Editar' +
+              '</button>' +
+
+              '<button class="danger" ' +
+                'onclick="deleteOrder(\'' +
+                o.id +
+                '\')">' +
+                '🗑️ Eliminar' +
+              '</button>' +
+
+            '</div>' +
+
+          '</div>'
+
+        );
+
+      })
+      .join("");
+
+};
+
+
+
+/* =========================
+   CAMBIAR ESTADO DESDE ORDEN
+========================= */
+
+window.changeOrderStatus = function(
+  id,
+  status
+){
+
+  var order =
+    db.orders.find(
+      function(o){
+        return o.id === id;
+      }
+    );
+
+
+  if(!order){
+    return;
+  }
+
+
+  order.status =
+    status;
+
+
+  order.updatedAt =
+    dateNow();
+
+
+  persist();
+
+  renderOrders();
+
+};
+
+
+
+/* =========================
+   EQUIPOS
+========================= */
+
+window.renderEquipment = function(){
+
+  var container =
+    document.getElementById(
+      "equipmentList"
+    );
+
+
+  if(!container){
+    return;
+  }
+
+
+  var q =
+    (
+      document.getElementById(
+        "equipmentSearch"
+      ).value || ""
+    )
+    .toLowerCase()
+    .trim();
+
+
+  var list =
+    db.orders.filter(
+      function(o){
+
+        return (
+          o.type === "Servicio"
+        );
+
+      }
+    );
+
+
+  list =
+    list.filter(
+      function(o){
+
+        var text = (
+
+          String(o.brand || "") +
+          " " +
+          String(o.model || "") +
+          " " +
+          String(o.serial || "") +
+          " " +
+          String(o.clientName || "")
+
+        ).toLowerCase();
+
+
+        return (
+          !q ||
+          text.includes(q)
+        );
+
+      }
+    );
+
+
+  if(!list.length){
+
+    container.innerHTML =
+      '<div class="card empty">' +
+      'No hay equipos registrados.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    list
+      .map(function(o){
+
+        return (
+
+          '<div class="list-item">' +
+
+            '<div class="list-title">' +
+              esc(
+                (
+                  o.brand ||
+                  ""
+                ) +
+                " " +
+                (
+                  o.model ||
+                  ""
+                )
+              ) +
+            '</div>' +
+
+            (
+              o.serial
+                ? '<div>Serie: ' +
+                  esc(o.serial) +
+                  '</div>'
+                : ''
+            ) +
+
+            '<div>Cliente: ' +
+              esc(
+                o.clientName ||
+                ""
+              ) +
+            '</div>' +
+
+            (
+              o.phone
+                ? '<div>📞 ' +
+                  esc(o.phone) +
+                  '</div>'
+                : ''
+            ) +
+
+            '<span class="badge">' +
+              esc(o.status) +
+            '</span>' +
+
+            '<div class="small" style="margin-top:7px">' +
+              'Orden ' +
+              formatOrderNumber(
+                o.number
+              ) +
+              ' · ' +
+              dateText(
+                o.createdAt
+              ) +
+            '</div>' +
+
+            '<div class="actions">' +
+
+              '<button class="info" ' +
+                'onclick="renderReceipt(\'' +
+                o.id +
+                '\')">' +
+                'Ver orden' +
+              '</button>' +
+
+            '</div>' +
+
+          '</div>'
+
+        );
+
+      })
+      .join("");
+
+};
+
+
+
+/* =========================
+   CAJA
+========================= */
+
+window.renderCash = function(){
+
+  var container =
+    document.getElementById(
+      "cashContent"
+    );
+
+
+  if(!container){
+    return;
+  }
+
+
+  var serviceDeposits =
+    db.orders
+      .filter(function(o){
+
+        return o.type === "Servicio";
+
+      })
+      .reduce(function(sum,o){
+
+        return sum +
+          Number(
+            o.deposit || 0
+          );
+
+      },0);
+
+
+  var mdfDeposits =
+    db.orders
+      .filter(function(o){
+
+        return o.type === "MDF";
+
+      })
+      .reduce(function(sum,o){
+
+        return sum +
+          Number(
+            o.deposit || 0
+          );
+
+      },0);
+
+
+  var total =
+    serviceDeposits +
+    mdfDeposits;
+
+
+  var totalVentas =
+    db.orders.reduce(
+      function(sum,o){
+
+        return sum +
+          Number(
+            o.total || 0
+          );
+
+      },
+      0
+    );
+
+
+  var saldoPendiente =
+    db.orders.reduce(
+      function(sum,o){
+
+        return sum +
+          Number(
+            o.balance || 0
+          );
+
+      },
+      0
+    );
+
+
+  container.innerHTML =
+
+    '<div class="card">' +
+
+      '<h3>Ingresos por Servicio Técnico</h3>' +
+
+      '<div class="total">' +
+        money(serviceDeposits) +
+      '</div>' +
+
+    '</div>' +
+
+
+    '<div class="card">' +
+
+      '<h3>Ingresos por Pedidos MDF</h3>' +
+
+      '<div class="total">' +
+        money(mdfDeposits) +
+      '</div>' +
+
+    '</div>' +
+
+
+    '<div class="card">' +
+
+      '<h3>Total ingresado</h3>' +
+
+      '<div class="total">' +
+        money(total) +
+      '</div>' +
+
+    '</div>' +
+
+
+    '<div class="card">' +
+
+      '<h3>Total de órdenes</h3>' +
+
+      '<div class="total">' +
+        money(totalVentas) +
+      '</div>' +
+
+      '<div class="small">' +
+        'Valor total de trabajos registrados' +
+      '</div>' +
+
+    '</div>' +
+
+
+    '<div class="card">' +
+
+      '<h3>Saldo pendiente de cobrar</h3>' +
+
+      '<div class="balance">' +
+        money(saldoPendiente) +
+      '</div>' +
+
+    '</div>';
+
+};
+
+
+
+/* =========================
+   COMPROBANTE
+========================= */
+
+window.renderReceipt = function(id){
+
+  var order =
+    db.orders.find(
+      function(o){
+        return o.id === id;
+      }
+    );
+
+
+  if(!order){
+    return;
+  }
+
+
+  var client =
+    db.clients.find(
+      function(c){
+        return c.id === order.clientId;
+      }
+    );
+
+
+  var html =
+
+    '<div class="no-print actions">' +
+
+      '<button class="secondary" ' +
+        'onclick="goBack()">' +
+        '← Volver' +
+      '</button>' +
+
+      '<button class="primary" ' +
+        'onclick="window.print()">' +
+        '🖨️ Imprimir' +
+      '</button>' +
+
+      '<button class="success" ' +
+        'onclick="shareReceipt(\'' +
+        order.id +
+        '\')">' +
+        '📤 Compartir' +
+      '</button>' +
+
+      (
+        order.photos &&
+        order.photos.length
+          ? '<button class="info" ' +
+              'onclick="sharePhotos(\'' +
+              order.id +
+              '\')">' +
+              '📷 Compartir fotos' +
+            '</button>'
+          : ''
+      ) +
+
+    '</div>' +
+
+
+    '<div style="text-align:center">' +
+
+      '<h2>JUREMA</h2>' +
+
+      '<div class="small">' +
+        'Servicio Técnico / MDF' +
+      '</div>' +
+
+    '</div>' +
+
+    '<hr>' +
+
+
+    '<h3>' +
+
+      (
+        order.type === "MDF"
+          ? "PEDIDO MDF"
+          : "SERVICIO TÉCNICO"
+      ) +
+
+    '</h3>' +
+
+
+    '<p><b>Orden:</b> ' +
+      formatOrderNumber(
+        order.number
+      ) +
+    '</p>' +
+
+
+    '<p><b>Fecha:</b> ' +
+      dateText(
+        order.createdAt
+      ) +
+    '</p>' +
+
+
+    '<hr>' +
+
+
+    '<p><b>Cliente:</b> ' +
+      esc(
+        order.clientName ||
+        (
+          client
+            ? client.name
+            : ""
+        )
+      ) +
+    '</p>' +
+
+
+    (
+      order.phone
+        ? '<p><b>Teléfono:</b> ' +
+          esc(order.phone) +
+          '</p>'
+        : ''
+    ) +
+
+
+    (
+      order.address
+        ? '<p><b>Dirección:</b> ' +
+          esc(order.address) +
+          '</p>'
+        : ''
+    );
+
+
+  if(order.type === "Servicio"){
+
+    html +=
+
+      '<hr>' +
+
+      '<p><b>Equipo:</b> ' +
+        esc(
+          [
+            order.brand,
+            order.model
+          ]
+          .filter(Boolean)
+          .join(" ")
+        ) +
+      '</p>' +
+
+
+      (
+        order.serial
+          ? '<p><b>N° Serie:</b> ' +
+            esc(order.serial) +
+            '</p>'
+          : ''
+      ) +
+
+
+      (
+        order.problem
+          ? '<p><b>Problema:</b><br>' +
+            esc(order.problem) +
+            '</p>'
+          : ''
+      ) +
+
+
+      (
+        order.condition
+          ? '<p><b>Estado exterior:</b><br>' +
+            esc(order.condition) +
+            '</p>'
+          : ''
+      ) +
+
+
+      (
+        order.accessories
+          ? '<p><b>Accesorios:</b><br>' +
+            esc(order.accessories) +
+            '</p>'
+          : ''
+      );
+
+  }else{
+
+    html +=
+
+      '<hr>' +
+
+      '<h3>Productos</h3>' +
+
+      (
+        order.items || []
+      )
+      .map(function(item){
+
+        return (
+
+          '<p>' +
+
+            esc(
+              item.description
+            ) +
+
+            '<br>' +
+
+            Number(item.qty) +
+            ' × ' +
+            money(item.price) +
+
+            ' = <b>' +
+            money(
+              Number(item.qty) *
+              Number(item.price)
+            ) +
+            '</b>' +
+
+          '</p>'
+
+        );
+
+      })
+      .join("");
+
+  }
+
+
+  html +=
+
+    '<hr>' +
+
+    '<p><b>Total:</b> ' +
+      money(order.total) +
+    '</p>' +
+
+    '<p><b>Seña / Pagado:</b> ' +
+      money(order.deposit) +
+    '</p>' +
+
+    '<p><b>Saldo:</b> ' +
+      money(order.balance) +
+    '</p>' +
+
+    '<p><b>Estado:</b> ' +
+      esc(order.status) +
+    '</p>' +
+
+
+    (
+      order.delivery
+        ? '<p><b>Entrega:</b> ' +
+          dateText(order.delivery) +
+          '</p>'
+        : ''
+    ) +
+
+
+    (
+      order.notes
+        ? '<hr><p><b>Observaciones:</b><br>' +
+          esc(order.notes) +
+          '</p>'
+        : ''
+    ) +
+
+
+    (
+      order.photos &&
+      order.photos.length
+        ? '<hr>' +
+          '<h3>Fotos</h3>' +
+          '<div class="photo-grid">' +
+          order.photos
+            .map(function(src){
+
+              return (
+                '<img src="' +
+                src +
+                '">'
+              );
+
+            })
+            .join("") +
+          '</div>'
+        : ''
+    );
+
+
+  document.getElementById(
+    "resultContent"
+  ).innerHTML =
+    html;
+
+
+  openScreen(
+    "resultScreen",
+    true
+  );
+
+};
+
+
+
+/* =========================
+   COMPARTIR COMPROBANTE
+========================= */
+
+window.shareReceipt = async function(id){
+
+  var order =
+    db.orders.find(
+      function(o){
+        return o.id === id;
+      }
+    );
+
+
+  if(!order){
+    return;
+  }
+
+
+  var text =
+
+    "JUREMA\n" +
+
+    (
+      order.type === "MDF"
+        ? "Pedido MDF"
+        : "Servicio Técnico"
+    ) +
+
+    "\nOrden: " +
+    formatOrderNumber(
+      order.number
+    ) +
+
+    "\nCliente: " +
+    (
+      order.clientName ||
+      ""
+    ) +
+
+    "\nTotal: " +
+    money(order.total) +
+
+    "\nPagado: " +
+    money(order.deposit) +
+
+    "\nSaldo: " +
+    money(order.balance) +
+
+    "\nEstado: " +
+    (
+      order.status ||
+      ""
+    );
+
+
+  try{
+
+    if(
+      navigator.share
+    ){
+
+      await navigator.share({
+        title:
+          "JUREMA - Orden " +
+          formatOrderNumber(
+            order.number
+          ),
+        text:text
+      });
+
+    }else{
+
+      await navigator.clipboard.writeText(
+        text
+      );
+
+      alert(
+        "El comprobante fue copiado."
       );
 
     }
 
-  };
+  }catch(e){
 
-  lector.readAsText(archivo);
+    console.log(e);
 
-  event.target.value="";
-}
+  }
 
+};
 
-function fechaArchivo(){
-
-  var d=new Date();
-
-  var y=d.getFullYear();
-
-  var m=String(d.getMonth()+1);
-
-  if(m.length<2) m="0"+m;
-
-  var dia=String(d.getDate());
-
-  if(dia.length<2) dia="0"+dia;
-
-  return y+"-"+m+"-"+dia;
-}
 
 
 /* =========================
    COMPARTIR FOTOS
 ========================= */
 
-function compartirFotos(id){
+window.sharePhotos = async function(id){
 
-  var o=buscarOrden(id);
+  var order =
+    db.orders.find(
+      function(o){
+        return o.id === id;
+      }
+    );
 
-  if(!o){
 
-    alert("No se encontró la orden.");
-
+  if(
+    !order ||
+    !order.photos ||
+    !order.photos.length
+  ){
     return;
   }
 
-  if(!o.fotos || o.fotos.length===0){
 
-    alert("Esta orden no tiene fotos.");
-
-    return;
-  }
-
-  if(!navigator.share){
+  if(
+    !navigator.share ||
+    !navigator.canShare
+  ){
 
     alert(
-      "Tu navegador no permite compartir archivos directamente."
+      "Tu navegador no permite compartir fotos directamente."
     );
 
     return;
+
   }
 
-  var archivos=[];
-
-  var pendientes=o.fotos.length;
-
-  var terminadas=0;
-
-  for(var i=0;i<o.fotos.length;i++){
-
-    convertirFotoAArchivo(
-      o.fotos[i],
-      "foto_"+o.id+"_"+(i+1)+".jpg",
-      function(archivo){
-
-        if(archivo){
-
-          archivos.push(archivo);
-
-        }
-
-        terminadas++;
-
-        if(terminadas===pendientes){
-
-          compartirArchivos(
-            archivos,
-            o
-          );
-
-        }
-
-      }
-    );
-  }
-}
-
-
-function convertirFotoAArchivo(dataURL,nombre,callback){
 
   try{
 
-    var partes=dataURL.split(",");
+    var files = [];
 
-    var mime="image/jpeg";
 
-    if(partes[0].indexOf("image/")!==-1){
+    for(
+      var i=0;
+      i<order.photos.length;
+      i++
+    ){
 
-      var encontrado=
-        partes[0].match(/data:(image\/[^;]+)/);
+      var response =
+        await fetch(
+          order.photos[i]
+        );
 
-      if(encontrado){
-        mime=encontrado[1];
-      }
+
+      var blob =
+        await response.blob();
+
+
+      files.push(
+        new File(
+          [blob],
+          "JUREMA_" +
+          formatOrderNumber(
+            order.number
+          ) +
+          "_" +
+          (i+1) +
+          ".jpg",
+          {
+            type:"image/jpeg"
+          }
+        )
+      );
+
     }
 
-    var binario=atob(partes[1]);
 
-    var longitud=binario.length;
-
-    var bytes=new Uint8Array(longitud);
-
-    var i;
-
-    for(i=0;i<longitud;i++){
-
-      bytes[i]=binario.charCodeAt(i);
-
-    }
-
-    var blob=new Blob(
-      [bytes],
-      {type:mime}
-    );
-
-    var archivo=new File(
-      [blob],
-      nombre,
-      {type:mime}
-    );
-
-    callback(archivo);
-
-  }catch(error){
-
-    callback(null);
-
-  }
-}
-
-
-function compartirArchivos(archivos,o){
-
-  if(archivos.length===0){
-
-    alert("No se pudieron preparar las fotos.");
-
-    return;
-  }
-
-  var datosCompartir={
-    title:"JUREMA - Orden "+o.id,
-    text:
-      "Cliente: "+(o.cliente||"")+
-      "\nOrden: "+o.id
-  };
-
-  try{
-
-    if(navigator.canShare &&
-       navigator.canShare({files:archivos})){
-
-      datosCompartir.files=archivos;
-
-      navigator.share(datosCompartir)
-        .catch(function(){});
-
-    }else{
-
-      navigator.share({
-        title:datosCompartir.title,
-        text:datosCompartir.text
-      }).catch(function(){});
+    if(
+      !navigator.canShare({
+        files:files
+      })
+    ){
 
       alert(
-        "Tu navegador no permite compartir las fotos como archivos."
+        "El teléfono no permite compartir estas fotos desde el navegador."
       );
+
+      return;
+
     }
 
-  }catch(error){
+
+    await navigator.share({
+      title:
+        "JUREMA - Fotos orden " +
+        formatOrderNumber(
+          order.number
+        ),
+      files:files
+    });
+
+  }catch(e){
+
+    console.error(e);
 
     alert(
       "No se pudieron compartir las fotos."
     );
 
   }
-}
 
+};
 
-/* =========================
-   EVENTOS
-========================= */
-
-function agregarEvento(id, evento, funcion){
-
-  var elemento=document.getElementById(id);
-
-  if(elemento){
-    elemento.addEventListener(evento, funcion);
-  }
-
-}
-
-
-agregarEvento(
-  "fotos",
-  "change",
-  cargarFotos
-);
-
-
-agregarEvento(
-  "buscarClientes",
-  "input",
-  mostrarClientes
-);
-
-
-agregarEvento(
-  "buscarOrdenes",
-  "input",
-  mostrarOrdenes
-);
-
-
-agregarEvento(
-  "filtroOrdenes",
-  "change",
-  mostrarOrdenes
-);
-
-
-agregarEvento(
-  "buscarEquipos",
-  "input",
-  mostrarEquipos
-);
-
-
-agregarEvento(
-  "cliente",
-  "change",
-  clienteSeleccionado
-);
-
-
-agregarEvento(
-  "clienteMDF",
-  "change",
-  clienteSeleccionadoMDF
-);
-
-
-agregarEvento(
-  "costo",
-  "input",
-  calcularServicio
-);
-
-
-agregarEvento(
-  "adelanto",
-  "input",
-  calcularServicio
-);
-
-
-agregarEvento(
-  "adelantoMDF",
-  "input",
-  calcularMDF
-);
-
-
-agregarEvento(
-  "backupFile",
-  "change",
-  importarBackup
-);
 
 
 /* =========================
-   INICIO
+   BACKUP EXPORTAR
 ========================= */
 
-actualizarSelectClientes();
+window.exportBackup = function(){
 
-mostrarOrdenes();
+  try{
 
-mostrarClientes();
+    var blob =
+      new Blob(
+        [
+          JSON.stringify(
+            db,
+            null,
+            2
+          )
+        ],
+        {
+          type:"application/json"
+        }
+      );
 
-mostrarEquipos();
 
-mostrarCaja();
-
-calcularServicio();
-
-calcularMDF();
+    var url =
+      URL.createObjectURL(
+        blob
+      );
 
 
-/* =========================
-   PROTECCIÓN DE ERRORES
-========================= */
+    var a =
+      document.createElement(
+        "a"
+      );
 
-window.addEventListener(
-  "error",
-  function(event){
 
-    console.error(
-      "Error JUREMA:",
-      event.error || event.message
+    a.href =
+      url;
+
+
+    a.download =
+      "JUREMA_backup_" +
+      new Date()
+        .toISOString()
+        .slice(0,10) +
+      ".json";
+
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+
+    setTimeout(
+      function(){
+
+        URL.revokeObjectURL(
+          url
+        );
+
+      },
+      1000
+    );
+
+
+  }catch(e){
+
+    console.error(e);
+
+    alert(
+      "No se pudo crear la copia de seguridad."
     );
 
   }
-);
+
+};
+
+
+
+/* =========================
+   BACKUP IMPORTAR
+========================= */
+
+window.importBackup = function(input){
+
+  if(
+    !input.files ||
+    !input.files.length
+  ){
+    return;
+  }
+
+
+  var file =
+    input.files[0];
+
+
+  if(
+    !confirm(
+      "La restauración reemplazará los datos actuales. ¿Continuar?"
+    )
+  ){
+
+    input.value = "";
+
+    return;
+
+  }
+
+
+  var reader =
+    new FileReader();
+
+
+  reader.onload =
+    function(e){
+
+      try{
+
+        var data =
+          JSON.parse(
+            e.target.result
+          );
+
+
+        normalizeDb(data);
+
+
+        if(!persist()){
+          return;
+        }
+
+
+        populateClientSelects();
+
+        renderClients();
+
+        renderOrders();
+
+        renderEquipment();
+
+        renderCash();
+
+
+        alert(
+          "Copia restaurada correctamente."
+        );
+
+
+        input.value = "";
+
+      }catch(err){
+
+        console.error(err);
+
+        alert(
+          "El archivo de copia no es válido."
+        );
+
+      }
+
+    };
+
+
+  reader.onerror =
+    function(){
+
+      alert(
+        "No se pudo leer la copia."
+      );
+
+    };
+
+
+  reader.readAsText(file);
+
+};
+
+
+
+/* =========================
+   BORRAR TODO
+========================= */
+
+window.clearAllData = function(){
+
+  if(
+    !confirm(
+      "ATENCIÓN: se eliminarán todos los clientes, órdenes y fotos. ¿Continuar?"
+    )
+  ){
+    return;
+  }
+
+
+  if(
+    !confirm(
+      "Última confirmación: ¿BORRAR TODO?"
+    )
+  ){
+    return;
+  }
+
+
+  db = {
+
+    clients:[],
+
+    orders:[],
+
+    next:5
+
+  };
+
+
+  if(!persist()){
+    return;
+  }
+
+
+  populateClientSelects();
+
+  renderClients();
+
+  renderOrders();
+
+  renderEquipment();
+
+  renderCash();
+
+
+  alert(
+    "Todos los datos fueron eliminados."
+  );
+
+};
+
+
+
+/* =========================
+   INICIALIZAR
+========================= */
+
+populateClientSelects();
+
+ensureMdfItems();
+
+calcService();
+
+calcMdf();
+
+
+})();
 
 </script>
 
