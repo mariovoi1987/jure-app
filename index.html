@@ -1,2936 +1,1801 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111827">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>JUREMA</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#111827}
-header{position:sticky;top:0;z-index:10;background:#111827;color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px}
-header h1{font-size:20px;margin:0}
-.back{background:#374151;color:#fff;border:0;border-radius:10px;padding:8px 12px;font-size:20px}
-main{max-width:700px;margin:auto;padding:16px}
-.screen{display:none}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f3f4f6;
+ color:#222;
+}
+header{
+ background:#111827;
+ color:white;
+ padding:16px;
+ text-align:center;
+ font-size:22px;
+ font-weight:bold;
+}
+.screen{display:none;padding:15px;padding-bottom:90px}
 .screen.active{display:block}
-h2{margin-top:4px}
-.card{background:#fff;border-radius:14px;padding:15px;margin:12px 0;box-shadow:0 2px 8px #0001}
-button{border:0;border-radius:11px;padding:12px 14px;font-size:15px;cursor:pointer;background:#111827;color:#fff}
-button.secondary{background:#e5e7eb;color:#111827}
-button.danger{background:#b91c1c}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.menu button{width:100%;min-height:62px}
-label{display:block;font-weight:bold;margin:11px 0 5px}
-input,select,textarea{width:100%;padding:11px;border:1px solid #d1d5db;border-radius:9px;font-size:16px;background:#fff}
-textarea{min-height:90px;resize:vertical}
-.row{display:flex;gap:8px;align-items:center}
-.row>*{flex:1}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.actions button{flex:1}
-.item{border:1px solid #e5e7eb;border-radius:10px;padding:10px;margin:8px 0}
-.small{font-size:13px;color:#6b7280}
-.money{font-weight:bold;font-size:18px}
-.status{display:inline-block;padding:5px 8px;border-radius:8px;background:#e5e7eb;font-size:12px}
-.ok{background:#dcfce7;color:#166534}
-.warn{background:#fef3c7;color:#92400e}
-.total{font-size:22px;font-weight:bold}
-.hidden{display:none}
-.photo{width:85px;height:85px;object-fit:cover;border-radius:8px;margin:4px}
-.photos{display:flex;flex-wrap:wrap}
-@media(max-width:430px){
- .grid{grid-template-columns:1fr}
- main{padding:12px}
+h2{margin-top:5px}
+button{
+ border:0;
+ border-radius:10px;
+ padding:12px 15px;
+ margin:5px 2px;
+ font-size:15px;
+ font-weight:bold;
+ cursor:pointer;
+}
+.btn{background:#111827;color:white}
+.green{background:#16803c;color:white}
+.red{background:#c62828;color:white}
+.gray{background:#6b7280;color:white}
+.blue{background:#2563eb;color:white}
+.card{
+ background:white;
+ border-radius:14px;
+ padding:15px;
+ margin:10px 0;
+ box-shadow:0 2px 8px #0001;
+}
+.menu{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+ margin-top:20px;
+}
+.menu button{
+ min-height:85px;
+ font-size:16px;
+}
+input,select,textarea{
+ width:100%;
+ padding:12px;
+ margin:5px 0 12px;
+ border:1px solid #ccc;
+ border-radius:9px;
+ font-size:16px;
+ background:white;
+}
+textarea{min-height:90px}
+label{
+ display:block;
+ font-weight:bold;
+ margin-top:8px;
+}
+.row{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+}
+.item{
+ border:1px solid #ddd;
+ border-radius:10px;
+ padding:10px;
+ margin:8px 0;
+}
+.total{
+ font-size:20px;
+ font-weight:bold;
+ text-align:right;
+ margin:10px 0;
+}
+.status{
+ display:inline-block;
+ padding:5px 9px;
+ border-radius:15px;
+ font-size:13px;
+ font-weight:bold;
+}
+.paid{background:#d1fae5;color:#065f46}
+.pending{background:#fee2e2;color:#991b1b}
+.topbar{
+ display:flex;
+ align-items:center;
+ gap:8px;
+ margin-bottom:12px;
+}
+.topbar button{
+ margin:0;
+}
+.photo{
+ width:90px;
+ height:90px;
+ object-fit:cover;
+ border-radius:8px;
+ margin:4px;
+}
+.receipt{
+ background:white;
+ max-width:700px;
+ margin:auto;
+ padding:25px;
+ color:#111;
+}
+.receipt h1{text-align:center}
+.receipt-line{
+ display:flex;
+ justify-content:space-between;
+ padding:6px 0;
+ border-bottom:1px dashed #bbb;
 }
 @media print{
- header,.no-print{display:none!important}
- body{background:#fff}
- .screen{display:none!important}
- .screen.printing{display:block!important}
- .card{box-shadow:none}
+ body *{visibility:hidden!important}
+ #receiptScreen,#receiptScreen *{
+   visibility:visible!important;
+ }
+ #receiptScreen{
+   display:block!important;
+   position:absolute!important;
+   left:0!important;
+   top:0!important;
+   width:100%!important;
+   padding:0!important;
+   background:white!important;
+ }
+ .no-print{display:none!important}
+ .receipt{
+   box-shadow:none!important;
+   max-width:none!important;
+   width:100%!important;
+ }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<button id="backBtn" class="back" onclick="goBack()" style="display:none">‹</button>
-<h1>JUREMA</h1>
-</header>
-
-<main>
+<header>JUREMA</header>
 
 <!-- INICIO -->
 <section id="home" class="screen active">
+ <h2>Panel principal</h2>
 
-<div class="card">
-<h2>JUREMA</h2>
-<p>Servicio técnico y pedidos MDF</p>
-</div>
-
-<div class="grid menu">
-
-<button onclick="openScreen('service')">
-🔧 Servicio Técnico
-</button>
-
-<button onclick="openScreen('mdf')">
-🪵 Pedido MDF
-</button>
-
-<button onclick="openScreen('clients')">
-👥 Clientes
-</button>
-
-<button onclick="openScreen('orders')">
-📋 Órdenes
-</button>
-
-<button onclick="openScreen('equipment')">
-🖨️ Equipos
-</button>
-
-<button onclick="openScreen('cash')">
-💰 Caja JUREMA
-</button>
-
-<button onclick="openScreen('backup')">
-💾 Copia de Seguridad
-</button>
-
-</div>
+ <div class="menu">
+  <button class="btn" onclick="openScreen('service')">🛠️<br>Servicio Técnico</button>
+  <button class="btn" onclick="openScreen('mdf')">🪵<br>Pedido MDF</button>
+  <button class="blue" onclick="openScreen('clients')">👥<br>Clientes</button>
+  <button class="btn" onclick="openScreen('orders')">📋<br>Órdenes</button>
+  <button class="btn" onclick="openScreen('equipment')">🖨️<br>Equipos</button>
+  <button class="green" onclick="openScreen('cash')">💰<br>Caja JUREMA</button>
+  <button class="gray" onclick="openScreen('backup')">💾<br>Copia de Seguridad</button>
+ </div>
 </section>
-
 
 <!-- CLIENTES -->
 <section id="clients" class="screen">
+ <div class="topbar">
+  <button class="gray" onclick="goBack()">←</button>
+  <h2>Clientes</h2>
+ </div>
 
-<div class="card">
+ <input id="clientSearch" placeholder="Buscar cliente..." oninput="renderClients()">
 
-<div class="actions">
-<button onclick="newClient()">+ Nuevo cliente</button>
-<button class="secondary" onclick="openScreen('home',false)">Inicio</button>
-</div>
+ <button class="green" onclick="newClient()">➕ Nuevo cliente</button>
 
-<input
-id="clientSearch"
-placeholder="Buscar cliente..."
-oninput="renderClients()">
-
-</div>
-
-<div id="clientsList"></div>
-
+ <div id="clientsList"></div>
 </section>
-
 
 <!-- FORMULARIO CLIENTE -->
 <section id="clientForm" class="screen">
+ <div class="topbar">
+  <button class="gray" onclick="goBack()">←</button>
+  <h2 id="clientFormTitle">Nuevo cliente</h2>
+ </div>
 
-<div class="card">
+ <input type="hidden" id="clientId">
 
-<h2 id="clientFormTitle">Nuevo cliente</h2>
+ <label>Nombre / Razón social</label>
+ <input id="cName" placeholder="Nombre del cliente">
 
-<label>Nombre</label>
-<input id="cName">
+ <label>Teléfono</label>
+ <div class="row">
+  <input id="cPhone" placeholder="Teléfono">
+  <button class="blue" type="button" onclick="importContact()">📱 Importar contacto</button>
+ </div>
 
-<label>Teléfono</label>
-<input id="cPhone" type="tel">
+ <label>Dirección</label>
+ <input id="cAddress" placeholder="Dirección">
 
-<label>Dirección</label>
-<input id="cAddress">
+ <label>Observaciones</label>
+ <textarea id="cNotes"></textarea>
 
-<label>Observaciones</label>
-<textarea id="cNotes"></textarea>
-
-<div class="actions">
-
-<button onclick="saveClient()">
-Guardar cliente
-</button>
-
-<button class="secondary" onclick="goBack()">
-Cancelar
-</button>
-
-</div>
-
-</div>
-
+ <button class="green" onclick="saveClient()">💾 Guardar cliente</button>
+ <button class="red" id="deleteClientBtn" onclick="deleteClient()" style="display:none">🗑️ Eliminar cliente</button>
 </section>
 
-
-<!-- SERVICIO TECNICO -->
+<!-- SERVICIO -->
 <section id="service" class="screen">
+ <div class="topbar">
+  <button class="gray" onclick="goBack()">←</button>
+  <h2 id="serviceTitle">Servicio Técnico</h2>
+ </div>
 
-<div class="card">
+ <input type="hidden" id="sOrderId">
 
-<h2 id="serviceTitle">
-Nuevo servicio técnico
-</h2>
+ <label>Cliente</label>
+ <select id="sClient" onchange="updateContactFields('s')"></select>
+ <button class="blue" onclick="newClientFromService()">➕ Nuevo cliente</button>
 
-<label>Cliente</label>
+ <label>Teléfono</label>
+ <input id="sPhone">
 
-<select id="sClient"></select>
+ <label>Dirección</label>
+ <input id="sAddress">
 
-<div class="actions">
-<button class="secondary" onclick="newClientFromService()">
-+ Crear cliente
-</button>
-</div>
+ <label>Marca</label>
+ <input id="sBrand" placeholder="Ej: HP">
 
-<label>Teléfono</label>
-<input id="sPhone">
+ <label>Modelo</label>
+ <input id="sModel" placeholder="Ej: LaserJet">
 
-<label>Dirección</label>
-<input id="sAddress">
+ <label>Número de serie</label>
+ <input id="sSerial">
 
-<label>Marca</label>
-<input id="sBrand">
+ <label>Problema informado</label>
+ <textarea id="sProblem"></textarea>
 
-<label>Modelo</label>
-<input id="sModel">
+ <label>Estado exterior</label>
+ <textarea id="sCondition"></textarea>
 
-<label>Número de serie</label>
-<input id="sSerial">
+ <label>Accesorios</label>
+ <textarea id="sAccessories"></textarea>
 
-<label>Problema / falla</label>
-<textarea id="sProblem"></textarea>
+ <label>Fotos</label>
+ <input id="sPhotos" type="file" accept="image/*" multiple onchange="readPhotos()">
+ <div id="photosPreview"></div>
 
-<label>Estado</label>
+ <label>Estado</label>
+ <select id="sStatus">
+  <option value="Pendiente">Pendiente</option>
+  <option value="En reparación">En reparación</option>
+  <option value="Listo">Listo</option>
+  <option value="Entregado">Entregado</option>
+ </select>
 
-<select id="sStatus">
-<option>Pendiente</option>
-<option>Terminado</option>
-<option>Entregado</option>
-</select>
+ <div class="row">
+  <div>
+   <label>Costo total</label>
+   <input id="sCost" type="number" inputmode="decimal" oninput="calcService()">
+  </div>
+  <div>
+   <label>Seña / cobrado</label>
+   <input id="sPaid" type="number" inputmode="decimal" oninput="calcService()">
+  </div>
+ </div>
 
-<label>Costo total</label>
+ <div class="total">Saldo: $<span id="sBalance">0</span></div>
 
-<input
-id="sTotal"
-type="number"
-min="0"
-step="0.01"
-oninput="calcService()">
+ <label>Observaciones</label>
+ <textarea id="sNotes"></textarea>
 
-<label>Seña / pago</label>
-
-<input
-id="sPaid"
-type="number"
-min="0"
-step="0.01"
-oninput="calcService()">
-
-<div class="card">
-
-<div>
-Saldo:
-<span id="sBalance" class="money">$0</span>
-</div>
-
-</div>
-
-<label>Condición exterior</label>
-<input id="sExterior">
-
-<label>Accesorios</label>
-<input id="sAccessories">
-
-<label>Observaciones</label>
-<textarea id="sNotes"></textarea>
-
-<label>Fotos</label>
-
-<input
-id="sPhotos"
-type="file"
-accept="image/*"
-multiple
-onchange="readPhotos(event)">
-
-<div id="servicePhotos" class="photos"></div>
-
-<div class="actions">
-
-<button onclick="saveService()">
-Guardar servicio
-</button>
-
-<button class="secondary" onclick="goBack()">
-Cancelar
-</button>
-
-</div>
-
-</div>
-
+ <button class="green" onclick="saveService()">💾 Guardar servicio</button>
 </section>
 
-
-<!-- PEDIDO MDF -->
+<!-- MDF -->
 <section id="mdf" class="screen">
+ <div class="topbar">
+  <button class="gray" onclick="goBack()">←</button>
+  <h2 id="mdfTitle">Pedido MDF</h2>
+ </div>
 
-<div class="card">
+ <input type="hidden" id="mOrderId">
 
-<h2 id="mdfTitle">
-Nuevo pedido MDF
-</h2>
+ <label>Cliente</label>
+ <select id="mClient" onchange="updateContactFields('m')"></select>
+ <button class="blue" onclick="newClientFromMdf()">➕ Nuevo cliente</button>
 
-<label>Cliente</label>
+ <label>Teléfono</label>
+ <input id="mPhone">
 
-<select id="mClient"></select>
+ <label>Dirección</label>
+ <input id="mAddress">
 
-<div class="actions">
+ <h3>Productos</h3>
+ <div id="mdfItems"></div>
 
-<button
-class="secondary"
-onclick="newClientFromMdf()">
+ <button class="blue" onclick="addMdfItem()">➕ Agregar producto</button>
 
-+ Crear cliente
+ <div class="total">
+  Total: $<span id="mTotal">0</span>
+ </div>
 
-</button>
+ <label>Forma de pago</label>
+ <select id="mPayment" onchange="calcMdf()">
+  <option value="pending">Pendiente</option>
+  <option value="paid">Pagado</option>
+ </select>
 
-</div>
+ <div class="row">
+  <div>
+   <label>Seña / cobrado</label>
+   <input id="mPaid" type="number" inputmode="decimal" oninput="calcMdf()">
+  </div>
+  <div>
+   <label>Saldo</label>
+   <input id="mBalance" readonly>
+  </div>
+ </div>
 
-<div id="mdfItems"></div>
+ <label>Observaciones</label>
+ <textarea id="mNotes"></textarea>
 
-<button
-class="secondary"
-onclick="addMdfItem()">
-
-+ Agregar producto
-
-</button>
-
-<label>Total</label>
-
-<input
-id="mTotal"
-type="number"
-readonly>
-
-
-<label>Estado del pedido</label>
-
-<select id="mStatus">
-
-<option>Pendiente</option>
-<option>Terminado</option>
-<option>Entregado</option>
-
-</select>
-
-
-<label>Estado de pago</label>
-
-<select
-id="mPayment"
-onchange="calcMdf()">
-
-<option value="pending">
-Pendiente
-</option>
-
-<option value="paid">
-Pagado
-</option>
-
-</select>
-
-
-<label>Pagado / seña</label>
-
-<input
-id="mPaid"
-type="number"
-min="0"
-step="0.01"
-oninput="calcMdf()">
-
-
-<div class="card">
-
-<div>
-Saldo:
-<span id="mBalance" class="money">$0</span>
-</div>
-
-<p class="small">
-Si seleccionás “Pagado”, el pedido queda cobrado por el total y se suma a la facturación.
-</p>
-
-</div>
-
-
-<label>Observaciones</label>
-
-<textarea id="mNotes"></textarea>
-
-
-<div class="actions">
-
-<button onclick="saveMdf()">
-Guardar pedido MDF
-</button>
-
-<button
-class="secondary"
-onclick="goBack()">
-
-Cancelar
-
-</button>
-
-</div>
-
-</div>
-
+ <button class="green" onclick="saveMdf()">💾 Guardar pedido</button>
 </section>
-
 
 <!-- ORDENES -->
 <section id="orders" class="screen">
+ <div class="topbar">
+  <button class="gray" onclick="goBack()">←</button>
+  <h2>Órdenes</h2>
+ </div>
 
-<div class="card">
+ <input id="orderSearch" placeholder="Buscar orden, cliente, equipo..." oninput="renderOrders()">
 
-<input
-id="orderSearch"
-placeholder="Buscar por cliente, número o equipo..."
-oninput="renderOrders()">
+ <div>
+  <button onclick="setOrderFilter('Todas')">Todas</button>
+  <button onclick="setOrderFilter('Pendientes')">Pendientes</button>
+  <button onclick="setOrderFilter('Terminadas')">Terminadas</button>
+  <button onclick="setOrderFilter('Entregadas')">Entregadas</button>
+ </div>
 
-<label>Filtrar</label>
-
-<select
-id="orderFilter"
-onchange="renderOrders()">
-
-<option value="all">Todas</option>
-<option>Pendiente</option>
-<option>Terminado</option>
-<option>Entregado</option>
-
-</select>
-
-</div>
-
-<div id="ordersList"></div>
-
+ <div id="ordersList"></div>
 </section>
-
 
 <!-- EQUIPOS -->
 <section id="equipment" class="screen">
+ <div class="topbar">
+  <button class="gray" onclick="goBack()">←</button>
+  <h2>Equipos / Impresoras</h2>
+ </div>
 
-<div class="card">
+ <input id="equipmentSearch" placeholder="Buscar equipo..." oninput="renderEquipment()">
 
-<input
-id="equipmentSearch"
-placeholder="Buscar impresora/equipo..."
-oninput="renderEquipment()">
-
-</div>
-
-<div id="equipmentList"></div>
-
+ <div id="equipmentList"></div>
 </section>
-
 
 <!-- CAJA -->
 <section id="cash" class="screen">
+ <div class="topbar">
+  <button class="gray" onclick="goBack()">←</button>
+  <h2>Caja JUREMA</h2>
+ </div>
 
-<div id="cashSummary"></div>
-
-<div id="cashList"></div>
-
+ <div id="cashContent"></div>
 </section>
 
-
-<!-- COPIA -->
+<!-- BACKUP -->
 <section id="backup" class="screen">
+ <div class="topbar">
+  <button class="gray" onclick="goBack()">←</button>
+  <h2>Copia de Seguridad</h2>
+ </div>
 
-<div class="card">
+ <div class="card">
+  <p>Guardá una copia de todos tus clientes y órdenes.</p>
+  <button class="green" onclick="exportBackup()">⬇️ Exportar copia</button>
+  <br>
+  <label>Importar copia</label>
+  <input type="file" id="backupFile" accept=".json" onchange="importBackup(event)">
+ </div>
 
-<h2>Copia de seguridad</h2>
+ <div id="backupInfo"></div>
 
-<p>
-Guardá una copia de todos los clientes y órdenes.
-</p>
-
-<div class="actions">
-
-<button onclick="exportBackup()">
-Exportar copia
-</button>
-
-<button
-class="secondary"
-onclick="document.getElementById('importFile').click()">
-
-Importar copia
-
-</button>
-
-</div>
-
-<input
-id="importFile"
-class="hidden"
-type="file"
-accept=".json,application/json"
-onchange="importBackup(event)">
-
-</div>
-
-<div id="backupInfo"></div>
-
-<div class="card">
-
-<button
-class="danger"
-onclick="clearDatabase()">
-
-Borrar todos los datos
-
-</button>
-
-</div>
-
+ <div class="card">
+  <button class="red" onclick="clearDatabase()">⚠️ Borrar todos los datos</button>
+ </div>
 </section>
-
 
 <!-- RECIBO -->
-<section id="receipt" class="screen">
+<section id="receiptScreen" class="screen">
+ <div class="topbar no-print">
+  <button class="gray" onclick="goBack()">←</button>
+  <h2>Documento</h2>
+ </div>
 
-<div id="receiptContent"></div>
+ <div id="receiptContent" class="receipt"></div>
 
-<div class="actions no-print">
-
-<button onclick="window.print()">
-Imprimir
-</button>
-
-<button onclick="shareReceipt()">
-Compartir
-</button>
-
-<button
-class="secondary"
-onclick="goBack()">
-
-Volver
-
-</button>
-
-</div>
-
+ <div class="no-print" style="text-align:center;margin-top:15px">
+  <button class="green" onclick="printReceipt()">🖨️ Generar documento</button>
+  <button class="blue" onclick="shareReceipt()">📤 Compartir</button>
+ </div>
 </section>
 
-</main>
-
-
 <script>
-
 (function(){
 
 "use strict";
 
+var KEY="jurema_v5";
 
-/* =========================
-   BASE DE DATOS
-========================= */
-
-var KEY = "jurema_v4";
-
-var db = {
- clients: [],
- orders: [],
- next: 5
+var db={
+ clients:[],
+ orders:[],
+ next:5
 };
 
-var currentScreen = "home";
-var stack = [];
-var editingClientId = null;
-var editingOrderId = null;
-var tempPhotos = [];
-var afterClientTarget = null;
-
-
-/* =========================
-   FUNCIONES BÁSICAS
-========================= */
+var currentScreen="home";
+var historyStack=[];
+var orderFilter="Todas";
+var afterClientTarget="";
+var currentPhotos=[];
 
 function $(id){
  return document.getElementById(id);
 }
 
-
 function uid(){
-
- return "id_" +
- Date.now() +
- "_" +
- Math.random().toString(36).slice(2,10);
-
+ return "id_"+Date.now()+"_"+Math.floor(Math.random()*1000000);
 }
-
 
 function money(n){
-
- return "$" +
- Number(n || 0).toLocaleString(
-  "es-AR",
-  {
-   minimumFractionDigits:2,
-   maximumFractionDigits:2
-  }
- );
-
+ n=Number(n)||0;
+ return n.toLocaleString("es-AR",{minimumFractionDigits:2,maximumFractionDigits:2});
 }
-
 
 function esc(s){
-
- return String(s == null ? "" : s)
- .replace(/[&<>"']/g,function(c){
-
-  return {
-   "&":"&amp;",
-   "<":"&lt;",
-   ">":"&gt;",
-   '"':"&quot;",
-   "'":"&#39;"
-  }[c];
-
- });
-
+ return String(s==null?"":s)
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;");
 }
-
 
 function today(){
-
  return new Date().toLocaleDateString("es-AR");
-
 }
-
-
-function findClient(id){
-
- return db.clients.find(function(c){
-  return c.id === id;
- });
-
-}
-
-
-function findOrder(id){
-
- return db.orders.find(function(o){
-  return o.id === id;
- });
-
-}
-
-
-function clientName(id){
-
- var c = findClient(id);
-
- return c ? c.name : "Sin cliente";
-
-}
-
-
-/* =========================
-   GUARDADO
-========================= */
 
 function loadDatabase(){
-
  try{
-
-  var raw = localStorage.getItem(KEY);
-
-  if(raw){
-
-   var x = JSON.parse(raw);
-
-   if(
-    x &&
-    Array.isArray(x.clients) &&
-    Array.isArray(x.orders)
-   ){
-
-    db = x;
-
-    if(!db.next){
-     db.next = 5;
-    }
-
+  var saved=localStorage.getItem(KEY);
+  if(saved){
+   var data=JSON.parse(saved);
+   if(data && typeof data==="object"){
+    db=data;
+    if(!Array.isArray(db.clients)) db.clients=[];
+    if(!Array.isArray(db.orders)) db.orders=[];
+    if(!db.next) db.next=5;
    }
-
   }
-
  }catch(e){
-
-  alert(
-   "No se pudo leer la memoria del teléfono. Se iniciará una base nueva."
-  );
-
+  console.log(e);
  }
-
 }
-
 
 function persist(){
-
- try{
-
-  localStorage.setItem(
-   KEY,
-   JSON.stringify(db)
-  );
-
-  return true;
-
- }catch(e){
-
-  alert(
-   "No se pudieron guardar los datos en el teléfono. Revisá el espacio disponible del navegador."
-  );
-
-  return false;
-
- }
-
+ localStorage.setItem(KEY,JSON.stringify(db));
+ renderClients();
+ renderOrders();
+ renderEquipment();
+ renderCash();
+ renderBackupInfo();
 }
-
 
 function nextNumber(){
-
- var n = Number(db.next) || 5;
-
- db.next = n + 5;
-
+ var n=Number(db.next)||5;
+ db.next=n+5;
  return String(n).padStart(5,"0");
-
 }
 
+function findClient(id){
+ for(var i=0;i<db.clients.length;i++){
+  if(db.clients[i].id===id)return db.clients[i];
+ }
+ return null;
+}
 
-/* =========================
-   PANTALLAS
-========================= */
+function findOrder(id){
+ for(var i=0;i<db.orders.length;i++){
+  if(db.orders[i].id===id)return db.orders[i];
+ }
+ return null;
+}
 
-window.openScreen = function(name,push){
+function clientName(id){
+ var c=findClient(id);
+ return c?c.name:"Cliente eliminado";
+}
 
- if(push === undefined){
-  push = true;
+function openScreen(name,push){
+ if(name===currentScreen)return;
+
+ if(push!==false){
+  historyStack.push(currentScreen);
  }
 
- if(name === currentScreen){
-  return;
+ var screens=document.querySelectorAll(".screen");
+ for(var i=0;i<screens.length;i++){
+  screens[i].classList.remove("active");
  }
 
- if(push){
-  stack.push(currentScreen);
+ var target=$(name);
+ if(target){
+  target.classList.add("active");
+  currentScreen=name;
  }
 
- document
- .querySelectorAll(".screen")
- .forEach(function(s){
+ if(name==="clients")renderClients();
+ if(name==="orders")renderOrders();
+ if(name==="equipment")renderEquipment();
+ if(name==="cash")renderCash();
+ if(name==="backup")renderBackupInfo();
+}
 
-  s.classList.remove(
-   "active",
-   "printing"
-  );
-
- });
-
- var el = $(name);
-
- if(!el){
-  return;
+function goBack(){
+ if(historyStack.length){
+  var previous=historyStack.pop();
+  openScreen(previous,false);
+ }else{
+  openScreen("home",false);
  }
+}
 
- el.classList.add("active");
+window.openScreen=openScreen;
+window.goBack=goBack;
 
- currentScreen = name;
-
- $("backBtn").style.display =
- name === "home" ? "none" : "block";
-
-
- if(name === "clients"){
-  renderClients();
- }
-
- if(name === "orders"){
-  renderOrders();
- }
-
- if(name === "equipment"){
-  renderEquipment();
- }
-
- if(name === "cash"){
-  renderCash();
- }
-
- if(name === "backup"){
-  renderBackupInfo();
- }
-
- if(name === "service" && !editingOrderId){
-  resetService();
- }
-
- if(name === "mdf" && !editingOrderId){
-  resetMdf();
- }
-
-};
-
-
-window.goBack = function(){
-
- if(currentScreen === "home"){
-  return;
- }
-
- var prev =
- stack.length ?
- stack.pop() :
- "home";
-
- editingClientId = null;
- editingOrderId = null;
-
- openScreen(prev,false);
-
-};
-
-
-/* =========================
-   CLIENTES
-========================= */
+/* CLIENTES */
 
 function fillClientSelect(id){
+ var select=$(id);
+ if(!select)return;
 
- var sel = $(id);
+ var old=select.value;
 
- if(!sel){
-  return;
+ select.innerHTML='<option value="">-- Seleccionar cliente --</option>';
+
+ for(var i=0;i<db.clients.length;i++){
+  var c=db.clients[i];
+  var op=document.createElement("option");
+  op.value=c.id;
+  op.textContent=c.name+(c.phone?" - "+c.phone:"");
+  select.appendChild(op);
  }
 
- var old = sel.value;
-
- sel.innerHTML =
- '<option value="">-- Seleccionar cliente --</option>' +
-
- db.clients.map(function(c){
-
-  return (
-   '<option value="' +
-   esc(c.id) +
-   '">' +
-   esc(c.name) +
-   '</option>'
-  );
-
- }).join("");
-
- if(old && findClient(old)){
-  sel.value = old;
- }
-
+ if(old && findClient(old))select.value=old;
 }
-
-
-function updateContactFields(prefix){
-
- var selectId =
- prefix === "s" ?
- "sClient" :
- "mClient";
-
- var id = $(selectId).value;
-
- var c = findClient(id);
-
- if(!c){
-  return;
- }
-
- if(prefix === "s"){
-
-  $("sPhone").value = c.phone || "";
-  $("sAddress").value = c.address || "";
-
- }else{
-
-  /* MDF no tiene campos de teléfono/dirección visibles */
-
- }
-
-}
-
 
 function setupSelects(){
-
- $("sClient").addEventListener(
-  "change",
-  function(){
-   updateContactFields("s");
-  }
- );
-
- $("mClient").addEventListener(
-  "change",
-  function(){
-   updateContactFields("m");
-  }
- );
-
-}
-
-
-function newClient(){
-
- editingClientId = null;
-
- $("clientFormTitle").textContent =
- "Nuevo cliente";
-
- $("cName").value = "";
- $("cPhone").value = "";
- $("cAddress").value = "";
- $("cNotes").value = "";
-
- openScreen("clientForm");
-
-}
-
-
-function editClient(id){
-
- var c = findClient(id);
-
- if(!c){
-  return;
- }
-
- editingClientId = id;
-
- $("clientFormTitle").textContent =
- "Editar cliente";
-
- $("cName").value = c.name || "";
- $("cPhone").value = c.phone || "";
- $("cAddress").value = c.address || "";
- $("cNotes").value = c.notes || "";
-
- openScreen("clientForm");
-
-}
-
-
-window.saveClient = function(){
-
- var name =
- $("cName").value.trim();
-
- if(!name){
-
-  alert(
-   "Ingresá el nombre del cliente."
-  );
-
-  return;
-
- }
-
- var id = editingClientId;
-
- var c =
- id ?
- findClient(id) :
- null;
-
-
- if(c){
-
-  c.name =
-   name;
-
-  c.phone =
-   $("cPhone").value.trim();
-
-  c.address =
-   $("cAddress").value.trim();
-
-  c.notes =
-   $("cNotes").value.trim();
-
- }else{
-
-  id = uid();
-
-  db.clients.push({
-
-   id:id,
-
-   name:name,
-
-   phone:
-    $("cPhone").value.trim(),
-
-   address:
-    $("cAddress").value.trim(),
-
-   notes:
-    $("cNotes").value.trim()
-
-  });
-
- }
-
-
- if(!persist()){
-  return;
- }
-
-
  fillClientSelect("sClient");
  fillClientSelect("mClient");
+}
 
+function updateContactFields(prefix){
+ var id=$(prefix+"Client").value;
+ var c=findClient(id);
 
- var target =
- afterClientTarget;
+ if(!c)return;
 
- afterClientTarget = null;
- editingClientId = null;
+ $(prefix+"Phone").value=c.phone||"";
+ $(prefix+"Address").value=c.address||"";
+}
 
+function newClient(){
+ $("clientFormTitle").textContent="Nuevo cliente";
+ $("clientId").value="";
+ $("cName").value="";
+ $("cPhone").value="";
+ $("cAddress").value="";
+ $("cNotes").value="";
+ $("deleteClientBtn").style.display="none";
 
- alert(
-  "Cliente guardado correctamente."
- );
+ openScreen("clientForm");
+}
 
+function editClient(id){
+ var c=findClient(id);
+ if(!c)return;
 
- if(target){
+ $("clientFormTitle").textContent="Editar cliente";
+ $("clientId").value=c.id;
+ $("cName").value=c.name||"";
+ $("cPhone").value=c.phone||"";
+ $("cAddress").value=c.address||"";
+ $("cNotes").value=c.notes||"";
+ $("deleteClientBtn").style.display="block";
 
-  openScreen(
-   target,
-   false
-  );
+ openScreen("clientForm");
+}
 
-  if(target === "service"){
+function saveClient(){
+ var name=$("cName").value.trim();
 
-   $("sClient").value = id;
-
-   updateContactFields("s");
-
-  }else{
-
-   $("mClient").value = id;
-
-  }
-
- }else{
-
-  openScreen(
-   "clients",
-   false
-  );
-
- }
-
-};
-
-
-function deleteClient(id){
-
- if(!confirm(
-  "¿Eliminar este cliente?"
-  )){
+ if(!name){
+  alert("Ingresá el nombre del cliente.");
   return;
  }
 
- db.clients =
- db.clients.filter(function(c){
-  return c.id !== id;
- });
+ var id=$("clientId").value;
+ var client;
+
+ if(id){
+  client=findClient(id);
+
+  if(!client){
+   alert("No se encontró el cliente.");
+   return;
+  }
+
+  client.name=name;
+  client.phone=$("cPhone").value.trim();
+  client.address=$("cAddress").value.trim();
+  client.notes=$("cNotes").value.trim();
+
+ }else{
+  client={
+   id:uid(),
+   name:name,
+   phone:$("cPhone").value.trim(),
+   address:$("cAddress").value.trim(),
+   notes:$("cNotes").value.trim(),
+   createdAt:Date.now()
+  };
+
+  db.clients.push(client);
+ }
+
+ persist();
+ setupSelects();
+
+ if(afterClientTarget){
+  var target=afterClientTarget;
+  afterClientTarget="";
+
+  openScreen(target);
+
+  if(target==="service"){
+   $("sClient").value=client.id;
+   updateContactFields("s");
+  }
+
+  if(target==="mdf"){
+   $("mClient").value=client.id;
+   updateContactFields("m");
+  }
+
+ }else{
+  openScreen("clients");
+ }
+
+ alert("Cliente guardado correctamente.");
+}
+
+function deleteClient(){
+ var id=$("clientId").value;
+
+ if(!id)return;
+
+ var c=findClient(id);
+ if(!c)return;
+
+ var used=false;
+
+ for(var i=0;i<db.orders.length;i++){
+  if(db.orders[i].clientId===id){
+   used=true;
+   break;
+  }
+ }
+
+ var message=used
+ ?"Este cliente tiene órdenes asociadas. ¿Querés eliminarlo igualmente?":"¿Eliminar este cliente?";
+
+ if(!confirm(message))return;
+
+ for(var j=db.clients.length-1;j>=0;j--){
+  if(db.clients[j].id===id){
+   db.clients.splice(j,1);
+   break;
+  }
+ }
+
+ persist();
+ setupSelects();
+ openScreen("clients");
+ alert("Cliente eliminado.");
+}
+
+function newClientFromService(){
+ afterClientTarget="service";
+ newClient();
+}
+
+function newClientFromMdf(){
+ afterClientTarget="mdf";
+ newClient();
+}
+
+function renderClients(){
+ var box=$("clientsList");
+ if(!box)return;
+
+ var q=($("clientSearch").value||"").toLowerCase().trim();
+
+ box.innerHTML="";
+
+ var found=0;
+
+ for(var i=0;i<db.clients.length;i++){
+  var c=db.clients[i];
+
+  var text=(c.name+" "+(c.phone||"")+" "+(c.address||"")).toLowerCase();
+
+  if(q && text.indexOf(q)<0)continue;
+
+  found++;
+
+  var div=document.createElement("div");
+  div.className="card";
+
+  div.innerHTML=
+   "<b>"+esc(c.name)+"</b>"+
+   "<br>📞 "+esc(c.phone||"Sin teléfono")+
+   "<br>📍 "+esc(c.address||"Sin dirección")+
+   (c.notes?"<br>📝 "+esc(c.notes):"")+
+   "<div style='margin-top:8px'>"+
+   "<button class='blue' onclick=\"editClient('"+c.id+"')\">✏️ Editar</button>"+
+   "<button class='red' onclick=\"deleteClientDirect('"+c.id+"')\">🗑️ Eliminar</button>"+
+   "</div>";
+
+  box.appendChild(div);
+ }
+
+ if(!found){
+  box.innerHTML="<div class='card'>No hay clientes.</div>";
+ }
+}
+
+function deleteClientDirect(id){
+ var c=findClient(id);
+ if(!c)return;
+
+ var used=false;
+
+ for(var i=0;i<db.orders.length;i++){
+  if(db.orders[i].clientId===id){
+   used=true;
+   break;
+  }
+ }
+
+ var message=used
+ ?"Este cliente tiene órdenes asociadas. ¿Eliminarlo igualmente?"
+ :"¿Eliminar a "+c.name+"?";
+
+ if(!confirm(message))return;
+
+ for(var j=db.clients.length-1;j>=0;j--){
+  if(db.clients[j].id===id){
+   db.clients.splice(j,1);
+   break;
+  }
+ }
+
+ persist();
+ setupSelects();
+}
+
+window.newClient=newClient;
+window.editClient=editClient;
+window.saveClient=saveClient;
+window.deleteClient=deleteClient;
+window.deleteClientDirect=deleteClientDirect;
+window.newClientFromService=newClientFromService;
+window.newClientFromMdf=newClientFromMdf;
+window.renderClients=renderClients;
+window.updateContactFields=updateContactFields;
+
+/* IMPORTAR CONTACTO ANDROID */
+
+function importContact(){
+ var phoneInput=$("cPhone");
+
+ /*
+  Android/Chrome no permite que una página lea
+  toda la agenda silenciosamente.
+  Contact Picker permite elegir un contacto cuando
+  el navegador lo soporta.
+  */
+
+ if(navigator.contacts && navigator.contacts.select){
+
+  navigator.contacts.select(
+   ["name","tel"],
+   {multiple:false}
+  ).then(function(contacts){
+
+   if(!contacts || !contacts.length)return;
+
+   var contact=contacts[0];
+
+   if(contact.name && contact.name.length){
+    $("cName").value=contact.name[0];
+   }
+
+   if(contact.tel && contact.tel.length){
+    phoneInput.value=contact.tel[0];
+   }
+
+  }).catch(function(){
+   alert("No se pudo abrir el selector de contactos.");
+  });
+
+ }else{
+  alert(
+   "Tu navegador no permite importar contactos directamente. "+
+   "Probá abrir JUREMA con Google Chrome actualizado."
+  );
+ }
+}
+
+window.importContact=importContact;
+
+/* SERVICIO TECNICO */
+
+function resetService(){
+ $("sOrderId").value="";
+ $("serviceTitle").textContent="Servicio Técnico";
+ $("sClient").value="";
+ $("sPhone").value="";
+ $("sAddress").value="";
+ $("sBrand").value="";
+ $("sModel").value="";
+ $("sSerial").value="";
+ $("sProblem").value="";
+ $("sCondition").value="";
+ $("sAccessories").value="";
+ $("sStatus").value="Pendiente";
+ $("sCost").value="";
+ $("sPaid").value="";
+ $("sBalance").textContent="0";
+ $("sNotes").value="";
+ currentPhotos=[];
+ $("photosPreview").innerHTML="";
+}
+
+function calcService(){
+ var total=Number($("sCost").value)||0;
+ var paid=Number($("sPaid").value)||0;
+
+ var balance=Math.max(0,total-paid);
+
+ $("sBalance").textContent=money(balance);
+}
+
+function readPhotos(){
+ var files=$("sPhotos").files;
+
+ if(!files || !files.length)return;
+
+ var pending=files.length;
+
+ for(var i=0;i<files.length;i++){
+  (function(file){
+
+   var reader=new FileReader();
+
+   reader.onload=function(e){
+    currentPhotos.push(e.target.result);
+    pending--;
+
+    if(pending===0){
+     renderPhotos();
+    }
+   };
+
+   reader.readAsDataURL(file);
+
+  })(files[i]);
+ }
+}
+
+function renderPhotos(){
+ var box=$("photosPreview");
+ box.innerHTML="";
+
+ for(var i=0;i<currentPhotos.length;i++){
+  box.innerHTML+=
+   "<img class='photo' src='"+currentPhotos[i]+"'>";
+ }
+}
+
+function saveService(){
+ var clientId=$("sClient").value;
+
+ if(!clientId){
+  alert("Seleccioná un cliente.");
+  return;
+ }
+
+ var total=Number($("sCost").value)||0;
+ var paid=Number($("sPaid").value)||0;
+ var balance=Math.max(0,total-paid);
+
+ var existingId=$("sOrderId").value;
+
+ if(existingId){
+  var o=findOrder(existingId);
+
+  if(!o){
+   alert("No se encontró la orden.");
+   return;
+  }
+
+  o.type="service";
+  o.clientId=clientId;
+  o.phone=$("sPhone").value.trim();
+  o.address=$("sAddress").value.trim();
+  o.brand=$("sBrand").value.trim();
+  o.model=$("sModel").value.trim();
+  o.serial=$("sSerial").value.trim();
+  o.problem=$("sProblem").value.trim();
+  o.condition=$("sCondition").value.trim();
+  o.accessories=$("sAccessories").value.trim();
+  o.status=$("sStatus").value;
+  o.total=total;
+  o.paid=paid;
+  o.balance=balance;
+  o.paymentStatus=balance<=0?"paid":"pending";
+  o.notes=$("sNotes").value.trim();
+  o.photos=currentPhotos.slice();
+
+  persist();
+  showReceipt(o.id);
+  return;
+ }
+
+ var order={
+  id:uid(),
+  number:nextNumber(),
+  type:"service",
+  clientId:clientId,
+  date:today(),
+  phone:$("sPhone").value.trim(),
+  address:$("sAddress").value.trim(),
+  brand:$("sBrand").value.trim(),
+  model:$("sModel").value.trim(),
+  serial:$("sSerial").value.trim(),
+  problem:$("sProblem").value.trim(),
+  condition:$("sCondition").value.trim(),
+  accessories:$("sAccessories").value.trim(),
+  status:$("sStatus").value,
+  total:total,
+  paid:paid,
+  balance:balance,
+  paymentStatus:balance<=0?"paid":"pending",
+  notes:$("sNotes").value.trim(),
+  photos:currentPhotos.slice(),
+  createdAt:Date.now()
+ };
+
+ db.orders.push(order);
 
  persist();
 
- renderClients();
-
+ showReceipt(order.id);
 }
 
-
-window.newClientFromService =
- function(){
-
-  afterClientTarget =
-   "service";
-
-  newClient();
-
- };
-
-
-window.newClientFromMdf =
- function(){
-
-  afterClientTarget =
-   "mdf";
-
-  newClient();
-
- };
-
-
-function renderClients(){
-
- var q =
- ($("clientSearch").value || "")
- .toLowerCase();
-
- var arr =
- db.clients.filter(function(c){
-
-  return (
-   (c.name || "") +
-   " " +
-   (c.phone || "") +
-   " " +
-   (c.address || "")
-  )
-  .toLowerCase()
-  .includes(q);
-
- });
-
-
- $("clientsList").innerHTML =
- arr.length ?
-
- arr.map(function(c){
-
-  return (
-
-   '<div class="card">' +
-
-   '<b>' +
-   esc(c.name) +
-   '</b>' +
-
-   '<div class="small">' +
-   esc(c.phone || "Sin teléfono") +
-   '</div>' +
-
-   '<div>' +
-   esc(c.address || "Sin dirección") +
-   '</div>' +
-
-   '<div class="actions">' +
-
-   '<button onclick="editClient(\'' +
-   c.id +
-   '\')">Editar</button>' +
-
-   '<button class="danger" onclick="deleteClient(\'' +
-   c.id +
-   '\')">Eliminar</button>' +
-
-   '</div>' +
-
-   '</div>'
-
-  );
-
- }).join("")
-
- :
-
- '<div class="card">No hay clientes.</div>';
-
-}
-
-
-/* =========================
-   SERVICIO TECNICO
-========================= */
-
-function resetService(){
-
- editingOrderId = null;
-
- tempPhotos = [];
-
- $("serviceTitle").textContent =
- "Nuevo servicio técnico";
-
- fillClientSelect("sClient");
-
- $("sPhone").value = "";
- $("sAddress").value = "";
- $("sBrand").value = "";
- $("sModel").value = "";
- $("sSerial").value = "";
- $("sProblem").value = "";
-
- $("sStatus").value =
- "Pendiente";
-
- $("sTotal").value = "";
- $("sPaid").value = "";
-
- $("sBalance").textContent =
- money(0);
-
- $("sExterior").value = "";
- $("sAccessories").value = "";
- $("sNotes").value = "";
-
- $("servicePhotos").innerHTML = "";
-
- $("sPhotos").value = "";
-
-}
-
-
-function calcService(){
-
- var total =
- Number($("sTotal").value) || 0;
-
- var paid =
- Number($("sPaid").value) || 0;
-
- $("sBalance").textContent =
- money(
-  Math.max(
-   0,
-   total - paid
-  )
- );
-
-}
-
-
-window.readPhotos = function(ev){
-
- tempPhotos = [];
-
- var files =
- Array.from(
-  ev.target.files || []
- );
-
- var left =
- files.length;
-
- if(!left){
-
-  $("servicePhotos").innerHTML =
-   "";
-
-  return;
-
- }
-
-
- files.forEach(function(file){
-
-  var reader =
-   new FileReader();
-
-  reader.onload =
-   function(){
-
-    var img =
-     new Image();
-
-    img.onload =
-     function(){
-
-      var canvas =
-       document.createElement(
-        "canvas"
-       );
-
-      var max = 1000;
-
-      var scale =
-       Math.min(
-        1,
-        max /
-        Math.max(
-         img.width,
-         img.height
-        )
-       );
-
-      canvas.width =
-       Math.round(
-        img.width * scale
-       );
-
-      canvas.height =
-       Math.round(
-        img.height * scale
-       );
-
-      var ctx =
-       canvas.getContext("2d");
-
-      ctx.drawImage(
-       img,
-       0,
-       0,
-       canvas.width,
-       canvas.height
-      );
-
-      tempPhotos.push(
-       canvas.toDataURL(
-        "image/jpeg",
-        .75
-       )
-      );
-
-      left--;
-
-      if(left === 0){
-       renderPhotos();
-      }
-
-     };
-
-    img.src =
-     reader.result;
-
-   };
-
-  reader.readAsDataURL(file);
-
- });
-
-};
-
-
-function renderPhotos(){
-
- $("servicePhotos").innerHTML =
- tempPhotos.map(function(p,i){
-
-  return (
-
-   '<span>' +
-
-   '<img class="photo" src="' +
-   p +
-   '">' +
-
-   '<button type="button" class="danger" onclick="removePhoto(' +
-   i +
-   ')">×</button>' +
-
-   '</span>'
-
-  );
-
- }).join("");
-
-}
-
-
-window.removePhoto =
- function(i){
-
-  tempPhotos.splice(i,1);
-
-  renderPhotos();
-
- };
-
-
-window.saveService =
- function(){
-
-  var client =
-   $("sClient").value;
-
-  if(!client){
-
-   alert(
-    "Seleccioná un cliente."
-   );
-
-   return;
-
-  }
-
-
-  var total =
-   Number($("sTotal").value) || 0;
-
-  var paid =
-   Number($("sPaid").value) || 0;
-
-
-  var o =
-   editingOrderId ?
-   findOrder(editingOrderId) :
-   null;
-
-
-  if(!o){
-
-   o = {
-
-    id:uid(),
-
-    number:nextNumber(),
-
-    type:"service",
-
-    date:today(),
-
-    clientId:client
-
-   };
-
-   db.orders.push(o);
-
-  }
-
-
-  o.clientId =
-   client;
-
-  o.brand =
-   $("sBrand").value.trim();
-
-  o.model =
-   $("sModel").value.trim();
-
-  o.serial =
-   $("sSerial").value.trim();
-
-  o.problem =
-   $("sProblem").value.trim();
-
-  o.status =
-   $("sStatus").value;
-
-  o.total =
-   total;
-
-  o.paid =
-   Math.min(
-    paid,
-    total
-   );
-
-  o.balance =
-   Math.max(
-    0,
-    total - o.paid
-   );
-
-  o.phone =
-   $("sPhone").value.trim();
-
-  o.address =
-   $("sAddress").value.trim();
-
-  o.exterior =
-   $("sExterior").value.trim();
-
-  o.accessories =
-   $("sAccessories").value.trim();
-
-  o.notes =
-   $("sNotes").value.trim();
-
-  o.photos =
-   tempPhotos.slice();
-
-  o.paymentStatus =
-   o.balance <= 0 ?
-   "paid" :
-   "pending";
-
-
-  if(!persist()){
-   return;
-  }
-
-
-  alert(
-   "Servicio guardado correctamente."
-  );
-
-  editingOrderId = null;
-
-  showReceipt(o.id);
-
- };
-
-
-/* =========================
-   PEDIDOS MDF
-========================= */
+window.resetService=resetService;
+window.calcService=calcService;
+window.readPhotos=readPhotos;
+window.saveService=saveService;
+
+/* MDF */
 
 function resetMdf(){
-
- editingOrderId = null;
-
- $("mdfTitle").textContent =
- "Nuevo pedido MDF";
-
- fillClientSelect("mClient");
-
- $("mStatus").value =
- "Pendiente";
-
- $("mPayment").value =
- "pending";
-
- $("mPaid").value =
- "";
-
- $("mNotes").value =
- "";
-
- $("mdfItems").innerHTML =
- "";
-
+ $("mOrderId").value="";
+ $("mdfTitle").textContent="Pedido MDF";
+ $("mClient").value="";
+ $("mPhone").value="";
+ $("mAddress").value="";
+ $("mPayment").value="pending";
+ $("mPaid").value="";
+ $("mBalance").value="";
+ $("mNotes").value="";
+ $("mdfItems").innerHTML="";
  addMdfItem();
+}
+
+function addMdfItem(data){
+ var box=$("mdfItems");
+
+ var div=document.createElement("div");
+ div.className="item";
+
+ var id=uid();
+
+ div.setAttribute("data-item-id",id);
+
+ div.innerHTML=
+  "<label>Producto / descripción</label>"+
+  "<input class='mdfDesc' value='"+esc(data?data.desc:"")+"' placeholder='Ej: Nombre personalizado'>"+
+  "<div class='row'>"+
+   "<div><label>Cantidad</label>"+
+   "<input class='mdfQty' type='number' inputmode='decimal' value='"+(data?data.qty:1)+"' oninput='calcMdf()'></div>"+
+   "<div><label>Precio unitario</label>"+
+   "<input class='mdfPrice' type='number' inputmode='decimal' value='"+(data?data.price:"")+"' oninput='calcMdf()'></div>"+
+  "</div>"+
+  "<div>Subtotal: $<span class='mdfSubtotal'>0</span></div>"+
+  "<button class='red' type='button' onclick='removeMdfItem(this)'>🗑️ Quitar</button>";
+
+ box.appendChild(div);
 
  calcMdf();
-
 }
 
+function removeMdfItem(btn){
+ var box=$("mdfItems");
 
-window.addMdfItem =
- function(data){
+ if(box.children.length<=1){
+  alert("El pedido debe tener al menos un producto.");
+  return;
+ }
 
-  var d =
-   data ||
-   {
-    description:"",
-    qty:1,
-    price:0
-   };
-
-
-  var wrap =
-   document.createElement(
-    "div"
-   );
-
-  wrap.className =
-   "item mdfItem";
-
-
-  wrap.innerHTML =
-
-   '<label>Producto</label>' +
-
-   '<input class="miDesc" value="' +
-   esc(d.description) +
-   '">' +
-
-   '<div class="row">' +
-
-   '<div>' +
-
-   '<label>Cantidad</label>' +
-
-   '<input class="miQty" type="number" min="1" step="1" value="' +
-   Number(d.qty || 1) +
-   '">' +
-
-   '</div>' +
-
-   '<div>' +
-
-   '<label>Precio unitario</label>' +
-
-   '<input class="miPrice" type="number" min="0" step="0.01" value="' +
-   Number(d.price || 0) +
-   '">' +
-
-   '</div>' +
-
-   '</div>' +
-
-   '<div>' +
-
-   'Subtotal: ' +
-
-   '<b class="miSub">$0</b>' +
-
-   '</div>' +
-
-   '<button type="button" class="danger" onclick="this.parentNode.remove();calcMdf()">' +
-
-   'Quitar' +
-
-   '</button>';
-
-
-  $("mdfItems")
-   .appendChild(wrap);
-
-
-  wrap
-  .querySelectorAll("input")
-  .forEach(function(x){
-
-   x.addEventListener(
-    "input",
-    calcMdf
-   );
-
-  });
-
-
-  calcMdf();
-
- };
-
+ btn.parentNode.remove();
+ calcMdf();
+}
 
 function readMdfItems(){
+ var box=$("mdfItems");
+ var arr=[];
 
- return Array
- .from(
-  document.querySelectorAll(
-   ".mdfItem"
-  )
- )
- .map(function(el){
+ for(var i=0;i<box.children.length;i++){
+  var el=box.children[i];
 
-  var q =
-   Number(
-    el.querySelector(
-     ".miQty"
-    ).value
-   ) || 0;
+  var desc=el.querySelector(".mdfDesc").value.trim();
+  var qty=Number(el.querySelector(".mdfQty").value)||0;
+  var price=Number(el.querySelector(".mdfPrice").value)||0;
 
-  var p =
-   Number(
-    el.querySelector(
-     ".miPrice"
-    ).value
-   ) || 0;
+  if(desc || price){
+   arr.push({
+    desc:desc,
+    qty:qty,
+    price:price,
+    subtotal:qty*price
+   });
+  }
+ }
 
-
-  return {
-
-   description:
-    el.querySelector(
-     ".miDesc"
-    ).value.trim(),
-
-   qty:q,
-
-   price:p,
-
-   subtotal:q*p
-
-  };
-
- })
- .filter(function(x){
-
-  return (
-   x.description ||
-   x.price
-  );
-
- });
-
+ return arr;
 }
 
+function calcMdf(){
+ var items=readMdfItems();
+ var total=0;
 
-window.calcMdf =
- function(){
+ var els=$("mdfItems").children;
 
-  var items =
-   readMdfItems();
+ for(var i=0;i<els.length;i++){
+  var qty=Number(els[i].querySelector(".mdfQty").value)||0;
+  var price=Number(els[i].querySelector(".mdfPrice").value)||0;
+  var sub=qty*price;
 
-  var total =
-   items.reduce(
-    function(a,x){
-     return a + x.subtotal;
-    },
-    0
-   );
+  total+=sub;
 
+  els[i].querySelector(".mdfSubtotal").textContent=money(sub);
+ }
 
-  var payment =
-   $("mPayment").value;
+ $("mTotal").textContent=money(total);
 
+ var paid;
 
-  var paid;
+ if($("mPayment").value==="paid"){
+  paid=total;
+  $("mPaid").value=total;
+ }else{
+  paid=Number($("mPaid").value)||0;
+ }
 
+ var balance=Math.max(0,total-paid);
 
-  if(payment === "paid"){
+ $("mBalance").value=money(balance);
 
-   paid = total;
-
-  }else{
-
-   paid =
-    Number(
-     $("mPaid").value
-    ) || 0;
-
-   if(paid > total){
-    paid = total;
-   }
-
-  }
-
-
-  $("mTotal").value =
-   total.toFixed(2);
-
-
-  if(payment === "paid"){
-
-   $("mPaid").value =
-    total.toFixed(2);
-
-  }
-
-
-  $("mBalance").textContent =
-   money(
-    Math.max(
-     0,
-     total - paid
-    )
-   );
-
-
-  document
-  .querySelectorAll(".mdfItem")
-  .forEach(function(el){
-
-   var q =
-    Number(
-     el.querySelector(
-      ".miQty"
-     ).value
-    ) || 0;
-
-   var p =
-    Number(
-     el.querySelector(
-      ".miPrice"
-     ).value
-    ) || 0;
-
-   el.querySelector(
-    ".miSub"
-   ).textContent =
-    money(q*p);
-
-  });
-
+ return {
+  items:items,
+  total:total,
+  paid:paid,
+  balance:balance
  };
+}
 
+function saveMdf(){
+ var clientId=$("mClient").value;
 
-window.saveMdf =
- function(){
-
-  var client =
-   $("mClient").value;
-
-  if(!client){
-
-   alert(
-    "Seleccioná un cliente."
-   );
-
-   return;
-
-  }
-
-
-  var items =
-   readMdfItems();
-
-
-  if(!items.length){
-
-   alert(
-    "Agregá al menos un producto."
-   );
-
-   return;
-
-  }
-
-
-  var total =
-   items.reduce(
-    function(a,x){
-     return a + x.subtotal;
-    },
-    0
-   );
-
-
-  var paid;
-
-
-  if(
-   $("mPayment").value ===
-   "paid"
-  ){
-
-   paid = total;
-
-  }else{
-
-   paid =
-    Number(
-     $("mPaid").value
-    ) || 0;
-
-   paid =
-    Math.min(
-     paid,
-     total
-    );
-
-  }
-
-
-  var o =
-   editingOrderId ?
-   findOrder(editingOrderId) :
-   null;
-
-
-  if(!o){
-
-   o = {
-
-    id:uid(),
-
-    number:nextNumber(),
-
-    type:"mdf",
-
-    date:today(),
-
-    clientId:client
-
-   };
-
-   db.orders.push(o);
-
-  }
-
-
-  o.clientId =
-   client;
-
-  o.items =
-   items;
-
-  o.total =
-   total;
-
-  o.paid =
-   paid;
-
-  o.balance =
-   Math.max(
-    0,
-    total - paid
-   );
-
-  o.paymentStatus =
-   o.balance <= 0 ?
-   "paid" :
-   "pending";
-
-  o.status =
-   $("mStatus").value;
-
-  o.notes =
-   $("mNotes").value.trim();
-
-
-  if(!persist()){
-   return;
-  }
-
-
-  alert(
-   "Pedido MDF guardado correctamente."
-  );
-
-  editingOrderId = null;
-
-  showReceipt(o.id);
-
- };
-
-
-/* =========================
-   EDITAR Y ELIMINAR ÓRDENES
-========================= */
-
-window.editOrder = function(id){
-
- var o = findOrder(id);
-
- if(!o){
+ if(!clientId){
+  alert("Seleccioná un cliente.");
   return;
  }
 
- editingOrderId = id;
+ var data=calcMdf();
 
- if(o.type === "service"){
+ if(data.items.length===0){
+  alert("Agregá al menos un producto.");
+  return;
+ }
 
-  openScreen("service");
+ var existingId=$("mOrderId").value;
 
-  $("serviceTitle").textContent =
-   "Editar servicio";
+ if(existingId){
+  var o=findOrder(existingId);
 
-  fillClientSelect("sClient");
+  if(!o){
+   alert("No se encontró la orden.");
+   return;
+  }
 
-  $("sClient").value =
-   o.clientId || "";
+  o.type="mdf";
+  o.clientId=clientId;
+  o.phone=$("mPhone").value.trim();
+  o.address=$("mAddress").value.trim();
+  o.items=data.items;
+  o.total=data.total;
+  o.paid=data.paid;
+  o.balance=data.balance;
+  o.paymentStatus=data.balance<=0?"paid":"pending";
+  o.paymentMethod=$("mPayment").value;
+  o.notes=$("mNotes").value.trim();
 
-  $("sPhone").value =
-   o.phone || "";
+  persist();
+  showReceipt(o.id);
+  return;
+ }
 
-  $("sAddress").value =
-   o.address || "";
+ var order={
+  id:uid(),
+  number:nextNumber(),
+  type:"mdf",
+  clientId:clientId,
+  date:today(),
+  phone:$("mPhone").value.trim(),
+  address:$("mAddress").value.trim(),
+  items:data.items,
+  total:data.total,
+  paid:data.paid,
+  balance:data.balance,
+  paymentStatus:data.balance<=0?"paid":"pending",
+  paymentMethod:$("mPayment").value,
+  status:data.balance<=0?"Entregado":"Pendiente",
+  notes:$("mNotes").value.trim(),
+  createdAt:Date.now()
+ };
 
-  $("sBrand").value =
-   o.brand || "";
+ db.orders.push(order);
 
-  $("sModel").value =
-   o.model || "";
+ persist();
 
-  $("sSerial").value =
-   o.serial || "";
+ showReceipt(order.id);
+}
 
-  $("sProblem").value =
-   o.problem || "";
+window.resetMdf=resetMdf;
+window.addMdfItem=addMdfItem;
+window.removeMdfItem=removeMdfItem;
+window.calcMdf=calcMdf;
+window.saveMdf=saveMdf;
+ /* =========================
+   ORDENES
+========================= */
 
-  $("sStatus").value =
-   o.status || "Pendiente";
+function setOrderFilter(filter){
+ orderFilter=filter;
+ renderOrders();
+}
 
-  $("sTotal").value =
-   o.total || 0;
+function editOrder(id){
+ var o=findOrder(id);
+ if(!o)return;
 
-  $("sPaid").value =
-   o.paid || 0;
+ if(o.type==="service"){
+  $("sOrderId").value=o.id;
+  $("serviceTitle").textContent="Editar Servicio #"+o.number;
 
-  $("sExterior").value =
-   o.exterior || "";
+  $("sClient").value=o.clientId||"";
+  $("sPhone").value=o.phone||"";
+  $("sAddress").value=o.address||"";
+  $("sBrand").value=o.brand||"";
+  $("sModel").value=o.model||"";
+  $("sSerial").value=o.serial||"";
+  $("sProblem").value=o.problem||"";
+  $("sCondition").value=o.condition||"";
+  $("sAccessories").value=o.accessories||"";
+  $("sStatus").value=o.status||"Pendiente";
+  $("sCost").value=o.total||"";
+  $("sPaid").value=o.paid||"";
+  $("sNotes").value=o.notes||"";
 
-  $("sAccessories").value =
-   o.accessories || "";
-
-  $("sNotes").value =
-   o.notes || "";
-
-  tempPhotos =
-   o.photos || [];
-
+  currentPhotos=(o.photos||[]).slice();
   renderPhotos();
-
   calcService();
 
- }else{
+  openScreen("service");
+ }
 
-  openScreen("mdf");
+ if(o.type==="mdf"){
+  $("mOrderId").value=o.id;
+  $("mdfTitle").textContent="Editar Pedido MDF #"+o.number;
 
-  $("mdfTitle").textContent =
-   "Editar pedido MDF";
+  $("mClient").value=o.clientId||"";
+  $("mPhone").value=o.phone||"";
+  $("mAddress").value=o.address||"";
+  $("mPayment").value=o.paymentMethod||"pending";
+  $("mNotes").value=o.notes||"";
 
-  fillClientSelect("mClient");
+  $("mdfItems").innerHTML="";
 
-  $("mClient").value =
-   o.clientId || "";
+  var items=o.items||[];
 
-  $("mStatus").value =
-   o.status || "Pendiente";
-
-  $("mPayment").value =
-   o.paymentStatus === "paid" ?
-   "paid" :
-   "pending";
-
-  $("mPaid").value =
-   o.paid || 0;
-
-  $("mNotes").value =
-   o.notes || "";
-
-  $("mdfItems").innerHTML =
-   "";
-
-  (o.items || [])
-   .forEach(function(item){
-    addMdfItem(item);
-   });
-
-  if(!o.items || !o.items.length){
+  if(items.length===0){
    addMdfItem();
+  }else{
+   for(var i=0;i<items.length;i++){
+    addMdfItem(items[i]);
+   }
+  }
+
+  if(o.paymentMethod==="paid"){
+   $("mPayment").value="paid";
+  }else{
+   $("mPayment").value="pending";
+   $("mPaid").value=o.paid||"";
   }
 
   calcMdf();
-
+  openScreen("mdf");
  }
+}
 
-};
-
-
-window.deleteOrder = function(id){
+function deleteOrder(id){
+ var o=findOrder(id);
+ if(!o)return;
 
  if(!confirm(
-  "¿Eliminar esta orden?"
-  )){
-  return;
+  "¿Eliminar la orden #"+o.number+"?\n\n"+
+  "Esta acción no se puede deshacer."
+ ))return;
+
+ for(var i=db.orders.length-1;i>=0;i--){
+  if(db.orders[i].id===id){
+   db.orders.splice(i,1);
+   break;
+  }
  }
 
- db.orders =
- db.orders.filter(function(o){
-  return o.id !== id;
- });
+ persist();
 
- if(persist()){
+ alert("Orden eliminada.");
+}
 
-  renderOrders();
-  renderCash();
+function renderOrders(){
+ var box=$("ordersList");
+ if(!box)return;
 
-  alert(
-   "Orden eliminada correctamente."
-  );
+ var q=($("orderSearch").value||"").toLowerCase().trim();
 
- }
+ box.innerHTML="";
 
-};
+ var found=0;
 
+ for(var i=db.orders.length-1;i>=0;i--){
+  var o=db.orders[i];
 
-/* =========================
-   ÓRDENES
-========================= */
+  var name=clientName(o.clientId);
+  var type=o.type==="mdf"?"MDF":"Servicio Técnico";
 
-window.renderOrders = function(){
+  var searchText=(
+   o.number+" "+
+   name+" "+
+   type+" "+
+   (o.brand||"")+" "+
+   (o.model||"")+" "+
+   (o.serial||"")
+  ).toLowerCase();
 
- var q =
-  ($("orderSearch").value || "")
-  .toLowerCase();
+  if(q && searchText.indexOf(q)<0)continue;
 
- var f =
-  $("orderFilter").value;
+  var status=o.status||"Pendiente";
 
-
- var arr =
-  db.orders
-  .slice()
-  .reverse()
-  .filter(function(o){
-
-   var matchesStatus =
-    f === "all" ||
-    o.status === f;
-
-   var text =
-    String(o.number || "") +
-    " " +
-    clientName(o.clientId) +
-    " " +
-    String(o.brand || "") +
-    " " +
-    String(o.model || "") +
-    " " +
-    String(o.serial || "");
-
-   return (
-    matchesStatus &&
-    text.toLowerCase().includes(q)
-   );
-
-  });
-
-
- if(!arr.length){
-
-  $("ordersList").innerHTML =
-   '<div class="card">' +
-   'No hay órdenes.' +
-   '</div>';
-
-  return;
-
- }
-
-
- $("ordersList").innerHTML =
-  arr.map(function(o){
-
-   var paymentHtml =
-    o.paymentStatus === "paid"
-
-    ?
-
-    '<span class="status ok">' +
-    'Pagado' +
-    '</span>'
-
-    :
-
-    '<span class="status warn">' +
-    'Pendiente ' +
-    money(o.balance) +
-    '</span>';
-
-
-   var type =
-    o.type === "mdf" ?
-    "Pedido MDF" :
-    "Servicio técnico";
-
-
-   return (
-
-    '<div class="card">' +
-
-    '<b>Orden ' +
-    esc(o.number) +
-    '</b>' +
-
-    ' · ' +
-
-    esc(type) +
-
-    '<br>' +
-
-    '<b>Cliente:</b> ' +
-    esc(clientName(o.clientId)) +
-
-    '<br>' +
-
-    '<span class="status">' +
-    esc(o.status || "Pendiente") +
-    '</span> ' +
-
-    paymentHtml +
-
-    '<div class="money">' +
-    money(o.total) +
-    '</div>' +
-
-    '<div class="small">' +
-    'Cobrado: ' +
-    money(o.paid) +
-    ' · Saldo: ' +
-    money(o.balance) +
-    '</div>' +
-
-    '<div class="actions">' +
-
-    '<button onclick="editOrder(\'' +
-    o.id +
-    '\')">' +
-    'Editar' +
-    '</button>' +
-
-    '<button onclick="showReceipt(\'' +
-    o.id +
-    '\')">' +
-    'Recibo' +
-    '</button>' +
-
-    '<button class="danger" onclick="deleteOrder(\'' +
-    o.id +
-    '\')">' +
-    'Eliminar' +
-    '</button>' +
-
-    '</div>' +
-
-    '</div>'
-
-   );
-
-  }).join("");
-
-};
-
-
-/* =========================
-   EQUIPOS / IMPRESORAS
-========================= */
-
-window.renderEquipment = function(){
-
- var q =
-  ($("equipmentSearch").value || "")
-  .toLowerCase();
-
-
- var arr =
-  db.orders
-  .filter(function(o){
-   return o.type === "service";
-  })
-  .filter(function(o){
-
-   var text =
-    String(o.brand || "") +
-    " " +
-    String(o.model || "") +
-    " " +
-    String(o.serial || "") +
-    " " +
-    clientName(o.clientId);
-
-   return text
-    .toLowerCase()
-    .includes(q);
-
-  });
-
-
- if(!arr.length){
-
-  $("equipmentList").innerHTML =
-   '<div class="card">' +
-   'No hay equipos registrados.' +
-   '</div>';
-
-  return;
-
- }
-
-
- $("equipmentList").innerHTML =
-  arr
-  .slice()
-  .reverse()
-  .map(function(o){
-
-   return (
-
-    '<div class="card">' +
-
-    '<b>' +
-    esc(
-     (o.brand || "Sin marca") +
-     " " +
-     (o.model || "")
-    ) +
-    '</b>' +
-
-    '<br>' +
-
-    'Serie: ' +
-    esc(o.serial || "Sin serie") +
-
-    '<br>' +
-
-    'Cliente: ' +
-    esc(clientName(o.clientId)) +
-
-    '<br>' +
-
-    'Estado: ' +
-    '<span class="status">' +
-    esc(o.status || "Pendiente") +
-    '</span>' +
-
-    '<div class="actions">' +
-
-    '<button onclick="editOrder(\'' +
-    o.id +
-    '\')">' +
-    'Abrir orden' +
-    '</button>' +
-
-    '</div>' +
-
-    '</div>'
-
-   );
-
-  })
-  .join("");
-
-};
-
-
-/* =========================
-   CAJA / FACTURACIÓN
-========================= */
-
-window.renderCash = function(){
-
- var facturacion = 0;
- var cobrado = 0;
- var pendiente = 0;
-
- var servicios = 0;
- var mdf = 0;
-
- var cobradoServicios = 0;
- var cobradoMdf = 0;
-
-
- db.orders.forEach(function(o){
-
-  var total =
-   Number(o.total) || 0;
-
-  var paid =
-   Number(o.paid) || 0;
-
-  var balance =
-   Number(o.balance);
-
-  if(isNaN(balance)){
-   balance =
-    Math.max(
-     0,
-     total - paid
-    );
+  if(orderFilter==="Pendientes"){
+   if(status==="Entregado" || status==="Listo")continue;
   }
 
+  if(orderFilter==="Terminadas"){
+   if(status!=="Listo")continue;
+  }
 
-  facturacion += total;
-  cobrado += paid;
-  pendiente += balance;
+  if(orderFilter==="Entregadas"){
+   if(status!=="Entregado")continue;
+  }
+
+  found++;
+
+  var paymentClass=o.balance<=0?"paid":"pending";
+  var paymentText=o.balance<=0?"Pagado":"Pendiente";
+
+  var div=document.createElement("div");
+  div.className="card";
+
+  div.innerHTML=
+   "<div style='display:flex;justify-content:space-between;align-items:center'>"+
+    "<b>Orden #"+esc(o.number)+"</b>"+
+    "<span class='status "+paymentClass+"'>"+paymentText+"</span>"+
+   "</div>"+
+   "<p><b>"+esc(type)+"</b></p>"+
+   "<p>👤 "+esc(name)+"</p>"+
+   "<p>📅 "+esc(o.date||"")+"</p>"+
+   (o.brand||o.model?
+    "<p>🖨️ "+esc((o.brand||"")+" "+(o.model||""))+"</p>":"")+
+   "<p>Estado: <b>"+esc(status)+"</b></p>"+
+   "<p>Total: <b>$"+money(o.total)+"</b></p>"+
+   "<p>Cobrado: $"+money(o.paid)+"</p>"+
+   "<p>Saldo: $"+money(o.balance)+"</p>"+
+   "<div>"+
+    "<button class='blue' onclick=\"editOrder('"+o.id+"')\">✏️ Editar</button>"+
+    "<button class='green' onclick=\"showReceipt('"+o.id+"')\">🧾 Documento</button>"+
+    "<button class='red' onclick=\"deleteOrder('"+o.id+"')\">🗑️ Eliminar</button>"+
+   "</div>";
+
+  box.appendChild(div);
+ }
+
+ if(!found){
+  box.innerHTML="<div class='card'>No se encontraron órdenes.</div>";
+ }
+}
+
+window.setOrderFilter=setOrderFilter;
+window.editOrder=editOrder;
+window.deleteOrder=deleteOrder;
+window.renderOrders=renderOrders;
 
 
-  if(o.type === "mdf"){
+/* =========================
+   EQUIPOS
+========================= */
 
-   mdf += total;
-   cobradoMdf += paid;
+function renderEquipment(){
+ var box=$("equipmentList");
+ if(!box)return;
 
+ var q=($("equipmentSearch").value||"").toLowerCase().trim();
+
+ box.innerHTML="";
+
+ var found=0;
+
+ for(var i=db.orders.length-1;i>=0;i--){
+  var o=db.orders[i];
+
+  if(o.type!=="service")continue;
+
+  var text=(
+   clientName(o.clientId)+" "+
+   (o.brand||"")+" "+
+   (o.model||"")+" "+
+   (o.serial||"")
+  ).toLowerCase();
+
+  if(q && text.indexOf(q)<0)continue;
+
+  found++;
+
+  var div=document.createElement("div");
+  div.className="card";
+
+  div.innerHTML=
+   "<b>"+esc((o.brand||"")+" "+(o.model||""))+"</b>"+
+   "<br>👤 "+esc(clientName(o.clientId))+
+   "<br>🔢 Serie: "+esc(o.serial||"Sin número")+
+   "<br>📋 Orden: #"+esc(o.number)+
+   "<br>Estado: "+esc(o.status||"Pendiente")+
+   "<br><button class='blue' onclick=\"editOrder('"+o.id+"')\">✏️ Ver orden</button>";
+
+  box.appendChild(div);
+ }
+
+ if(!found){
+  box.innerHTML="<div class='card'>No hay equipos registrados.</div>";
+ }
+}
+
+window.renderEquipment=renderEquipment;
+
+
+/* =========================
+   CAJA JUREMA
+========================= */
+
+function renderCash(){
+ var box=$("cashContent");
+ if(!box)return;
+
+ var serviceTotal=0;
+ var servicePaid=0;
+ var servicePending=0;
+
+ var mdfTotal=0;
+ var mdfPaid=0;
+ var mdfPending=0;
+
+ for(var i=0;i<db.orders.length;i++){
+  var o=db.orders[i];
+
+  var total=Number(o.total)||0;
+  var paid=Number(o.paid)||0;
+  var balance=Math.max(0,total-paid);
+
+  if(o.type==="mdf"){
+   mdfTotal+=total;
+   mdfPaid+=paid;
+   mdfPending+=balance;
   }else{
-
-   servicios += total;
-   cobradoServicios += paid;
-
+   serviceTotal+=total;
+   servicePaid+=paid;
+   servicePending+=balance;
   }
-
- });
-
-
- $("cashSummary").innerHTML =
-
-  '<div class="grid">' +
-
-  '<div class="card">' +
-  '<div class="small">' +
-  'FACTURACIÓN TOTAL' +
-  '</div>' +
-  '<div class="total">' +
-  money(facturacion) +
-  '</div>' +
-  '</div>' +
-
-  '<div class="card">' +
-  '<div class="small">' +
-  'TOTAL COBRADO' +
-  '</div>' +
-  '<div class="total">' +
-  money(cobrado) +
-  '</div>' +
-  '</div>' +
-
-  '<div class="card">' +
-  '<div class="small">' +
-  'PENDIENTE DE COBRO' +
-  '</div>' +
-  '<div class="total">' +
-  money(pendiente) +
-  '</div>' +
-  '</div>' +
-
-  '</div>' +
-
-
-  '<div class="grid">' +
-
-  '<div class="card">' +
-  '<div class="small">' +
-  'SERVICIOS TÉCNICOS' +
-  '</div>' +
-  '<div class="money">' +
-  money(servicios) +
-  '</div>' +
-  '<div class="small">' +
-  'Cobrado: ' +
-  money(cobradoServicios) +
-  '</div>' +
-  '</div>' +
-
-  '<div class="card">' +
-  '<div class="small">' +
-  'PEDIDOS MDF' +
-  '</div>' +
-  '<div class="money">' +
-  money(mdf) +
-  '</div>' +
-  '<div class="small">' +
-  'Cobrado: ' +
-  money(cobradoMdf) +
-  '</div>' +
-  '</div>' +
-
-  '</div>';
-
-
- var orders =
-  db.orders
-  .slice()
-  .reverse();
-
-
- if(!orders.length){
-
-  $("cashList").innerHTML =
-   '<div class="card">' +
-   'Todavía no hay movimientos.' +
-   '</div>';
-
-  return;
-
  }
 
+ var facturacion=serviceTotal+mdfTotal;
+ var cobrado=servicePaid+mdfPaid;
+ var pendiente=servicePending+mdfPending;
 
- $("cashList").innerHTML =
-  orders.map(function(o){
+ box.innerHTML=
+  "<div class='card'>"+
+   "<h3>💰 Resumen general</h3>"+
+   "<p>Facturación total: <b>$"+money(facturacion)+"</b></p>"+
+   "<p>Dinero cobrado: <b>$"+money(cobrado)+"</b></p>"+
+   "<p>Dinero pendiente: <b>$"+money(pendiente)+"</b></p>"+
+  "</div>"+
 
-   return (
+  "<div class='card'>"+
+   "<h3>🛠️ Servicio Técnico</h3>"+
+   "<p>Total vendido: <b>$"+money(serviceTotal)+"</b></p>"+
+   "<p>Cobrado: <b>$"+money(servicePaid)+"</b></p>"+
+   "<p>Pendiente: <b>$"+money(servicePending)+"</b></p>"+
+  "</div>"+
 
-    '<div class="card">' +
+  "<div class='card'>"+
+   "<h3>🪵 Pedidos MDF</h3>"+
+   "<p>Total vendido: <b>$"+money(mdfTotal)+"</b></p>"+
+   "<p>Cobrado: <b>$"+money(mdfPaid)+"</b></p>"+
+   "<p>Pendiente: <b>$"+money(mdfPending)+"</b></p>"+
+  "</div>";
+}
 
-    '<b>Orden ' +
-    esc(o.number) +
-    '</b>' +
-
-    ' · ' +
-
-    (o.type === "mdf" ?
-     "MDF" :
-     "Servicio") +
-
-    '<br>' +
-
-    esc(clientName(o.clientId)) +
-
-    '<br>' +
-
-    'Facturado: ' +
-    money(o.total) +
-
-    '<br>' +
-
-    'Cobrado: ' +
-    money(o.paid) +
-
-    '<br>' +
-
-    'Saldo: ' +
-    money(o.balance) +
-
-    '<br>' +
-
-    (
-     o.paymentStatus === "paid" ?
-
-     '<span class="status ok">' +
-     'PAGADO' +
-     '</span>' :
-
-     '<span class="status warn">' +
-     'PENDIENTE' +
-     '</span>'
-    ) +
-
-    '</div>'
-
-   );
-
-  }).join("");
-
-};
+window.renderCash=renderCash;
 
 
 /* =========================
-   RECIBO
+   DOCUMENTO / RECIBO
 ========================= */
 
-window.showReceipt = function(id){
+var lastReceiptId=null;
 
- var o =
-  findOrder(id);
+function showReceipt(id){
+ var o=findOrder(id);
 
  if(!o){
+  alert("No se encontró la orden.");
   return;
  }
 
- var c =
-  findClient(o.clientId) ||
-  {};
+ lastReceiptId=id;
 
+ var c=findClient(o.clientId);
 
- var html =
+ var type=o.type==="mdf"?"PEDIDO MDF":"SERVICIO TÉCNICO";
 
-  '<div class="card">' +
+ var html="";
 
-  '<h2>JUREMA</h2>' +
+ html+=
+  "<div class='receipt'>"+
+   "<h1>JUREMA</h1>"+
+   "<div style='text-align:center'>"+type+"</div>"+
+   "<hr>"+
 
-  '<p>' +
+   "<div class='receipt-line'>"+
+    "<span><b>Orden</b></span>"+
+    "<span>#"+esc(o.number)+"</span>"+
+   "</div>"+
 
-  'Orden Nº <b>' +
-  esc(o.number) +
-  '</b>' +
+   "<div class='receipt-line'>"+
+    "<span><b>Fecha</b></span>"+
+    "<span>"+esc(o.date||today())+"</span>"+
+   "</div>"+
 
-  '<br>' +
+   "<h3>Cliente</h3>"+
 
-  'Fecha: ' +
-  esc(o.date) +
+   "<div class='receipt-line'>"+
+    "<span>Nombre</span>"+
+    "<span>"+esc(c?c.name:"")+"</span>"+
+   "</div>"+
 
-  '</p>' +
+   "<div class='receipt-line'>"+
+    "<span>Teléfono</span>"+
+    "<span>"+esc(o.phone||(c?c.phone:"")||"")+"</span>"+
+   "</div>"+
 
-  '<hr>' +
+   "<div class='receipt-line'>"+
+    "<span>Dirección</span>"+
+    "<span>"+esc(o.address||(c?c.address:"")||"")+"</span>"+
+   "</div>";
 
-  '<b>Cliente:</b> ' +
-  esc(c.name || "") +
+ if(o.type==="service"){
 
-  '<br>' +
+  html+=
+   "<h3>Equipo</h3>"+
 
-  '<b>Teléfono:</b> ' +
-  esc(c.phone || "") +
+   "<div class='receipt-line'>"+
+    "<span>Marca</span>"+
+    "<span>"+esc(o.brand||"")+"</span>"+
+   "</div>"+
 
-  '<br>' +
+   "<div class='receipt-line'>"+
+    "<span>Modelo</span>"+
+    "<span>"+esc(o.model||"")+"</span>"+
+   "</div>"+
 
-  '<b>Dirección:</b> ' +
-  esc(c.address || "") +
+   "<div class='receipt-line'>"+
+    "<span>Serie</span>"+
+    "<span>"+esc(o.serial||"")+"</span>"+
+   "</div>"+
 
-  '<hr>';
+   "<h3>Servicio</h3>"+
 
-
- if(o.type === "mdf"){
-
-  html +=
-   '<h3>Pedido MDF</h3>';
-
-
-  (o.items || [])
-  .forEach(function(i){
-
-   html +=
-
-    esc(i.description) +
-
-    ' × ' +
-
-    esc(i.qty) +
-
-    ' = ' +
-
-    money(i.subtotal) +
-
-    '<br>';
-
-  });
-
+   "<p><b>Problema:</b><br>"+esc(o.problem||"")+"</p>"+
+   "<p><b>Estado exterior:</b><br>"+esc(o.condition||"")+"</p>"+
+   "<p><b>Accesorios:</b><br>"+esc(o.accessories||"")+"</p>";
 
  }else{
 
-  html +=
+  html+="<h3>Productos</h3>";
 
-   '<h3>Servicio técnico</h3>' +
+  var items=o.items||[];
 
-   '<b>Marca:</b> ' +
-   esc(o.brand || "") +
+  for(var i=0;i<items.length;i++){
+   var item=items[i];
 
-   '<br>' +
-
-   '<b>Modelo:</b> ' +
-   esc(o.model || "") +
-
-   '<br>' +
-
-   '<b>Serie:</b> ' +
-   esc(o.serial || "") +
-
-   '<br>' +
-
-   '<b>Problema:</b> ' +
-   esc(o.problem || "");
-
+   html+=
+    "<div class='receipt-line'>"+
+     "<span>"+
+      esc(item.desc||"Producto")+
+      " x "+esc(item.qty)+
+     "</span>"+
+     "<span>$"+money(item.subtotal)+"</span>"+
+    "</div>";
+  }
  }
 
+ html+=
+   "<h3>Pago</h3>"+
 
- html +=
+   "<div class='receipt-line'>"+
+    "<span>Total</span>"+
+    "<b>$"+money(o.total)+"</b>"+
+   "</div>"+
 
-  '<hr>' +
+   "<div class='receipt-line'>"+
+    "<span>Cobrado</span>"+
+    "<span>$"+money(o.paid)+"</span>"+
+   "</div>"+
 
-  '<div class="total">' +
-  'Total: ' +
-  money(o.total) +
-  '</div>' +
+   "<div class='receipt-line'>"+
+    "<span>Saldo</span>"+
+    "<span>$"+money(o.balance)+"</span>"+
+   "</div>"+
 
-  '<div>' +
-  'Pagado: ' +
-  money(o.paid) +
-  '</div>' +
+   "<p style='text-align:center;margin-top:15px'>"+
+    "<b>"+(o.balance<=0?"PAGADO":"PENDIENTE")+"</b>"+
+   "</p>";
 
-  '<div>' +
-  'Saldo: ' +
-  money(o.balance) +
-  '</div>' +
+ if(o.notes){
+  html+=
+   "<p><b>Observaciones:</b><br>"+
+   esc(o.notes)+
+   "</p>";
+ }
 
-  '<p>' +
+ html+=
+   "<hr>"+
+   "<p style='text-align:center'>Gracias por confiar en JUREMA</p>"+
+  "</div>";
 
-  'Estado: ' +
-  esc(o.status || "") +
-
-  '<br>' +
-
-  'Pago: ' +
-
-  (
-   o.paymentStatus === "paid" ?
-
-   '<b>PAGADO</b>' :
-
-   '<b>PENDIENTE</b>'
-  ) +
-
-  '</p>' +
-
-  '<p>' +
-  esc(o.notes || "") +
-  '</p>' +
-
-  '</div>';
-
-
- $("receiptContent").innerHTML =
-  html;
-
+ $("receiptContent").innerHTML=html;
 
  /*
-    Marcamos el recibo para impresión.
+  Importante:
+  primero cargamos el contenido y después
+  cambiamos de pantalla. Así evitamos que
+  aparezca una hoja en blanco.
  */
+ openScreen("receiptScreen");
+}
 
- document
- .querySelectorAll(".screen")
- .forEach(function(s){
-  s.classList.remove("printing");
- });
-
- $("receipt")
- .classList.add("printing");
-
-
- openScreen(
-  "receipt"
- );
-
-};
-
-
-/* =========================
-   COMPARTIR RECIBO
-========================= */
-
-window.shareReceipt = function(){
-
- if(!navigator.share){
-
-  alert(
-   "Tu navegador no admite compartir."
-  );
-
+function printReceipt(){
+ if(!lastReceiptId){
+  alert("No hay ningún documento para imprimir.");
   return;
-
  }
 
+ var o=findOrder(lastReceiptId);
 
- var text =
-  $("receiptContent").innerText;
+ if(!o){
+  alert("No se encontró el documento.");
+  return;
+ }
 
+ /*
+  Le damos tiempo al navegador para renderizar
+  el recibo antes de abrir la ventana de impresión.
+ */
+ setTimeout(function(){
+  window.print();
+ },300);
+}
 
- navigator.share({
+function shareReceipt(){
+ if(!lastReceiptId)return;
 
-  title:
-   "JUREMA - Orden",
+ var o=findOrder(lastReceiptId);
+ if(!o)return;
 
-  text:text
+ var c=findClient(o.clientId);
 
- })
- .catch(function(){});
+ var text=
+  "JUREMA\n"+
+  "Orden #"+o.number+"\n"+
+  "Fecha: "+(o.date||"")+"\n"+
+  "Cliente: "+(c?c.name:"")+"\n"+
+  "Total: $"+money(o.total)+"\n"+
+  "Cobrado: $"+money(o.paid)+"\n"+
+  "Saldo: $"+money(o.balance)+"\n"+
+  "Estado: "+(o.balance<=0?"PAGADO":"PENDIENTE");
 
-};
+ if(navigator.share){
+  navigator.share({
+   title:"JUREMA - Orden #"+o.number,
+   text:text
+  }).catch(function(){});
+ }else{
+  alert("Tu navegador no permite compartir directamente.");
+ }
+}
+
+window.showReceipt=showReceipt;
+window.printReceipt=printReceipt;
+window.shareReceipt=shareReceipt;
 
 
 /* =========================
    COPIA DE SEGURIDAD
 ========================= */
 
-window.exportBackup = function(){
+function exportBackup(){
+ var data=JSON.stringify(db,null,2);
 
- try{
+ var blob=new Blob(
+  [data],
+  {type:"application/json"}
+ );
 
-  var data =
-   JSON.stringify(
-    db,
-    null,
-    2
-   );
+ var url=URL.createObjectURL(blob);
 
+ var a=document.createElement("a");
 
-  var blob =
-   new Blob(
-    [data],
-    {
-     type:
-      "application/json"
-    }
-   );
+ a.href=url;
+ a.download="JUREMA_backup_"+new Date().toISOString().slice(0,10)+".json";
 
+ document.body.appendChild(a);
+ a.click();
+ document.body.removeChild(a);
 
-  var url =
-   URL.createObjectURL(blob);
+ setTimeout(function(){
+  URL.revokeObjectURL(url);
+ },1000);
+}
 
+function importBackup(event){
+ var file=event.target.files[0];
 
-  var a =
-   document.createElement("a");
+ if(!file)return;
 
+ var reader=new FileReader();
 
-  a.href =
-   url;
-
-
-  a.download =
-   "jurema-backup-" +
-   new Date()
-   .toISOString()
-   .slice(0,10) +
-   ".json";
-
-
-  document.body
-   .appendChild(a);
-
-
-  a.click();
-
-
-  document.body
-   .removeChild(a);
-
-
-  setTimeout(
-   function(){
-    URL.revokeObjectURL(url);
-   },
-   1000
-  );
-
-
- }catch(e){
-
-  alert(
-   "No se pudo crear la copia de seguridad."
-  );
-
- }
-
-};
-
-
-window.importBackup = function(ev){
-
- var file =
-  ev.target.files[0];
-
-
- if(!file){
-  return;
- }
-
-
- var reader =
-  new FileReader();
-
-
- reader.onload =
-  function(){
-
-   try{
-
-    var x =
-     JSON.parse(
-      reader.result
-     );
-
-
-    if(
-     !x ||
-     !Array.isArray(x.clients) ||
-     !Array.isArray(x.orders)
-    ){
-
-     throw new Error(
-      "Formato inválido"
-     );
-
-    }
-
-
-    db = x;
-
-
-    if(
-     !db.next ||
-     Number(db.next) < 5
-    ){
-
-     db.next = 5;
-
-    }
-
-
-    if(
-     persist()
-    ){
-
-     alert(
-      "Copia restaurada correctamente."
-     );
-
-     renderBackupInfo();
-     fillClientSelect("sClient");
-     fillClientSelect("mClient");
-
-    }
-
-
-   }catch(e){
-
-    alert(
-     "El archivo no es una copia válida de JUREMA."
-    );
-
-   }
-
-  };
-
-
- reader.readAsText(file);
-
-};
-
-
-/* =========================
-   INFORMACIÓN DE BACKUP
-========================= */
-
-window.renderBackupInfo =
- function(){
-
-  $("backupInfo").innerHTML =
-
-   '<div class="card">' +
-
-   'Clientes: <b>' +
-   db.clients.length +
-   '</b>' +
-
-   '<br>' +
-
-   'Órdenes: <b>' +
-   db.orders.length +
-   '</b>' +
-
-   '<br>' +
-
-   'Próximo número: <b>' +
-   String(db.next)
-   .padStart(5,"0") +
-   '</b>' +
-
-   '</div>';
-
- };
-
-
-/* =========================
-   BORRAR BASE
-========================= */
-
-window.clearDatabase =
- function(){
-
-  var x =
-   prompt(
-    "Para borrar TODOS los datos escribí BORRAR"
-   );
-
-
-  if(x !== "BORRAR"){
-   return;
-  }
-
-
-  db = {
-   clients:[],
-   orders:[],
-   next:5
-  };
-
+ reader.onload=function(e){
 
   try{
 
-   localStorage.removeItem(
-    KEY
-   );
+   var data=JSON.parse(e.target.result);
 
-  }catch(e){}
+   if(!data || !Array.isArray(data.clients) || !Array.isArray(data.orders)){
+    alert("El archivo no parece ser una copia de JUREMA.");
+    return;
+   }
 
+   if(!confirm(
+    "La importación reemplazará los datos actuales.\n\n"+
+    "¿Continuar?"
+   ))return;
 
-  editingClientId = null;
-  editingOrderId = null;
-  tempPhotos = [];
-  stack = [];
+   db=data;
 
+   if(!db.next)db.next=5;
 
-  alert(
-   "Todos los datos fueron borrados."
-  );
+   persist();
+   setupSelects();
 
+   alert("Copia restaurada correctamente.");
 
-  openScreen(
-   "home",
-   false
-  );
+  }catch(error){
 
+   alert("No se pudo leer la copia de seguridad.");
+
+  }
+
+  event.target.value="";
  };
+
+ reader.readAsText(file);
+}
+
+function renderBackupInfo(){
+ var box=$("backupInfo");
+ if(!box)return;
+
+ box.innerHTML=
+  "<div class='card'>"+
+   "<b>Clientes:</b> "+db.clients.length+
+   "<br><b>Órdenes:</b> "+db.orders.length+
+  "</div>";
+}
+
+window.exportBackup=exportBackup;
+window.importBackup=importBackup;
+window.renderBackupInfo=renderBackupInfo;
+
+
+/* =========================
+   BORRAR BASE DE DATOS
+========================= */
+
+function clearDatabase(){
+
+ var confirmation=prompt(
+  "ATENCIÓN\n\n"+
+  "Esto eliminará todos los clientes y órdenes.\n\n"+
+  "Escribí BORRAR para confirmar."
+ );
+
+ if(confirmation!=="BORRAR"){
+  return;
+ }
+
+ db={
+  clients:[],
+  orders:[],
+  next:5
+ };
+
+ localStorage.removeItem(KEY);
+ localStorage.setItem(KEY,JSON.stringify(db));
+
+ setupSelects();
+ renderClients();
+ renderOrders();
+ renderEquipment();
+ renderCash();
+ renderBackupInfo();
+
+ alert("Todos los datos fueron eliminados.");
+
+ openScreen("home",false);
+}
+
+window.clearDatabase=clearDatabase;
 
 
 /* =========================
@@ -2941,24 +1806,14 @@ loadDatabase();
 
 setupSelects();
 
-fillClientSelect(
- "sClient"
-);
-
-fillClientSelect(
- "mClient"
-);
-
 renderClients();
-
 renderOrders();
-
 renderEquipment();
-
 renderCash();
-
 renderBackupInfo();
 
+resetService();
+resetMdf();
 
 })();
 </script>
