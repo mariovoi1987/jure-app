@@ -3460,67 +3460,89 @@ function compartirArchivos(archivos,o){
    EVENTOS
 ========================= */
 
-document.getElementById("fotos").addEventListener(
+function agregarEvento(id, evento, funcion){
+
+  var elemento=document.getElementById(id);
+
+  if(elemento){
+    elemento.addEventListener(evento, funcion);
+  }
+
+}
+
+
+agregarEvento(
+  "fotos",
   "change",
   cargarFotos
 );
 
 
-document.getElementById("buscarClientes").addEventListener(
+agregarEvento(
+  "buscarClientes",
   "input",
   mostrarClientes
 );
 
 
-document.getElementById("buscarOrdenes").addEventListener(
+agregarEvento(
+  "buscarOrdenes",
   "input",
   mostrarOrdenes
 );
 
 
-document.getElementById("filtroOrdenes").addEventListener(
+agregarEvento(
+  "filtroOrdenes",
   "change",
   mostrarOrdenes
 );
 
 
-document.getElementById("buscarEquipos").addEventListener(
+agregarEvento(
+  "buscarEquipos",
   "input",
   mostrarEquipos
 );
 
 
-document.getElementById("cliente").addEventListener(
+agregarEvento(
+  "cliente",
   "change",
   clienteSeleccionado
 );
 
 
-document.getElementById("clienteMDF").addEventListener(
+agregarEvento(
+  "clienteMDF",
   "change",
   clienteSeleccionadoMDF
 );
 
 
-document.getElementById("costo").addEventListener(
+agregarEvento(
+  "costo",
   "input",
   calcularServicio
 );
 
 
-document.getElementById("adelanto").addEventListener(
+agregarEvento(
+  "adelanto",
   "input",
   calcularServicio
 );
 
 
-document.getElementById("adelantoMDF").addEventListener(
+agregarEvento(
+  "adelantoMDF",
   "input",
   calcularMDF
 );
 
 
-document.getElementById("backupFile").addEventListener(
+agregarEvento(
+  "backupFile",
   "change",
   importarBackup
 );
