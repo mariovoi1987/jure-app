@@ -1,3612 +1,2966 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
 <title>JUREMA</title>
-
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-html,body{
-  margin:0;
-  padding:0;
-  min-height:100%;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f3f4f6;
-  color:#111827;
-}
-button,input,select,textarea{
-  font:inherit;
-}
-button{
-  cursor:pointer;
-}
-.app{
-  min-height:100vh;
-}
-.header{
-  position:sticky;
-  top:0;
-  z-index:20;
-  height:58px;
-  background:#111827;
-  color:white;
-  display:flex;
-  align-items:center;
-  padding:0 14px;
-  box-shadow:0 2px 8px rgba(0,0,0,.18);
-}
-.back{
-  width:42px;
-  height:42px;
-  border:0;
-  background:transparent;
-  color:white;
-  font-size:30px;
-  line-height:1;
-  display:none;
-}
-.header-title{
-  font-size:20px;
-  font-weight:700;
-}
-.container{
-  width:100%;
-  max-width:700px;
-  margin:auto;
-  padding:14px;
-}
-.screen{
-  display:none;
-}
-.screen.active{
-  display:block;
-}
-.home-title{
-  font-size:28px;
-  font-weight:800;
-  margin:10px 0 4px;
-}
-.subtitle{
-  color:#6b7280;
-  margin-bottom:18px;
-}
-.menu{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-.menu button{
-  min-height:92px;
-  border:0;
-  border-radius:18px;
-  background:white;
-  box-shadow:0 2px 9px rgba(0,0,0,.09);
-  padding:14px;
-  text-align:left;
-  font-weight:700;
-  color:#111827;
-}
-.menu button .ico{
-  display:block;
-  font-size:30px;
-  margin-bottom:7px;
-}
-.menu .wide{
-  grid-column:1/-1;
-}
-.card{
-  background:white;
-  border-radius:16px;
-  padding:14px;
-  margin-bottom:14px;
-  box-shadow:0 2px 8px rgba(0,0,0,.07);
-}
-h2{
-  margin:4px 0 15px;
-  font-size:22px;
-}
-h3{
-  margin:5px 0 12px;
-}
-label{
-  display:block;
-  font-size:14px;
-  font-weight:700;
-  margin:11px 0 5px;
-}
-input,select,textarea{
-  width:100%;
-  border:1px solid #d1d5db;
-  border-radius:10px;
-  padding:11px;
-  background:white;
-  color:#111827;
-}
-textarea{
-  min-height:85px;
-  resize:vertical;
-}
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-.row3{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:8px;
-}
-.actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:14px;
-}
-.btn{
-  border:0;
-  border-radius:10px;
-  padding:11px 15px;
-  font-weight:700;
-}
-.btn-primary{
-  background:#111827;
-  color:white;
-}
-.btn-secondary{
-  background:#e5e7eb;
-  color:#111827;
-}
-.btn-success{
-  background:#166534;
-  color:white;
-}
-.btn-danger{
-  background:#b91c1c;
-  color:white;
-}
-.btn-blue{
-  background:#1d4ed8;
-  color:white;
-}
-.small{
-  font-size:12px;
-  color:#6b7280;
-}
-.search{
-  margin-bottom:10px;
-}
-.list{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-.item{
-  background:white;
-  border-radius:14px;
-  padding:13px;
-  box-shadow:0 2px 7px rgba(0,0,0,.07);
-}
-.item-title{
-  font-weight:800;
-  font-size:17px;
-  margin-bottom:5px;
-}
-.item-line{
-  margin:3px 0;
-  color:#374151;
-}
-.badge{
-  display:inline-block;
-  padding:5px 8px;
-  border-radius:20px;
-  background:#e5e7eb;
-  font-size:12px;
-  font-weight:700;
-  margin-top:5px;
-}
-.badge.green{
-  background:#dcfce7;
-  color:#166534;
-}
-.badge.orange{
-  background:#ffedd5;
-  color:#9a3412;
-}
-.badge.blue{
-  background:#dbeafe;
-  color:#1e40af;
-}
-.badge.gray{
-  background:#e5e7eb;
-  color:#374151;
-}
-.filters{
-  display:flex;
-  gap:6px;
-  overflow-x:auto;
-  padding-bottom:5px;
-}
-.filters button{
-  white-space:nowrap;
-}
-.filter-active{
-  background:#111827!important;
-  color:white!important;
-}
-.photo-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:7px;
-  margin-top:10px;
-}
-.photo-grid img{
-  width:100%;
-  aspect-ratio:1;
-  object-fit:cover;
-  border-radius:9px;
-}
-.photo-preview{
-  position:relative;
-}
-.photo-preview button{
-  position:absolute;
-  top:3px;
-  right:3px;
-  width:25px;
-  height:25px;
-  border:0;
-  border-radius:50%;
-  background:#b91c1c;
-  color:white;
-}
-.line-item{
-  border:1px solid #e5e7eb;
-  border-radius:12px;
-  padding:10px;
-  margin-bottom:9px;
-}
-.line-total{
-  text-align:right;
-  font-weight:800;
-  margin-top:7px;
-}
-.total-box{
-  background:#f9fafb;
-  border-radius:12px;
-  padding:12px;
-  margin-top:12px;
-}
-.total-row{
-  display:flex;
-  justify-content:space-between;
-  padding:4px 0;
-}
-.total-row strong{
-  font-size:18px;
-}
-.empty{
-  text-align:center;
-  color:#6b7280;
-  padding:30px 10px;
-}
-.receipt{
-  background:white;
-  padding:20px;
-  border-radius:8px;
-}
-.receipt-header{
-  text-align:center;
-  margin-bottom:15px;
-}
-.receipt-logo{
-  font-size:30px;
-  font-weight:900;
-}
-.receipt-number{
-  font-size:20px;
-  font-weight:800;
-}
-.receipt-section{
-  border-top:1px solid #ddd;
-  padding-top:10px;
-  margin-top:10px;
-}
-.receipt-row{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:4px 0;
-}
-.money{
-  font-weight:800;
-}
-.stat-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-.stat{
-  background:white;
-  border-radius:14px;
-  padding:15px;
-  box-shadow:0 2px 7px rgba(0,0,0,.07);
-}
-.stat-label{
-  color:#6b7280;
-  font-size:13px;
-}
-.stat-value{
-  font-size:22px;
-  font-weight:800;
-  margin-top:4px;
-}
-.notice{
-  padding:10px;
-  border-radius:10px;
-  background:#eff6ff;
-  color:#1e40af;
-  font-size:13px;
-  margin-top:10px;
-}
-@media(max-width:420px){
-  .menu{
-    grid-template-columns:1fr;
-  }
-  .menu .wide{
-    grid-column:auto;
-  }
-  .row3{
-    grid-template-columns:1fr;
-  }
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#111827}
+header{position:sticky;top:0;z-index:10;background:#111827;color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px}
+header h1{font-size:20px;margin:0}
+.back{background:#374151;color:#fff;border:0;border-radius:10px;padding:8px 12px;font-size:20px}
+main{max-width:700px;margin:auto;padding:16px}
+.screen{display:none}
+.screen.active{display:block}
+h2{margin-top:4px}
+.card{background:#fff;border-radius:14px;padding:15px;margin:12px 0;box-shadow:0 2px 8px #0001}
+button{border:0;border-radius:11px;padding:12px 14px;font-size:15px;cursor:pointer;background:#111827;color:#fff}
+button.secondary{background:#e5e7eb;color:#111827}
+button.danger{background:#b91c1c}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.menu button{width:100%;min-height:62px}
+label{display:block;font-weight:bold;margin:11px 0 5px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d1d5db;border-radius:9px;font-size:16px;background:#fff}
+textarea{min-height:90px;resize:vertical}
+.row{display:flex;gap:8px;align-items:center}
+.row>*{flex:1}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.actions button{flex:1}
+.item{border:1px solid #e5e7eb;border-radius:10px;padding:10px;margin:8px 0}
+.small{font-size:13px;color:#6b7280}
+.money{font-weight:bold;font-size:18px}
+.status{display:inline-block;padding:5px 8px;border-radius:8px;background:#e5e7eb;font-size:12px}
+.ok{background:#dcfce7;color:#166534}
+.warn{background:#fef3c7;color:#92400e}
+.total{font-size:22px;font-weight:bold}
+.hidden{display:none}
+.photo{width:85px;height:85px;object-fit:cover;border-radius:8px;margin:4px}
+.photos{display:flex;flex-wrap:wrap}
+@media(max-width:430px){
+ .grid{grid-template-columns:1fr}
+ main{padding:12px}
 }
 @media print{
-  body{
-    background:white;
-  }
-  .header,
-  .no-print{
-    display:none!important;
-  }
-  .container{
-    max-width:none;
-    padding:0;
-  }
-  .screen{
-    display:none!important;
-  }
-  #screen-result{
-    display:block!important;
-  }
-  .receipt{
-    box-shadow:none;
-    border-radius:0;
-  }
+ header,.no-print{display:none!important}
+ body{background:#fff}
+ .screen{display:none!important}
+ .screen.printing{display:block!important}
+ .card{box-shadow:none}
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
-
-<header class="header">
-  <button id="backBtn" class="back" onclick="goBack()">‹</button>
-  <div id="headerTitle" class="header-title">JUREMA</div>
+<header>
+<button id="backBtn" class="back" onclick="goBack()" style="display:none">‹</button>
+<h1>JUREMA</h1>
 </header>
 
-<main class="container">
+<main>
 
-<section id="screen-home" class="screen active">
-  <div class="home-title">JUREMA</div>
-  <div class="subtitle">Gestión de servicio técnico y pedidos MDF</div>
+<!-- INICIO -->
+<section id="home" class="screen active">
 
-  <div class="menu">
+<div class="card">
+<h2>JUREMA</h2>
+<p>Servicio técnico y pedidos MDF</p>
+</div>
 
-    <button onclick="openScreen('service')">
-      <span class="ico">🔧</span>
-      Servicio Técnico
-    </button>
+<div class="grid menu">
 
-    <button onclick="openScreen('mdf')">
-      <span class="ico">🪵</span>
-      Pedido MDF
-    </button>
+<button onclick="openScreen('service')">
+🔧 Servicio Técnico
+</button>
 
-    <button onclick="openScreen('clients')">
-      <span class="ico">👥</span>
-      Clientes
-    </button>
+<button onclick="openScreen('mdf')">
+🪵 Pedido MDF
+</button>
 
-    <button onclick="openScreen('orders')">
-      <span class="ico">📋</span>
-      Órdenes
-    </button>
+<button onclick="openScreen('clients')">
+👥 Clientes
+</button>
 
-    <button onclick="openScreen('equipment')">
-      <span class="ico">🖨️</span>
-      Equipos / Impresoras
-    </button>
+<button onclick="openScreen('orders')">
+📋 Órdenes
+</button>
 
-    <button onclick="openScreen('cash')">
-      <span class="ico">💰</span>
-      Caja JUREMA
-    </button>
+<button onclick="openScreen('equipment')">
+🖨️ Equipos
+</button>
 
-    <button class="wide" onclick="openScreen('backup')">
-      <span class="ico">💾</span>
-      Copia de Seguridad
-    </button>
+<button onclick="openScreen('cash')">
+💰 Caja JUREMA
+</button>
 
-  </div>
+<button onclick="openScreen('backup')">
+💾 Copia de Seguridad
+</button>
+
+</div>
 </section>
 
 
-<section id="screen-service" class="screen">
+<!-- CLIENTES -->
+<section id="clients" class="screen">
 
-  <h2 id="serviceTitle">Nuevo Servicio Técnico</h2>
+<div class="card">
 
-  <div class="card">
+<div class="actions">
+<button onclick="newClient()">+ Nuevo cliente</button>
+<button class="secondary" onclick="openScreen('home',false)">Inicio</button>
+</div>
 
-    <h3>Cliente</h3>
+<input
+id="clientSearch"
+placeholder="Buscar cliente..."
+oninput="renderClients()">
 
-    <label>Seleccionar cliente</label>
-    <select id="sClient"></select>
+</div>
 
-    <div class="actions">
-      <button class="btn btn-primary" onclick="quickClient('service')">
-        + Nuevo cliente
-      </button>
-
-      <button class="btn btn-blue" onclick="pickContact('service')">
-        📱 Importar contacto
-      </button>
-    </div>
-
-    <div class="row">
-      <div>
-        <label>Teléfono</label>
-        <input id="sPhone" type="tel">
-      </div>
-
-      <div>
-        <label>Dirección</label>
-        <input id="sAddress">
-      </div>
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Equipo</h3>
-
-    <div class="row">
-      <div>
-        <label>Marca</label>
-        <input id="sBrand">
-      </div>
-
-      <div>
-        <label>Modelo</label>
-        <input id="sModel">
-      </div>
-    </div>
-
-    <label>Número de serie</label>
-    <input id="sSerial">
-
-    <label>Problema / falla</label>
-    <textarea id="sProblem"></textarea>
-
-    <label>Estado exterior</label>
-    <textarea id="sCondition"></textarea>
-
-    <label>Accesorios entregados</label>
-    <textarea id="sAccessories"></textarea>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Fotos</h3>
-
-    <input
-      id="sPhotoInput"
-      type="file"
-      accept="image/*"
-      multiple
-      onchange="handlePhotos(this)"
-    >
-
-    <div id="sPhotos" class="photo-grid"></div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Pago</h3>
-
-    <div class="row">
-      <div>
-        <label>Costo total</label>
-        <input id="sTotal" type="number" step="0.01" oninput="calcService()">
-      </div>
-
-      <div>
-        <label>Seña / pago</label>
-        <input id="sDeposit" type="number" step="0.01" oninput="calcService()">
-      </div>
-    </div>
-
-    <div class="total-box">
-      <div class="total-row">
-        <span>Saldo</span>
-        <strong id="sBalance">$0</strong>
-      </div>
-    </div>
-
-    <label>Estado</label>
-    <select id="sStatus">
-      <option value="Pendiente">Pendiente</option>
-      <option value="Listo">Listo</option>
-      <option value="Entregado">Entregado</option>
-    </select>
-
-    <label>Observaciones</label>
-    <textarea id="sNotes"></textarea>
-
-  </div>
-
-  <div class="actions">
-    <button class="btn btn-primary" onclick="saveService()">
-      💾 Guardar servicio
-    </button>
-
-    <button class="btn btn-secondary" onclick="goBack()">
-      Cancelar
-    </button>
-  </div>
+<div id="clientsList"></div>
 
 </section>
 
 
-<section id="screen-mdf" class="screen">
+<!-- FORMULARIO CLIENTE -->
+<section id="clientForm" class="screen">
 
-  <h2 id="mdfTitle">Nuevo Pedido MDF</h2>
+<div class="card">
 
-  <div class="card">
+<h2 id="clientFormTitle">Nuevo cliente</h2>
 
-    <h3>Cliente</h3>
+<label>Nombre</label>
+<input id="cName">
 
-    <label>Seleccionar cliente</label>
-    <select id="mClient"></select>
+<label>Teléfono</label>
+<input id="cPhone" type="tel">
 
-    <div class="actions">
-      <button class="btn btn-primary" onclick="quickClient('mdf')">
-        + Nuevo cliente
-      </button>
+<label>Dirección</label>
+<input id="cAddress">
 
-      <button class="btn btn-blue" onclick="pickContact('mdf')">
-        📱 Importar contacto
-      </button>
-    </div>
+<label>Observaciones</label>
+<textarea id="cNotes"></textarea>
 
-    <div class="row">
-      <div>
-        <label>Teléfono</label>
-        <input id="mPhone" type="tel">
-      </div>
+<div class="actions">
 
-      <div>
-        <label>Dirección</label>
-        <input id="mAddress">
-      </div>
-    </div>
+<button onclick="saveClient()">
+Guardar cliente
+</button>
 
-  </div>
+<button class="secondary" onclick="goBack()">
+Cancelar
+</button>
 
+</div>
 
-  <div class="card">
-
-    <h3>Productos</h3>
-
-    <div id="mdfItems"></div>
-
-    <button class="btn btn-secondary" onclick="addMdfItem()">
-      + Agregar producto
-    </button>
-
-    <div class="total-box">
-      <div class="total-row">
-        <span>Total</span>
-        <strong id="mTotal">$0</strong>
-      </div>
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Pago y entrega</h3>
-
-    <div class="row">
-      <div>
-        <label>Seña / pago</label>
-        <input id="mDeposit" type="number" step="0.01" oninput="calcMdf()">
-      </div>
-
-      <div>
-        <label>Fecha de entrega</label>
-        <input id="mDelivery" type="date">
-      </div>
-    </div>
-
-    <div class="total-box">
-      <div class="total-row">
-        <span>Saldo</span>
-        <strong id="mBalance">$0</strong>
-      </div>
-    </div>
-
-    <label>Estado</label>
-    <select id="mStatus">
-      <option value="Pendiente">Pendiente</option>
-      <option value="Listo">Listo</option>
-      <option value="Entregado">Entregado</option>
-    </select>
-
-    <label>Observaciones</label>
-    <textarea id="mNotes"></textarea>
-
-  </div>
-
-  <div class="actions">
-    <button class="btn btn-primary" onclick="saveMdf()">
-      💾 Guardar pedido
-    </button>
-
-    <button class="btn btn-secondary" onclick="goBack()">
-      Cancelar
-    </button>
-  </div>
+</div>
 
 </section>
 
 
-<section id="screen-clients" class="screen">
+<!-- SERVICIO TECNICO -->
+<section id="service" class="screen">
 
-  <h2>Clientes</h2>
+<div class="card">
 
-  <div class="card">
+<h2 id="serviceTitle">
+Nuevo servicio técnico
+</h2>
 
-    <label>Buscar cliente</label>
-    <input
-      id="clientSearch"
-      class="search"
-      placeholder="Nombre, teléfono o dirección"
-      oninput="renderClients()"
-    >
+<label>Cliente</label>
 
-    <div class="actions">
-      <button class="btn btn-primary" onclick="newClientFrom('clients')">
-        + Nuevo cliente
-      </button>
-    </div>
+<select id="sClient"></select>
 
-  </div>
+<div class="actions">
+<button class="secondary" onclick="newClientFromService()">
++ Crear cliente
+</button>
+</div>
 
-  <div id="clientsList" class="list"></div>
+<label>Teléfono</label>
+<input id="sPhone">
 
-</section>
+<label>Dirección</label>
+<input id="sAddress">
 
+<label>Marca</label>
+<input id="sBrand">
 
-<section id="screen-client-form" class="screen">
+<label>Modelo</label>
+<input id="sModel">
 
-  <h2 id="clientFormTitle">Nuevo Cliente</h2>
+<label>Número de serie</label>
+<input id="sSerial">
 
-  <div class="card">
+<label>Problema / falla</label>
+<textarea id="sProblem"></textarea>
 
-    <label>Nombre</label>
-    <input id="cName">
+<label>Estado</label>
 
-    <label>Teléfono</label>
-    <input id="cPhone" type="tel">
+<select id="sStatus">
+<option>Pendiente</option>
+<option>Terminado</option>
+<option>Entregado</option>
+</select>
 
-    <label>Dirección</label>
-    <input id="cAddress">
+<label>Costo total</label>
 
-    <label>Observaciones</label>
-    <textarea id="cNotes"></textarea>
+<input
+id="sTotal"
+type="number"
+min="0"
+step="0.01"
+oninput="calcService()">
 
-  </div>
+<label>Seña / pago</label>
 
-  <div class="actions">
-    <button class="btn btn-primary" onclick="saveClient()">
-      💾 Guardar cliente
-    </button>
+<input
+id="sPaid"
+type="number"
+min="0"
+step="0.01"
+oninput="calcService()">
 
-    <button class="btn btn-secondary" onclick="goBack()">
-      Cancelar
-    </button>
-  </div>
+<div class="card">
 
-</section>
+<div>
+Saldo:
+<span id="sBalance" class="money">$0</span>
+</div>
 
+</div>
 
-<section id="screen-orders" class="screen">
+<label>Condición exterior</label>
+<input id="sExterior">
 
-  <h2>Órdenes</h2>
+<label>Accesorios</label>
+<input id="sAccessories">
 
-  <div class="card">
+<label>Observaciones</label>
+<textarea id="sNotes"></textarea>
 
-    <label>Buscar</label>
-    <input
-      id="orderSearch"
-      class="search"
-      placeholder="Número, cliente, teléfono o equipo"
-      oninput="renderOrders()"
-    >
+<label>Fotos</label>
 
-    <div class="filters">
-      <button class="btn btn-secondary filter-active" data-status="Todas" onclick="setOrderFilter('Todas')">
-        Todas
-      </button>
+<input
+id="sPhotos"
+type="file"
+accept="image/*"
+multiple
+onchange="readPhotos(event)">
 
-      <button class="btn btn-secondary" data-status="Pendientes" onclick="setOrderFilter('Pendientes')">
-        Pendientes
-      </button>
+<div id="servicePhotos" class="photos"></div>
 
-      <button class="btn btn-secondary" data-status="Terminadas" onclick="setOrderFilter('Terminadas')">
-        Terminadas
-      </button>
+<div class="actions">
 
-      <button class="btn btn-secondary" data-status="Entregadas" onclick="setOrderFilter('Entregadas')">
-        Entregadas
-      </button>
-    </div>
+<button onclick="saveService()">
+Guardar servicio
+</button>
 
-    <div class="filters" style="margin-top:7px">
+<button class="secondary" onclick="goBack()">
+Cancelar
+</button>
 
-      <button class="btn btn-secondary filter-active" data-type="Todas" onclick="setOrderType('Todas')">
-        Todos
-      </button>
+</div>
 
-      <button class="btn btn-secondary" data-type="Servicio" onclick="setOrderType('Servicio')">
-        Servicio
-      </button>
-
-      <button class="btn btn-secondary" data-type="MDF" onclick="setOrderType('MDF')">
-        MDF
-      </button>
-
-    </div>
-
-  </div>
-
-  <div id="ordersList" class="list"></div>
+</div>
 
 </section>
 
 
-<section id="screen-equipment" class="screen">
+<!-- PEDIDO MDF -->
+<section id="mdf" class="screen">
 
-  <h2>Equipos / Impresoras</h2>
+<div class="card">
 
-  <div class="card">
+<h2 id="mdfTitle">
+Nuevo pedido MDF
+</h2>
 
-    <label>Buscar equipo</label>
+<label>Cliente</label>
 
-    <input
-      id="equipmentSearch"
-      class="search"
-      placeholder="Marca, modelo, serie o cliente"
-      oninput="renderEquipment()"
-    >
+<select id="mClient"></select>
 
-  </div>
+<div class="actions">
 
-  <div id="equipmentList" class="list"></div>
+<button
+class="secondary"
+onclick="newClientFromMdf()">
+
++ Crear cliente
+
+</button>
+
+</div>
+
+<div id="mdfItems"></div>
+
+<button
+class="secondary"
+onclick="addMdfItem()">
+
++ Agregar producto
+
+</button>
+
+<label>Total</label>
+
+<input
+id="mTotal"
+type="number"
+readonly>
+
+
+<label>Estado del pedido</label>
+
+<select id="mStatus">
+
+<option>Pendiente</option>
+<option>Terminado</option>
+<option>Entregado</option>
+
+</select>
+
+
+<label>Estado de pago</label>
+
+<select
+id="mPayment"
+onchange="calcMdf()">
+
+<option value="pending">
+Pendiente
+</option>
+
+<option value="paid">
+Pagado
+</option>
+
+</select>
+
+
+<label>Pagado / seña</label>
+
+<input
+id="mPaid"
+type="number"
+min="0"
+step="0.01"
+oninput="calcMdf()">
+
+
+<div class="card">
+
+<div>
+Saldo:
+<span id="mBalance" class="money">$0</span>
+</div>
+
+<p class="small">
+Si seleccionás “Pagado”, el pedido queda cobrado por el total y se suma a la facturación.
+</p>
+
+</div>
+
+
+<label>Observaciones</label>
+
+<textarea id="mNotes"></textarea>
+
+
+<div class="actions">
+
+<button onclick="saveMdf()">
+Guardar pedido MDF
+</button>
+
+<button
+class="secondary"
+onclick="goBack()">
+
+Cancelar
+
+</button>
+
+</div>
+
+</div>
 
 </section>
 
 
-<section id="screen-cash" class="screen">
+<!-- ORDENES -->
+<section id="orders" class="screen">
 
-  <h2>Caja JUREMA</h2>
+<div class="card">
 
-  <div id="cashStats" class="stat-grid"></div>
+<input
+id="orderSearch"
+placeholder="Buscar por cliente, número o equipo..."
+oninput="renderOrders()">
 
-  <div class="card" style="margin-top:14px">
-    <h3>Movimientos</h3>
-    <div id="cashList" class="list"></div>
-  </div>
+<label>Filtrar</label>
 
-</section>
+<select
+id="orderFilter"
+onchange="renderOrders()">
 
+<option value="all">Todas</option>
+<option>Pendiente</option>
+<option>Terminado</option>
+<option>Entregado</option>
 
-<section id="screen-backup" class="screen">
+</select>
 
-  <h2>Copia de Seguridad</h2>
+</div>
 
-  <div class="card">
-
-    <p>
-      Guardá una copia de todos los clientes, órdenes, fotos y configuraciones.
-    </p>
-
-    <div class="actions">
-
-      <button class="btn btn-primary" onclick="exportBackup()">
-        ⬇️ Exportar copia
-      </button>
-
-      <label class="btn btn-secondary" style="display:inline-block">
-        ⬆️ Importar copia
-        <input
-          type="file"
-          accept=".json,application/json"
-          style="display:none"
-          onchange="importBackup(this)"
-        >
-      </label>
-
-    </div>
-
-    <div class="notice">
-      La copia se guarda como archivo JSON. No cierres la aplicación mientras se está importando.
-    </div>
-
-  </div>
-
-  <div class="card">
-
-    <h3>Base actual</h3>
-
-    <div id="backupInfo"></div>
-
-    <div class="actions">
-      <button class="btn btn-danger" onclick="clearDatabase()">
-        🗑️ Borrar todos los datos
-      </button>
-    </div>
-
-  </div>
+<div id="ordersList"></div>
 
 </section>
 
 
-<section id="screen-result" class="screen">
+<!-- EQUIPOS -->
+<section id="equipment" class="screen">
 
-  <div class="actions no-print">
-    <button class="btn btn-secondary" onclick="goBack()">‹ Volver</button>
-    <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir</button>
-    <button class="btn btn-blue" onclick="shareReceipt()">📤 Compartir</button>
-    <button id="sharePhotosBtn" class="btn btn-success" onclick="sharePhotos()">📷 Compartir fotos</button>
-  </div>
+<div class="card">
 
-  <div id="receipt" class="receipt"></div>
+<input
+id="equipmentSearch"
+placeholder="Buscar impresora/equipo..."
+oninput="renderEquipment()">
+
+</div>
+
+<div id="equipmentList"></div>
+
+</section>
+
+
+<!-- CAJA -->
+<section id="cash" class="screen">
+
+<div id="cashSummary"></div>
+
+<div id="cashList"></div>
+
+</section>
+
+
+<!-- COPIA -->
+<section id="backup" class="screen">
+
+<div class="card">
+
+<h2>Copia de seguridad</h2>
+
+<p>
+Guardá una copia de todos los clientes y órdenes.
+</p>
+
+<div class="actions">
+
+<button onclick="exportBackup()">
+Exportar copia
+</button>
+
+<button
+class="secondary"
+onclick="document.getElementById('importFile').click()">
+
+Importar copia
+
+</button>
+
+</div>
+
+<input
+id="importFile"
+class="hidden"
+type="file"
+accept=".json,application/json"
+onchange="importBackup(event)">
+
+</div>
+
+<div id="backupInfo"></div>
+
+<div class="card">
+
+<button
+class="danger"
+onclick="clearDatabase()">
+
+Borrar todos los datos
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- RECIBO -->
+<section id="receipt" class="screen">
+
+<div id="receiptContent"></div>
+
+<div class="actions no-print">
+
+<button onclick="window.print()">
+Imprimir
+</button>
+
+<button onclick="shareReceipt()">
+Compartir
+</button>
+
+<button
+class="secondary"
+onclick="goBack()">
+
+Volver
+
+</button>
+
+</div>
 
 </section>
 
 </main>
-</div>
 
 
 <script>
+
 (function(){
 
 "use strict";
 
-/* =========================================================
-   CONFIGURACIÓN
-   ========================================================= */
 
-var KEY = "jurema_v3";
+/* =========================
+   BASE DE DATOS
+========================= */
 
-var titles = {
-  home:"JUREMA",
-  service:"Servicio Técnico",
-  mdf:"Pedido MDF",
-  clients:"Clientes",
-  "client-form":"Cliente",
-  orders:"Órdenes",
-  equipment:"Equipos / Impresoras",
-  cash:"Caja JUREMA",
-  backup:"Copia de Seguridad",
-  result:"Comprobante"
-};
+var KEY = "jurema_v4";
 
 var db = {
-  clients:[],
-  orders:[],
-  next:5
+ clients: [],
+ orders: [],
+ next: 5
 };
 
-var historyStack = [];
 var currentScreen = "home";
-
-window._editingOrderId = null;
-window._editingClientId = null;
-window._currentPhotos = [];
-window._currentReceiptOrderId = null;
-
-var orderStatusFilter = "Todas";
-var orderTypeFilter = "Todas";
+var stack = [];
+var editingClientId = null;
+var editingOrderId = null;
+var tempPhotos = [];
+var afterClientTarget = null;
 
 
-/* =========================================================
-   UTILIDADES
-   ========================================================= */
+/* =========================
+   FUNCIONES BÁSICAS
+========================= */
+
+function $(id){
+ return document.getElementById(id);
+}
+
 
 function uid(){
-  return "j_" +
-    Date.now().toString(36) +
-    "_" +
-    Math.random().toString(36).slice(2,10);
+
+ return "id_" +
+ Date.now() +
+ "_" +
+ Math.random().toString(36).slice(2,10);
+
 }
 
-function money(value){
-  var n = Number(value || 0);
-  return "$" + n.toLocaleString("es-AR",{
-    minimumFractionDigits:2,
-    maximumFractionDigits:2
-  });
+
+function money(n){
+
+ return "$" +
+ Number(n || 0).toLocaleString(
+  "es-AR",
+  {
+   minimumFractionDigits:2,
+   maximumFractionDigits:2
+  }
+ );
+
 }
 
-function esc(value){
-  var s = String(value == null ? "" : value);
 
-  return s
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+function esc(s){
+
+ return String(s == null ? "" : s)
+ .replace(/[&<>"']/g,function(c){
+
+  return {
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#39;"
+  }[c];
+
+ });
+
 }
+
 
 function today(){
-  var d = new Date();
-  var y = d.getFullYear();
-  var m = String(d.getMonth()+1).padStart(2,"0");
-  var day = String(d.getDate()).padStart(2,"0");
-  return y+"-"+m+"-"+day;
+
+ return new Date().toLocaleDateString("es-AR");
+
 }
 
-function orderNumber(){
-  var n = Number(db.next || 5);
-  var text = String(n).padStart(5,"0");
-  db.next = n + 5;
-  return text;
-}
 
 function findClient(id){
-  return db.clients.find(function(c){
-    return c.id === id;
-  }) || null;
+
+ return db.clients.find(function(c){
+  return c.id === id;
+ });
+
 }
+
 
 function findOrder(id){
-  return db.orders.find(function(o){
-    return o.id === id;
-  }) || null;
+
+ return db.orders.find(function(o){
+  return o.id === id;
+ });
+
 }
+
 
 function clientName(id){
-  var c = findClient(id);
-  return c ? c.name : "Cliente eliminado";
+
+ var c = findClient(id);
+
+ return c ? c.name : "Sin cliente";
+
 }
 
 
-/* =========================================================
-   CARGA / GUARDADO
-   ========================================================= */
+/* =========================
+   GUARDADO
+========================= */
 
 function loadDatabase(){
 
-  try{
+ try{
 
-    var raw = localStorage.getItem(KEY);
+  var raw = localStorage.getItem(KEY);
 
-    if(!raw){
-      return;
+  if(raw){
+
+   var x = JSON.parse(raw);
+
+   if(
+    x &&
+    Array.isArray(x.clients) &&
+    Array.isArray(x.orders)
+   ){
+
+    db = x;
+
+    if(!db.next){
+     db.next = 5;
     }
 
-    var parsed = JSON.parse(raw);
+   }
 
-    if(parsed && typeof parsed === "object"){
-
-      db.clients = Array.isArray(parsed.clients)
-        ? parsed.clients
-        : [];
-
-      db.orders = Array.isArray(parsed.orders)
-        ? parsed.orders
-        : [];
-
-      db.next = Number(parsed.next || 5);
-
-      if(db.next < 5){
-        db.next = 5;
-      }
-
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-    alert(
-      "No se pudo leer la base local de JUREMA. " +
-      "Se iniciará una base vacía."
-    );
-
-    db = {
-      clients:[],
-      orders:[],
-      next:5
-    };
   }
+
+ }catch(e){
+
+  alert(
+   "No se pudo leer la memoria del teléfono. Se iniciará una base nueva."
+  );
+
+ }
+
 }
+
 
 function persist(){
 
-  try{
+ try{
 
-    localStorage.setItem(
-      KEY,
-      JSON.stringify(db)
-    );
+  localStorage.setItem(
+   KEY,
+   JSON.stringify(db)
+  );
 
-    return true;
+  return true;
 
-  }catch(error){
+ }catch(e){
 
-    console.error(error);
+  alert(
+   "No se pudieron guardar los datos en el teléfono. Revisá el espacio disponible del navegador."
+  );
 
-    alert(
-      "No se pudieron guardar los datos.\n\n" +
-      "Puede que el almacenamiento del navegador esté lleno."
-    );
+  return false;
 
-    return false;
-  }
+ }
+
 }
 
 
-/* =========================================================
-   NAVEGACIÓN
-   ========================================================= */
+function nextNumber(){
 
-window.openScreen = function(name, push){
+ var n = Number(db.next) || 5;
 
-  if(push === undefined){
-    push = true;
-  }
+ db.next = n + 5;
 
-  if(name === currentScreen){
-    return;
-  }
+ return String(n).padStart(5,"0");
 
-  if(push){
-    historyStack.push(currentScreen);
-  }
+}
 
-  document.querySelectorAll(".screen").forEach(function(s){
-    s.classList.remove("active");
-  });
 
-  var target = document.getElementById("screen-"+name);
+/* =========================
+   PANTALLAS
+========================= */
 
-  if(!target){
-    return;
-  }
+window.openScreen = function(name,push){
 
-  target.classList.add("active");
+ if(push === undefined){
+  push = true;
+ }
 
-  currentScreen = name;
+ if(name === currentScreen){
+  return;
+ }
 
-  document.getElementById("headerTitle").textContent =
-    titles[name] || "JUREMA";
+ if(push){
+  stack.push(currentScreen);
+ }
 
-  document.getElementById("backBtn").style.display =
-    name === "home" ? "none" : "block";
+ document
+ .querySelectorAll(".screen")
+ .forEach(function(s){
 
-  if(name === "clients"){
-    renderClients();
-  }
+  s.classList.remove(
+   "active",
+   "printing"
+  );
 
-  if(name === "orders"){
-    renderOrders();
-  }
+ });
 
-  if(name === "equipment"){
-    renderEquipment();
-  }
+ var el = $(name);
 
-  if(name === "cash"){
-    renderCash();
-  }
+ if(!el){
+  return;
+ }
 
-  if(name === "backup"){
-    renderBackupInfo();
-  }
+ el.classList.add("active");
+
+ currentScreen = name;
+
+ $("backBtn").style.display =
+ name === "home" ? "none" : "block";
+
+
+ if(name === "clients"){
+  renderClients();
+ }
+
+ if(name === "orders"){
+  renderOrders();
+ }
+
+ if(name === "equipment"){
+  renderEquipment();
+ }
+
+ if(name === "cash"){
+  renderCash();
+ }
+
+ if(name === "backup"){
+  renderBackupInfo();
+ }
+
+ if(name === "service" && !editingOrderId){
+  resetService();
+ }
+
+ if(name === "mdf" && !editingOrderId){
+  resetMdf();
+ }
+
 };
+
 
 window.goBack = function(){
 
-  if(historyStack.length){
+ if(currentScreen === "home"){
+  return;
+ }
 
-    var previous =
-      historyStack.pop();
+ var prev =
+ stack.length ?
+ stack.pop() :
+ "home";
 
-    openScreen(previous,false);
+ editingClientId = null;
+ editingOrderId = null;
 
-  }else{
+ openScreen(prev,false);
 
-    openScreen("home",false);
-  }
 };
 
 
-/* =========================================================
+/* =========================
    CLIENTES
-   ========================================================= */
+========================= */
 
-function fillClientSelect(selectId, selectedId){
+function fillClientSelect(id){
 
-  var select =
-    document.getElementById(selectId);
+ var sel = $(id);
 
-  if(!select){
-    return;
-  }
+ if(!sel){
+  return;
+ }
 
-  var html =
-    '<option value="">-- Seleccionar cliente --</option>';
+ var old = sel.value;
 
-  db.clients
-    .slice()
-    .sort(function(a,b){
-      return String(a.name).localeCompare(
-        String(b.name),
-        "es"
-      );
-    })
-    .forEach(function(c){
+ sel.innerHTML =
+ '<option value="">-- Seleccionar cliente --</option>' +
 
-      html +=
-        '<option value="'+esc(c.id)+'">'+
-        esc(c.name)+
-        (c.phone ? " — "+esc(c.phone) : "")+
-        "</option>";
-    });
+ db.clients.map(function(c){
 
-  select.innerHTML = html;
+  return (
+   '<option value="' +
+   esc(c.id) +
+   '">' +
+   esc(c.name) +
+   '</option>'
+  );
 
-  if(selectedId){
-    select.value = selectedId;
-  }
+ }).join("");
+
+ if(old && findClient(old)){
+  sel.value = old;
+ }
+
 }
 
-function updateClientFields(prefix){
 
-  var select =
-    document.getElementById(prefix+"Client");
+function updateContactFields(prefix){
 
-  var client =
-    findClient(select.value);
+ var selectId =
+ prefix === "s" ?
+ "sClient" :
+ "mClient";
 
-  if(!client){
-    return;
-  }
+ var id = $(selectId).value;
 
-  document.getElementById(prefix+"Phone").value =
-    client.phone || "";
+ var c = findClient(id);
 
-  document.getElementById(prefix+"Address").value =
-    client.address || "";
+ if(!c){
+  return;
+ }
+
+ if(prefix === "s"){
+
+  $("sPhone").value = c.phone || "";
+  $("sAddress").value = c.address || "";
+
+ }else{
+
+  /* MDF no tiene campos de teléfono/dirección visibles */
+
+ }
+
 }
 
-function setupClientSelectListeners(){
 
-  var s =
-    document.getElementById("sClient");
+function setupSelects(){
 
-  var m =
-    document.getElementById("mClient");
-
-  if(s){
-    s.addEventListener("change",function(){
-      updateClientFields("s");
-    });
+ $("sClient").addEventListener(
+  "change",
+  function(){
+   updateContactFields("s");
   }
+ );
 
-  if(m){
-    m.addEventListener("change",function(){
-      updateClientFields("m");
-    });
+ $("mClient").addEventListener(
+  "change",
+  function(){
+   updateContactFields("m");
   }
+ );
+
 }
 
-window.newClientFrom = function(returnTo){
 
-  window._editingClientId = null;
+function newClient(){
 
-  document.getElementById("clientFormTitle").textContent =
-    "Nuevo Cliente";
+ editingClientId = null;
 
-  document.getElementById("cName").value = "";
-  document.getElementById("cPhone").value = "";
-  document.getElementById("cAddress").value = "";
-  document.getElementById("cNotes").value = "";
+ $("clientFormTitle").textContent =
+ "Nuevo cliente";
 
-  window._clientReturnScreen =
-    returnTo || "clients";
+ $("cName").value = "";
+ $("cPhone").value = "";
+ $("cAddress").value = "";
+ $("cNotes").value = "";
 
-  openScreen("client-form");
-};
+ openScreen("clientForm");
 
-window.editClient = function(id){
+}
 
-  var c = findClient(id);
 
-  if(!c){
-    alert("Cliente no encontrado.");
-    return;
-  }
+function editClient(id){
 
-  window._editingClientId = id;
-  window._clientReturnScreen = "clients";
+ var c = findClient(id);
 
-  document.getElementById("clientFormTitle").textContent =
-    "Editar Cliente";
+ if(!c){
+  return;
+ }
 
-  document.getElementById("cName").value =
-    c.name || "";
+ editingClientId = id;
 
-  document.getElementById("cPhone").value =
-    c.phone || "";
+ $("clientFormTitle").textContent =
+ "Editar cliente";
 
-  document.getElementById("cAddress").value =
-    c.address || "";
+ $("cName").value = c.name || "";
+ $("cPhone").value = c.phone || "";
+ $("cAddress").value = c.address || "";
+ $("cNotes").value = c.notes || "";
 
-  document.getElementById("cNotes").value =
-    c.notes || "";
+ openScreen("clientForm");
 
-  openScreen("client-form");
-};
+}
+
 
 window.saveClient = function(){
 
-  var name =
-    document.getElementById("cName").value.trim();
+ var name =
+ $("cName").value.trim();
 
-  var phone =
-    document.getElementById("cPhone").value.trim();
+ if(!name){
 
-  var address =
-    document.getElementById("cAddress").value.trim();
+  alert(
+   "Ingresá el nombre del cliente."
+  );
 
-  var notes =
-    document.getElementById("cNotes").value.trim();
+  return;
 
-  if(!name){
+ }
 
-    alert("Ingresá el nombre del cliente.");
+ var id = editingClientId;
 
-    return;
-  }
+ var c =
+ id ?
+ findClient(id) :
+ null;
 
-  if(window._editingClientId){
 
-    var c =
-      findClient(window._editingClientId);
+ if(c){
 
-    if(!c){
-      alert("No se encontró el cliente.");
-      return;
-    }
+  c.name =
+   name;
 
-    c.name = name;
-    c.phone = phone;
-    c.address = address;
-    c.notes = notes;
+  c.phone =
+   $("cPhone").value.trim();
+
+  c.address =
+   $("cAddress").value.trim();
+
+  c.notes =
+   $("cNotes").value.trim();
+
+ }else{
+
+  id = uid();
+
+  db.clients.push({
+
+   id:id,
+
+   name:name,
+
+   phone:
+    $("cPhone").value.trim(),
+
+   address:
+    $("cAddress").value.trim(),
+
+   notes:
+    $("cNotes").value.trim()
+
+  });
+
+ }
+
+
+ if(!persist()){
+  return;
+ }
+
+
+ fillClientSelect("sClient");
+ fillClientSelect("mClient");
+
+
+ var target =
+ afterClientTarget;
+
+ afterClientTarget = null;
+ editingClientId = null;
+
+
+ alert(
+  "Cliente guardado correctamente."
+ );
+
+
+ if(target){
+
+  openScreen(
+   target,
+   false
+  );
+
+  if(target === "service"){
+
+   $("sClient").value = id;
+
+   updateContactFields("s");
 
   }else{
 
-    db.clients.push({
-      id:uid(),
-      name:name,
-      phone:phone,
-      address:address,
-      notes:notes,
-      createdAt:new Date().toISOString()
-    });
+   $("mClient").value = id;
+
   }
 
-  if(!persist()){
-    return;
-  }
+ }else{
 
-  var returnScreen =
-    window._clientReturnScreen || "clients";
-
-  window._editingClientId = null;
-
-  fillClientSelect(
-    "sClient",
-    ""
+  openScreen(
+   "clients",
+   false
   );
 
-  fillClientSelect(
-    "mClient",
-    ""
-  );
+ }
 
-  if(returnScreen === "service"){
-
-    openScreen("service");
-
-    fillClientSelect(
-      "sClient",
-      db.clients[db.clients.length-1].id
-    );
-
-    updateClientFields("s");
-
-  }else if(returnScreen === "mdf"){
-
-    openScreen("mdf");
-
-    fillClientSelect(
-      "mClient",
-      db.clients[db.clients.length-1].id
-    );
-
-    updateClientFields("m");
-
-  }else{
-
-    openScreen("clients");
-  }
-
-  renderClients();
 };
 
-window.deleteClient = function(id){
 
-  var c = findClient(id);
+function deleteClient(id){
 
-  if(!c){
-    return;
-  }
+ if(!confirm(
+  "¿Eliminar este cliente?"
+  )){
+  return;
+ }
 
-  var hasOrders =
-    db.orders.some(function(o){
-      return o.clientId === id;
-    });
+ db.clients =
+ db.clients.filter(function(c){
+  return c.id !== id;
+ });
 
-  var message =
-    "¿Querés eliminar a "+c.name+"?";
+ persist();
 
-  if(hasOrders){
+ renderClients();
 
-    message +=
-      "\n\nEste cliente tiene órdenes asociadas. " +
-      "Las órdenes NO serán eliminadas.";
-  }
+}
 
-  if(!confirm(message)){
-    return;
-  }
 
-  db.clients =
-    db.clients.filter(function(x){
-      return x.id !== id;
-    });
+window.newClientFromService =
+ function(){
 
-  persist();
+  afterClientTarget =
+   "service";
 
-  renderClients();
-};
+  newClient();
+
+ };
+
+
+window.newClientFromMdf =
+ function(){
+
+  afterClientTarget =
+   "mdf";
+
+  newClient();
+
+ };
+
 
 function renderClients(){
 
-  var container =
-    document.getElementById("clientsList");
+ var q =
+ ($("clientSearch").value || "")
+ .toLowerCase();
 
-  var search =
-    (document.getElementById("clientSearch").value || "")
-    .toLowerCase()
-    .trim();
+ var arr =
+ db.clients.filter(function(c){
 
-  var clients =
-    db.clients.filter(function(c){
+  return (
+   (c.name || "") +
+   " " +
+   (c.phone || "") +
+   " " +
+   (c.address || "")
+  )
+  .toLowerCase()
+  .includes(q);
 
-      if(!search){
-        return true;
-      }
+ });
 
-      return (
-        String(c.name || "").toLowerCase().includes(search) ||
-        String(c.phone || "").toLowerCase().includes(search) ||
-        String(c.address || "").toLowerCase().includes(search)
-      );
-    });
 
-  if(!clients.length){
+ $("clientsList").innerHTML =
+ arr.length ?
 
-    container.innerHTML =
-      '<div class="empty">No hay clientes.</div>';
+ arr.map(function(c){
 
-    return;
-  }
+  return (
 
-  clients.sort(function(a,b){
-    return String(a.name).localeCompare(
-      String(b.name),
-      "es"
-    );
-  });
+   '<div class="card">' +
 
-  container.innerHTML =
-    clients.map(function(c){
+   '<b>' +
+   esc(c.name) +
+   '</b>' +
 
-      var count =
-        db.orders.filter(function(o){
-          return o.clientId === c.id;
-        }).length;
+   '<div class="small">' +
+   esc(c.phone || "Sin teléfono") +
+   '</div>' +
 
-      return `
-        <div class="item">
-          <div class="item-title">${esc(c.name)}</div>
+   '<div>' +
+   esc(c.address || "Sin dirección") +
+   '</div>' +
 
-          <div class="item-line">
-            📞 ${esc(c.phone || "Sin teléfono")}
-          </div>
+   '<div class="actions">' +
 
-          <div class="item-line">
-            📍 ${esc(c.address || "Sin dirección")}
-          </div>
+   '<button onclick="editClient(\'' +
+   c.id +
+   '\')">Editar</button>' +
 
-          <div class="item-line">
-            📋 ${count} orden(es)
-          </div>
+   '<button class="danger" onclick="deleteClient(\'' +
+   c.id +
+   '\')">Eliminar</button>' +
 
-          ${
-            c.notes
-            ? '<div class="item-line">📝 '+esc(c.notes)+'</div>'
-            : ''
-          }
+   '</div>' +
 
-          <div class="actions">
-            <button
-              class="btn btn-secondary"
-              onclick="editClient('${c.id}')"
-            >
-              Editar
-            </button>
+   '</div>'
 
-            <button
-              class="btn btn-danger"
-              onclick="deleteClient('${c.id}')"
-            >
-              Eliminar
-            </button>
-          </div>
-        </div>
-      `;
-    }).join("");
+  );
+
+ }).join("")
+
+ :
+
+ '<div class="card">No hay clientes.</div>';
+
 }
 
 
-/* =========================================================
-   CONTACTOS DEL TELÉFONO
-   ========================================================= */
-
-window.pickContact = async function(type){
-
-  if(!navigator.contacts ||
-     !navigator.contacts.select){
-
-    alert(
-      "Tu navegador no permite importar contactos directamente.\n\n" +
-      "Si estás usando un navegador compatible con Contact Picker, " +
-      "podrás seleccionar el contacto desde ahí."
-    );
-
-    return;
-  }
-
-  try{
-
-    var contacts =
-      await navigator.contacts.select(
-        ["name","tel"],
-        {multiple:false}
-      );
-
-    if(!contacts || !contacts.length){
-      return;
-    }
-
-    var contact = contacts[0];
-
-    var name =
-      Array.isArray(contact.name)
-      ? contact.name[0]
-      : contact.name || "";
-
-    var phone =
-      Array.isArray(contact.tel)
-      ? contact.tel[0]
-      : contact.tel || "";
-
-    var existing =
-      db.clients.find(function(c){
-        return phone &&
-          String(c.phone || "").replace(/\D/g,"") ===
-          String(phone).replace(/\D/g,"");
-      });
-
-    var client;
-
-    if(existing){
-
-      client = existing;
-
-    }else{
-
-      client = {
-        id:uid(),
-        name:name || "Contacto",
-        phone:phone || "",
-        address:"",
-        notes:"",
-        createdAt:new Date().toISOString()
-      };
-
-      db.clients.push(client);
-
-      if(!persist()){
-        return;
-      }
-    }
-
-    if(type === "service"){
-
-      fillClientSelect(
-        "sClient",
-        client.id
-      );
-
-      updateClientFields("s");
-
-    }else{
-
-      fillClientSelect(
-        "mClient",
-        client.id
-      );
-
-      updateClientFields("m");
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-    alert(
-      "No se pudo importar el contacto."
-    );
-  }
-};
-
-
-/* =========================================================
-   NUEVO CLIENTE DESDE SERVICIO / MDF
-   ========================================================= */
-
-window.quickClient = function(type){
-
-  window._editingClientId = null;
-  window._clientReturnScreen = type;
-
-  document.getElementById("clientFormTitle").textContent =
-    "Nuevo Cliente";
-
-  document.getElementById("cName").value = "";
-
-  document.getElementById("cPhone").value =
-    type === "service"
-    ? document.getElementById("sPhone").value
-    : document.getElementById("mPhone").value;
-
-  document.getElementById("cAddress").value =
-    type === "service"
-    ? document.getElementById("sAddress").value
-    : document.getElementById("mAddress").value;
-
-  document.getElementById("cNotes").value = "";
-
-  openScreen("client-form");
-};
-
-
-/* =========================================================
-   SERVICIO TÉCNICO
-   ========================================================= */
+/* =========================
+   SERVICIO TECNICO
+========================= */
 
 function resetService(){
 
-  window._editingOrderId = null;
-  window._currentPhotos = [];
+ editingOrderId = null;
 
-  document.getElementById("serviceTitle").textContent =
-    "Nuevo Servicio Técnico";
+ tempPhotos = [];
 
-  fillClientSelect("sClient","");
+ $("serviceTitle").textContent =
+ "Nuevo servicio técnico";
 
-  document.getElementById("sPhone").value = "";
-  document.getElementById("sAddress").value = "";
+ fillClientSelect("sClient");
 
-  document.getElementById("sBrand").value = "";
-  document.getElementById("sModel").value = "";
-  document.getElementById("sSerial").value = "";
-  document.getElementById("sProblem").value = "";
-  document.getElementById("sCondition").value = "";
-  document.getElementById("sAccessories").value = "";
+ $("sPhone").value = "";
+ $("sAddress").value = "";
+ $("sBrand").value = "";
+ $("sModel").value = "";
+ $("sSerial").value = "";
+ $("sProblem").value = "";
 
-  document.getElementById("sTotal").value = "";
-  document.getElementById("sDeposit").value = "";
+ $("sStatus").value =
+ "Pendiente";
 
-  document.getElementById("sBalance").textContent =
-    money(0);
+ $("sTotal").value = "";
+ $("sPaid").value = "";
 
-  document.getElementById("sStatus").value =
-    "Pendiente";
+ $("sBalance").textContent =
+ money(0);
 
-  document.getElementById("sNotes").value = "";
+ $("sExterior").value = "";
+ $("sAccessories").value = "";
+ $("sNotes").value = "";
 
-  renderServicePhotos();
+ $("servicePhotos").innerHTML = "";
+
+ $("sPhotos").value = "";
+
 }
 
-window.saveService = function(){
 
-  try{
+function calcService(){
 
-    var clientId =
-      document.getElementById("sClient").value;
+ var total =
+ Number($("sTotal").value) || 0;
 
-    if(!clientId){
+ var paid =
+ Number($("sPaid").value) || 0;
 
-      alert("Seleccioná un cliente.");
-      return;
-    }
+ $("sBalance").textContent =
+ money(
+  Math.max(
+   0,
+   total - paid
+  )
+ );
 
-    var total =
-      Number(
-        document.getElementById("sTotal").value || 0
-      );
-
-    var deposit =
-      Number(
-        document.getElementById("sDeposit").value || 0
-      );
-
-    if(deposit > total && total >= 0){
-
-      if(!confirm(
-        "El pago es mayor que el total.\n¿Querés continuar?"
-      )){
-        return;
-      }
-    }
-
-    var balance =
-      total - deposit;
-
-    var data = {
-      type:"Servicio",
-      clientId:clientId,
-
-      phone:
-        document.getElementById("sPhone").value.trim(),
-
-      address:
-        document.getElementById("sAddress").value.trim(),
-
-      brand:
-        document.getElementById("sBrand").value.trim(),
-
-      model:
-        document.getElementById("sModel").value.trim(),
-
-      serial:
-        document.getElementById("sSerial").value.trim(),
-
-      problem:
-        document.getElementById("sProblem").value.trim(),
-
-      condition:
-        document.getElementById("sCondition").value.trim(),
-
-      accessories:
-        document.getElementById("sAccessories").value.trim(),
-
-      photos:
-        Array.isArray(window._currentPhotos)
-        ? window._currentPhotos.slice()
-        : [],
-
-      total:total,
-      deposit:deposit,
-      balance:balance,
-
-      status:
-        document.getElementById("sStatus").value,
-
-      notes:
-        document.getElementById("sNotes").value.trim()
-    };
-
-    if(window._editingOrderId){
-
-      var existing =
-        findOrder(window._editingOrderId);
-
-      if(!existing){
-
-        alert("No se encontró la orden.");
-        return;
-      }
-
-      Object.keys(data).forEach(function(k){
-        existing[k] = data[k];
-      });
-
-      existing.updatedAt =
-        new Date().toISOString();
-
-      if(!persist()){
-        return;
-      }
-
-      showReceipt(existing.id);
-
-    }else{
-
-      data.id = uid();
-      data.number = orderNumber();
-
-      data.createdAt =
-        new Date().toISOString();
-
-      db.orders.unshift(data);
-
-      if(!persist()){
-        return;
-      }
-
-      showReceipt(data.id);
-    }
-
-    window._editingOrderId = null;
-
-  }catch(error){
-
-    console.error(error);
-
-    alert(
-      "Ocurrió un error al guardar el servicio:\n" +
-      error.message
-    );
-  }
-};
-
-window.calcService = function(){
-
-  var total =
-    Number(
-      document.getElementById("sTotal").value || 0
-    );
-
-  var deposit =
-    Number(
-      document.getElementById("sDeposit").value || 0
-    );
-
-  document.getElementById("sBalance").textContent =
-    money(total - deposit);
-};
+}
 
 
-/* =========================================================
-   FOTOS
-   ========================================================= */
+window.readPhotos = function(ev){
 
-window.handlePhotos = function(input){
+ tempPhotos = [];
 
-  var files =
-    Array.from(input.files || []);
+ var files =
+ Array.from(
+  ev.target.files || []
+ );
 
-  if(!files.length){
-    return;
-  }
+ var left =
+ files.length;
 
-  var pending = files.length;
+ if(!left){
 
-  files.forEach(function(file){
+  $("servicePhotos").innerHTML =
+   "";
 
-    resizeImage(file,function(dataUrl){
+  return;
 
-      window._currentPhotos.push(dataUrl);
+ }
 
-      pending--;
 
-      if(pending === 0){
-        renderServicePhotos();
-        input.value = "";
-      }
-    });
-  });
-};
-
-function resizeImage(file,callback){
+ files.forEach(function(file){
 
   var reader =
-    new FileReader();
+   new FileReader();
 
-  reader.onload = function(){
+  reader.onload =
+   function(){
 
     var img =
-      new Image();
+     new Image();
 
-    img.onload = function(){
-
-      var max = 1280;
-
-      var ratio =
-        Math.min(
-          1,
-          max / Math.max(img.width,img.height)
-        );
+    img.onload =
+     function(){
 
       var canvas =
-        document.createElement("canvas");
+       document.createElement(
+        "canvas"
+       );
+
+      var max = 1000;
+
+      var scale =
+       Math.min(
+        1,
+        max /
+        Math.max(
+         img.width,
+         img.height
+        )
+       );
 
       canvas.width =
-        Math.max(1,Math.round(img.width * ratio));
+       Math.round(
+        img.width * scale
+       );
 
       canvas.height =
-        Math.max(1,Math.round(img.height * ratio));
+       Math.round(
+        img.height * scale
+       );
 
       var ctx =
-        canvas.getContext("2d");
+       canvas.getContext("2d");
 
       ctx.drawImage(
-        img,
-        0,
-        0,
-        canvas.width,
-        canvas.height
+       img,
+       0,
+       0,
+       canvas.width,
+       canvas.height
       );
 
-      callback(
-        canvas.toDataURL(
-          "image/jpeg",
-          .78
-        )
+      tempPhotos.push(
+       canvas.toDataURL(
+        "image/jpeg",
+        .75
+       )
       );
-    };
 
-    img.src = reader.result;
-  };
+      left--;
+
+      if(left === 0){
+       renderPhotos();
+      }
+
+     };
+
+    img.src =
+     reader.result;
+
+   };
 
   reader.readAsDataURL(file);
-}
 
-function renderServicePhotos(){
+ });
 
-  var container =
-    document.getElementById("sPhotos");
-
-  if(!window._currentPhotos.length){
-
-    container.innerHTML = "";
-    return;
-  }
-
-  container.innerHTML =
-    window._currentPhotos.map(function(photo,index){
-
-      return `
-        <div class="photo-preview">
-          <img src="${photo}" alt="Foto ${index+1}">
-          <button onclick="removePhoto(${index})">×</button>
-        </div>
-      `;
-    }).join("");
-}
-
-window.removePhoto = function(index){
-
-  window._currentPhotos.splice(index,1);
-
-  renderServicePhotos();
 };
 
 
-/* =========================================================
+function renderPhotos(){
+
+ $("servicePhotos").innerHTML =
+ tempPhotos.map(function(p,i){
+
+  return (
+
+   '<span>' +
+
+   '<img class="photo" src="' +
+   p +
+   '">' +
+
+   '<button type="button" class="danger" onclick="removePhoto(' +
+   i +
+   ')">×</button>' +
+
+   '</span>'
+
+  );
+
+ }).join("");
+
+}
+
+
+window.removePhoto =
+ function(i){
+
+  tempPhotos.splice(i,1);
+
+  renderPhotos();
+
+ };
+
+
+window.saveService =
+ function(){
+
+  var client =
+   $("sClient").value;
+
+  if(!client){
+
+   alert(
+    "Seleccioná un cliente."
+   );
+
+   return;
+
+  }
+
+
+  var total =
+   Number($("sTotal").value) || 0;
+
+  var paid =
+   Number($("sPaid").value) || 0;
+
+
+  var o =
+   editingOrderId ?
+   findOrder(editingOrderId) :
+   null;
+
+
+  if(!o){
+
+   o = {
+
+    id:uid(),
+
+    number:nextNumber(),
+
+    type:"service",
+
+    date:today(),
+
+    clientId:client
+
+   };
+
+   db.orders.push(o);
+
+  }
+
+
+  o.clientId =
+   client;
+
+  o.brand =
+   $("sBrand").value.trim();
+
+  o.model =
+   $("sModel").value.trim();
+
+  o.serial =
+   $("sSerial").value.trim();
+
+  o.problem =
+   $("sProblem").value.trim();
+
+  o.status =
+   $("sStatus").value;
+
+  o.total =
+   total;
+
+  o.paid =
+   Math.min(
+    paid,
+    total
+   );
+
+  o.balance =
+   Math.max(
+    0,
+    total - o.paid
+   );
+
+  o.phone =
+   $("sPhone").value.trim();
+
+  o.address =
+   $("sAddress").value.trim();
+
+  o.exterior =
+   $("sExterior").value.trim();
+
+  o.accessories =
+   $("sAccessories").value.trim();
+
+  o.notes =
+   $("sNotes").value.trim();
+
+  o.photos =
+   tempPhotos.slice();
+
+  o.paymentStatus =
+   o.balance <= 0 ?
+   "paid" :
+   "pending";
+
+
+  if(!persist()){
+   return;
+  }
+
+
+  alert(
+   "Servicio guardado correctamente."
+  );
+
+  editingOrderId = null;
+
+  showReceipt(o.id);
+
+ };
+
+
+/* =========================
    PEDIDOS MDF
-   ========================================================= */
+========================= */
 
 function resetMdf(){
 
-  window._editingOrderId = null;
+ editingOrderId = null;
 
-  document.getElementById("mdfTitle").textContent =
-    "Nuevo Pedido MDF";
+ $("mdfTitle").textContent =
+ "Nuevo pedido MDF";
 
-  fillClientSelect("mClient","");
+ fillClientSelect("mClient");
 
-  document.getElementById("mPhone").value = "";
-  document.getElementById("mAddress").value = "";
+ $("mStatus").value =
+ "Pendiente";
 
-  document.getElementById("mdfItems").innerHTML = "";
+ $("mPayment").value =
+ "pending";
 
-  document.getElementById("mDeposit").value = "";
-  document.getElementById("mDelivery").value =
-    today();
+ $("mPaid").value =
+ "";
 
-  document.getElementById("mStatus").value =
-    "Pendiente";
+ $("mNotes").value =
+ "";
 
-  document.getElementById("mNotes").value = "";
+ $("mdfItems").innerHTML =
+ "";
 
-  addMdfItem();
-  calcMdf();
+ addMdfItem();
+
+ calcMdf();
+
 }
 
-window.addMdfItem = function(item){
 
-  var container =
-    document.getElementById("mdfItems");
+window.addMdfItem =
+ function(data){
 
-  var div =
-    document.createElement("div");
+  var d =
+   data ||
+   {
+    description:"",
+    qty:1,
+    price:0
+   };
 
-  div.className = "line-item";
 
-  div.innerHTML = `
-    <label>Producto / descripción</label>
+  var wrap =
+   document.createElement(
+    "div"
+   );
 
-    <input
-      class="m-item-desc"
-      value="${esc(item && item.description || "")}"
-      placeholder="Ej: Caja personalizada"
-      oninput="calcMdf()"
-    >
+  wrap.className =
+   "item mdfItem";
 
-    <div class="row3">
 
-      <div>
-        <label>Cantidad</label>
-        <input
-          class="m-item-qty"
-          type="number"
-          min="0"
-          step="1"
-          value="${item ? Number(item.qty || 1) : 1}"
-          oninput="calcMdf()"
-        >
-      </div>
+  wrap.innerHTML =
 
-      <div>
-        <label>Precio unitario</label>
-        <input
-          class="m-item-price"
-          type="number"
-          min="0"
-          step="0.01"
-          value="${item ? Number(item.price || 0) : 0}"
-          oninput="calcMdf()"
-        >
-      </div>
+   '<label>Producto</label>' +
 
-      <div>
-        <label>Subtotal</label>
-        <input
-          class="m-item-subtotal"
-          readonly
-          value="${money(item ? Number(item.qty || 1)*Number(item.price || 0) : 0)}"
-        >
-      </div>
+   '<input class="miDesc" value="' +
+   esc(d.description) +
+   '">' +
 
-    </div>
+   '<div class="row">' +
 
-    <div class="actions">
-      <button
-        class="btn btn-danger"
-        onclick="removeMdfItem(this)"
-      >
-        Eliminar producto
-      </button>
-    </div>
-  `;
+   '<div>' +
 
-  container.appendChild(div);
+   '<label>Cantidad</label>' +
+
+   '<input class="miQty" type="number" min="1" step="1" value="' +
+   Number(d.qty || 1) +
+   '">' +
+
+   '</div>' +
+
+   '<div>' +
+
+   '<label>Precio unitario</label>' +
+
+   '<input class="miPrice" type="number" min="0" step="0.01" value="' +
+   Number(d.price || 0) +
+   '">' +
+
+   '</div>' +
+
+   '</div>' +
+
+   '<div>' +
+
+   'Subtotal: ' +
+
+   '<b class="miSub">$0</b>' +
+
+   '</div>' +
+
+   '<button type="button" class="danger" onclick="this.parentNode.remove();calcMdf()">' +
+
+   'Quitar' +
+
+   '</button>';
+
+
+  $("mdfItems")
+   .appendChild(wrap);
+
+
+  wrap
+  .querySelectorAll("input")
+  .forEach(function(x){
+
+   x.addEventListener(
+    "input",
+    calcMdf
+   );
+
+  });
+
 
   calcMdf();
-};
 
-window.removeMdfItem = function(button){
+ };
 
-  var item =
-    button.closest(".line-item");
-
-  if(item){
-    item.remove();
-  }
-
-  calcMdf();
-};
 
 function readMdfItems(){
 
-  var rows =
-    Array.from(
-      document.querySelectorAll("#mdfItems .line-item")
-    );
+ return Array
+ .from(
+  document.querySelectorAll(
+   ".mdfItem"
+  )
+ )
+ .map(function(el){
 
-  return rows.map(function(row){
+  var q =
+   Number(
+    el.querySelector(
+     ".miQty"
+    ).value
+   ) || 0;
 
-    var description =
-      row.querySelector(".m-item-desc").value.trim();
+  var p =
+   Number(
+    el.querySelector(
+     ".miPrice"
+    ).value
+   ) || 0;
 
-    var qty =
-      Number(
-        row.querySelector(".m-item-qty").value || 0
-      );
 
-    var price =
-      Number(
-        row.querySelector(".m-item-price").value || 0
-      );
+  return {
 
-    return {
-      description:description,
-      qty:qty,
-      price:price,
-      subtotal:qty*price
-    };
-  }).filter(function(item){
-    return item.description ||
-      item.qty ||
-      item.price;
-  });
+   description:
+    el.querySelector(
+     ".miDesc"
+    ).value.trim(),
+
+   qty:q,
+
+   price:p,
+
+   subtotal:q*p
+
+  };
+
+ })
+ .filter(function(x){
+
+  return (
+   x.description ||
+   x.price
+  );
+
+ });
+
 }
 
-window.calcMdf = function(){
 
-  var rows =
-    Array.from(
-      document.querySelectorAll("#mdfItems .line-item")
-    );
+window.calcMdf =
+ function(){
 
-  var total = 0;
+  var items =
+   readMdfItems();
 
-  rows.forEach(function(row){
+  var total =
+   items.reduce(
+    function(a,x){
+     return a + x.subtotal;
+    },
+    0
+   );
 
-    var qty =
-      Number(
-        row.querySelector(".m-item-qty").value || 0
-      );
 
-    var price =
-      Number(
-        row.querySelector(".m-item-price").value || 0
-      );
+  var payment =
+   $("mPayment").value;
 
-    var subtotal =
-      qty * price;
 
-    total += subtotal;
+  var paid;
 
-    row.querySelector(".m-item-subtotal").value =
-      money(subtotal);
+
+  if(payment === "paid"){
+
+   paid = total;
+
+  }else{
+
+   paid =
+    Number(
+     $("mPaid").value
+    ) || 0;
+
+   if(paid > total){
+    paid = total;
+   }
+
+  }
+
+
+  $("mTotal").value =
+   total.toFixed(2);
+
+
+  if(payment === "paid"){
+
+   $("mPaid").value =
+    total.toFixed(2);
+
+  }
+
+
+  $("mBalance").textContent =
+   money(
+    Math.max(
+     0,
+     total - paid
+    )
+   );
+
+
+  document
+  .querySelectorAll(".mdfItem")
+  .forEach(function(el){
+
+   var q =
+    Number(
+     el.querySelector(
+      ".miQty"
+     ).value
+    ) || 0;
+
+   var p =
+    Number(
+     el.querySelector(
+      ".miPrice"
+     ).value
+    ) || 0;
+
+   el.querySelector(
+    ".miSub"
+   ).textContent =
+    money(q*p);
+
   });
 
-  var deposit =
-    Number(
-      document.getElementById("mDeposit").value || 0
-    );
+ };
 
-  document.getElementById("mTotal").textContent =
-    money(total);
 
-  document.getElementById("mBalance").textContent =
-    money(total - deposit);
+window.saveMdf =
+ function(){
 
-  return total;
-};
+  var client =
+   $("mClient").value;
 
-window.saveMdf = function(){
+  if(!client){
 
-  try{
+   alert(
+    "Seleccioná un cliente."
+   );
 
-    var clientId =
-      document.getElementById("mClient").value;
+   return;
 
-    if(!clientId){
-
-      alert("Seleccioná un cliente.");
-      return;
-    }
-
-    var items =
-      readMdfItems();
-
-    if(!items.length){
-
-      alert(
-        "Agregá al menos un producto."
-      );
-
-      return;
-    }
-
-    var total =
-      items.reduce(function(sum,item){
-        return sum + item.subtotal;
-      },0);
-
-    var deposit =
-      Number(
-        document.getElementById("mDeposit").value || 0
-      );
-
-    var data = {
-
-      type:"MDF",
-
-      clientId:clientId,
-
-      phone:
-        document.getElementById("mPhone").value.trim(),
-
-      address:
-        document.getElementById("mAddress").value.trim(),
-
-      items:items,
-
-      total:total,
-
-      deposit:deposit,
-
-      balance:total-deposit,
-
-      delivery:
-        document.getElementById("mDelivery").value,
-
-      status:
-        document.getElementById("mStatus").value,
-
-      notes:
-        document.getElementById("mNotes").value.trim()
-    };
-
-    if(window._editingOrderId){
-
-      var existing =
-        findOrder(window._editingOrderId);
-
-      if(!existing){
-
-        alert("No se encontró la orden.");
-        return;
-      }
-
-      Object.keys(data).forEach(function(k){
-        existing[k] = data[k];
-      });
-
-      existing.updatedAt =
-        new Date().toISOString();
-
-      if(!persist()){
-        return;
-      }
-
-      showReceipt(existing.id);
-
-    }else{
-
-      data.id = uid();
-      data.number = orderNumber();
-
-      data.createdAt =
-        new Date().toISOString();
-
-      db.orders.unshift(data);
-
-      if(!persist()){
-        return;
-      }
-
-      showReceipt(data.id);
-    }
-
-    window._editingOrderId = null;
-
-  }catch(error){
-
-    console.error(error);
-
-    alert(
-      "Ocurrió un error al guardar el pedido:\n" +
-      error.message
-    );
   }
-};
 
 
-/* =========================================================
-   EDITAR ORDEN
-   ========================================================= */
+  var items =
+   readMdfItems();
+
+
+  if(!items.length){
+
+   alert(
+    "Agregá al menos un producto."
+   );
+
+   return;
+
+  }
+
+
+  var total =
+   items.reduce(
+    function(a,x){
+     return a + x.subtotal;
+    },
+    0
+   );
+
+
+  var paid;
+
+
+  if(
+   $("mPayment").value ===
+   "paid"
+  ){
+
+   paid = total;
+
+  }else{
+
+   paid =
+    Number(
+     $("mPaid").value
+    ) || 0;
+
+   paid =
+    Math.min(
+     paid,
+     total
+    );
+
+  }
+
+
+  var o =
+   editingOrderId ?
+   findOrder(editingOrderId) :
+   null;
+
+
+  if(!o){
+
+   o = {
+
+    id:uid(),
+
+    number:nextNumber(),
+
+    type:"mdf",
+
+    date:today(),
+
+    clientId:client
+
+   };
+
+   db.orders.push(o);
+
+  }
+
+
+  o.clientId =
+   client;
+
+  o.items =
+   items;
+
+  o.total =
+   total;
+
+  o.paid =
+   paid;
+
+  o.balance =
+   Math.max(
+    0,
+    total - paid
+   );
+
+  o.paymentStatus =
+   o.balance <= 0 ?
+   "paid" :
+   "pending";
+
+  o.status =
+   $("mStatus").value;
+
+  o.notes =
+   $("mNotes").value.trim();
+
+
+  if(!persist()){
+   return;
+  }
+
+
+  alert(
+   "Pedido MDF guardado correctamente."
+  );
+
+  editingOrderId = null;
+
+  showReceipt(o.id);
+
+ };
+
+
+/* =========================
+   EDITAR Y ELIMINAR ÓRDENES
+========================= */
 
 window.editOrder = function(id){
 
-  var order =
-    findOrder(id);
+ var o = findOrder(id);
 
-  if(!order){
-    alert("Orden no encontrada.");
-    return;
+ if(!o){
+  return;
+ }
+
+ editingOrderId = id;
+
+ if(o.type === "service"){
+
+  openScreen("service");
+
+  $("serviceTitle").textContent =
+   "Editar servicio";
+
+  fillClientSelect("sClient");
+
+  $("sClient").value =
+   o.clientId || "";
+
+  $("sPhone").value =
+   o.phone || "";
+
+  $("sAddress").value =
+   o.address || "";
+
+  $("sBrand").value =
+   o.brand || "";
+
+  $("sModel").value =
+   o.model || "";
+
+  $("sSerial").value =
+   o.serial || "";
+
+  $("sProblem").value =
+   o.problem || "";
+
+  $("sStatus").value =
+   o.status || "Pendiente";
+
+  $("sTotal").value =
+   o.total || 0;
+
+  $("sPaid").value =
+   o.paid || 0;
+
+  $("sExterior").value =
+   o.exterior || "";
+
+  $("sAccessories").value =
+   o.accessories || "";
+
+  $("sNotes").value =
+   o.notes || "";
+
+  tempPhotos =
+   o.photos || [];
+
+  renderPhotos();
+
+  calcService();
+
+ }else{
+
+  openScreen("mdf");
+
+  $("mdfTitle").textContent =
+   "Editar pedido MDF";
+
+  fillClientSelect("mClient");
+
+  $("mClient").value =
+   o.clientId || "";
+
+  $("mStatus").value =
+   o.status || "Pendiente";
+
+  $("mPayment").value =
+   o.paymentStatus === "paid" ?
+   "paid" :
+   "pending";
+
+  $("mPaid").value =
+   o.paid || 0;
+
+  $("mNotes").value =
+   o.notes || "";
+
+  $("mdfItems").innerHTML =
+   "";
+
+  (o.items || [])
+   .forEach(function(item){
+    addMdfItem(item);
+   });
+
+  if(!o.items || !o.items.length){
+   addMdfItem();
   }
 
-  window._editingOrderId = id;
+  calcMdf();
 
-  historyStack.push("orders");
+ }
 
-  if(order.type === "Servicio"){
-
-    window._currentPhotos =
-      Array.isArray(order.photos)
-      ? order.photos.slice()
-      : [];
-
-    document.getElementById("serviceTitle").textContent =
-      "Editar Servicio #"+order.number;
-
-    fillClientSelect(
-      "sClient",
-      order.clientId
-    );
-
-    document.getElementById("sPhone").value =
-      order.phone || "";
-
-    document.getElementById("sAddress").value =
-      order.address || "";
-
-    document.getElementById("sBrand").value =
-      order.brand || "";
-
-    document.getElementById("sModel").value =
-      order.model || "";
-
-    document.getElementById("sSerial").value =
-      order.serial || "";
-
-    document.getElementById("sProblem").value =
-      order.problem || "";
-
-    document.getElementById("sCondition").value =
-      order.condition || "";
-
-    document.getElementById("sAccessories").value =
-      order.accessories || "";
-
-    document.getElementById("sTotal").value =
-      Number(order.total || 0);
-
-    document.getElementById("sDeposit").value =
-      Number(order.deposit || 0);
-
-    document.getElementById("sStatus").value =
-      order.status || "Pendiente";
-
-    document.getElementById("sNotes").value =
-      order.notes || "";
-
-    renderServicePhotos();
-    calcService();
-
-    openScreen("service",false);
-
-  }else{
-
-    document.getElementById("mdfTitle").textContent =
-      "Editar Pedido #"+order.number;
-
-    fillClientSelect(
-      "mClient",
-      order.clientId
-    );
-
-    document.getElementById("mPhone").value =
-      order.phone || "";
-
-    document.getElementById("mAddress").value =
-      order.address || "";
-
-    document.getElementById("mdfItems").innerHTML = "";
-
-    var items =
-      Array.isArray(order.items)
-      ? order.items
-      : [];
-
-    if(!items.length){
-
-      addMdfItem();
-
-    }else{
-
-      items.forEach(function(item){
-        addMdfItem(item);
-      });
-    }
-
-    document.getElementById("mDeposit").value =
-      Number(order.deposit || 0);
-
-    document.getElementById("mDelivery").value =
-      order.delivery || "";
-
-    document.getElementById("mStatus").value =
-      order.status || "Pendiente";
-
-    document.getElementById("mNotes").value =
-      order.notes || "";
-
-    calcMdf();
-
-    openScreen("mdf",false);
-  }
 };
 
-
-/* =========================================================
-   ELIMINAR ORDEN
-   ========================================================= */
 
 window.deleteOrder = function(id){
 
-  var order =
-    findOrder(id);
-
-  if(!order){
-    return;
-  }
-
-  if(!confirm(
-    "¿Eliminar la orden #"+order.number+"?\n\n" +
-    "Esta acción no se puede deshacer."
+ if(!confirm(
+  "¿Eliminar esta orden?"
   )){
-    return;
-  }
+  return;
+ }
 
-  db.orders =
-    db.orders.filter(function(o){
-      return o.id !== id;
-    });
+ db.orders =
+ db.orders.filter(function(o){
+  return o.id !== id;
+ });
 
-  persist();
+ if(persist()){
 
   renderOrders();
+  renderCash();
+
+  alert(
+   "Orden eliminada correctamente."
+  );
+
+ }
+
 };
 
 
-/* =========================================================
+/* =========================
    ÓRDENES
-   ========================================================= */
+========================= */
 
-window.setOrderFilter = function(value){
+window.renderOrders = function(){
 
-  orderStatusFilter = value;
+ var q =
+  ($("orderSearch").value || "")
+  .toLowerCase();
 
-  document
-    .querySelectorAll("[data-status]")
-    .forEach(function(btn){
-
-      btn.classList.toggle(
-        "filter-active",
-        btn.getAttribute("data-status") === value
-      );
-    });
-
-  renderOrders();
-};
-
-window.setOrderType = function(value){
-
-  orderTypeFilter = value;
-
-  document
-    .querySelectorAll("[data-type]")
-    .forEach(function(btn){
-
-      btn.classList.toggle(
-        "filter-active",
-        btn.getAttribute("data-type") === value
-      );
-    });
-
-  renderOrders();
-};
-
-function orderMatchesStatus(order){
-
-  if(orderStatusFilter === "Todas"){
-    return true;
-  }
-
-  if(orderStatusFilter === "Pendientes"){
-
-    return order.status !== "Listo" &&
-           order.status !== "Entregado";
-  }
-
-  if(orderStatusFilter === "Terminadas"){
-    return order.status === "Listo";
-  }
-
-  if(orderStatusFilter === "Entregadas"){
-    return order.status === "Entregado";
-  }
-
-  return true;
-}
-
-function renderOrders(){
-
-  var container =
-    document.getElementById("ordersList");
-
-  var search =
-    (
-      document.getElementById("orderSearch").value || ""
-    )
-    .toLowerCase()
-    .trim();
-
-  var orders =
-    db.orders.filter(function(o){
-
-      if(!orderMatchesStatus(o)){
-        return false;
-      }
-
-      if(
-        orderTypeFilter !== "Todas" &&
-        o.type !== orderTypeFilter
-      ){
-        return false;
-      }
-
-      if(!search){
-        return true;
-      }
-
-      var c =
-        findClient(o.clientId);
-
-      var text = [
-        o.number,
-        o.type,
-        o.status,
-        c ? c.name : "",
-        c ? c.phone : "",
-        o.brand,
-        o.model,
-        o.serial,
-        o.problem
-      ].join(" ").toLowerCase();
-
-      return text.includes(search);
-    });
-
-  if(!orders.length){
-
-    container.innerHTML =
-      '<div class="empty">No hay órdenes que coincidan.</div>';
-
-    return;
-  }
-
-  container.innerHTML =
-    orders.map(function(o){
-
-      var c =
-        findClient(o.clientId);
-
-      var badgeClass =
-        o.status === "Entregado"
-        ? "green"
-        : o.status === "Listo"
-        ? "blue"
-        : "orange";
-
-      var detail = "";
-
-      if(o.type === "Servicio"){
-
-        detail =
-          "<div class='item-line'>🔧 "+
-          esc(
-            [o.brand,o.model]
-              .filter(Boolean)
-              .join(" ")
-            || "Equipo sin especificar"
-          )+
-          "</div>";
-
-      }else{
-
-        detail =
-          "<div class='item-line'>🪵 "+
-          esc(
-            (o.items || [])
-              .map(function(i){
-                return (
-                  (i.qty || 0)+" × "+
-                  (i.description || "Producto")
-                );
-              })
-              .join(", ")
-          )+
-          "</div>";
-      }
-
-      return `
-        <div class="item">
-
-          <div class="item-title">
-            #${esc(o.number)} · ${esc(o.type)}
-          </div>
-
-          <div class="item-line">
-            👤 ${esc(c ? c.name : "Cliente eliminado")}
-          </div>
-
-          ${detail}
-
-          <div class="item-line">
-            💰 Total: <strong>${money(o.total)}</strong>
-          </div>
-
-          <div class="item-line">
-            Saldo: ${money(o.balance)}
-          </div>
-
-          <span class="badge ${badgeClass}">
-            ${esc(o.status || "Pendiente")}
-          </span>
-
-          <div class="actions">
-
-            <button
-              class="btn btn-blue"
-              onclick="showReceipt('${o.id}')"
-            >
-              Ver
-            </button>
-
-            <button
-              class="btn btn-secondary"
-              onclick="editOrder('${o.id}')"
-            >
-              Editar
-            </button>
-
-            <button
-              class="btn btn-danger"
-              onclick="deleteOrder('${o.id}')"
-            >
-              Eliminar
-            </button>
-
-          </div>
-
-        </div>
-      `;
-    }).join("");
-}
+ var f =
+  $("orderFilter").value;
 
 
-/* =========================================================
-   EQUIPOS
-   ========================================================= */
+ var arr =
+  db.orders
+  .slice()
+  .reverse()
+  .filter(function(o){
 
-function renderEquipment(){
+   var matchesStatus =
+    f === "all" ||
+    o.status === f;
 
-  var container =
-    document.getElementById("equipmentList");
+   var text =
+    String(o.number || "") +
+    " " +
+    clientName(o.clientId) +
+    " " +
+    String(o.brand || "") +
+    " " +
+    String(o.model || "") +
+    " " +
+    String(o.serial || "");
 
-  var search =
-    (
-      document.getElementById("equipmentSearch").value || ""
-    )
-    .toLowerCase()
-    .trim();
+   return (
+    matchesStatus &&
+    text.toLowerCase().includes(q)
+   );
 
-  var services =
-    db.orders.filter(function(o){
-      return o.type === "Servicio";
-    });
-
-  var groups = {};
-
-  services.forEach(function(o){
-
-    var key =
-      [
-        o.clientId,
-        o.brand,
-        o.model,
-        o.serial
-      ].join("|");
-
-    if(!groups[key]){
-      groups[key] = {
-        clientId:o.clientId,
-        brand:o.brand || "",
-        model:o.model || "",
-        serial:o.serial || "",
-        orders:[]
-      };
-    }
-
-    groups[key].orders.push(o);
   });
 
-  var list =
-    Object.keys(groups)
-      .map(function(k){
-        return groups[k];
-      })
-      .filter(function(g){
 
-        if(!search){
-          return true;
-        }
+ if(!arr.length){
 
-        var c =
-          findClient(g.clientId);
+  $("ordersList").innerHTML =
+   '<div class="card">' +
+   'No hay órdenes.' +
+   '</div>';
 
-        var text = [
-          c ? c.name : "",
-          g.brand,
-          g.model,
-          g.serial
-        ].join(" ").toLowerCase();
+  return;
 
-        return text.includes(search);
-      });
+ }
 
-  if(!list.length){
 
-    container.innerHTML =
-      '<div class="empty">No hay equipos registrados.</div>';
+ $("ordersList").innerHTML =
+  arr.map(function(o){
 
-    return;
+   var paymentHtml =
+    o.paymentStatus === "paid"
+
+    ?
+
+    '<span class="status ok">' +
+    'Pagado' +
+    '</span>'
+
+    :
+
+    '<span class="status warn">' +
+    'Pendiente ' +
+    money(o.balance) +
+    '</span>';
+
+
+   var type =
+    o.type === "mdf" ?
+    "Pedido MDF" :
+    "Servicio técnico";
+
+
+   return (
+
+    '<div class="card">' +
+
+    '<b>Orden ' +
+    esc(o.number) +
+    '</b>' +
+
+    ' · ' +
+
+    esc(type) +
+
+    '<br>' +
+
+    '<b>Cliente:</b> ' +
+    esc(clientName(o.clientId)) +
+
+    '<br>' +
+
+    '<span class="status">' +
+    esc(o.status || "Pendiente") +
+    '</span> ' +
+
+    paymentHtml +
+
+    '<div class="money">' +
+    money(o.total) +
+    '</div>' +
+
+    '<div class="small">' +
+    'Cobrado: ' +
+    money(o.paid) +
+    ' · Saldo: ' +
+    money(o.balance) +
+    '</div>' +
+
+    '<div class="actions">' +
+
+    '<button onclick="editOrder(\'' +
+    o.id +
+    '\')">' +
+    'Editar' +
+    '</button>' +
+
+    '<button onclick="showReceipt(\'' +
+    o.id +
+    '\')">' +
+    'Recibo' +
+    '</button>' +
+
+    '<button class="danger" onclick="deleteOrder(\'' +
+    o.id +
+    '\')">' +
+    'Eliminar' +
+    '</button>' +
+
+    '</div>' +
+
+    '</div>'
+
+   );
+
+  }).join("");
+
+};
+
+
+/* =========================
+   EQUIPOS / IMPRESORAS
+========================= */
+
+window.renderEquipment = function(){
+
+ var q =
+  ($("equipmentSearch").value || "")
+  .toLowerCase();
+
+
+ var arr =
+  db.orders
+  .filter(function(o){
+   return o.type === "service";
+  })
+  .filter(function(o){
+
+   var text =
+    String(o.brand || "") +
+    " " +
+    String(o.model || "") +
+    " " +
+    String(o.serial || "") +
+    " " +
+    clientName(o.clientId);
+
+   return text
+    .toLowerCase()
+    .includes(q);
+
+  });
+
+
+ if(!arr.length){
+
+  $("equipmentList").innerHTML =
+   '<div class="card">' +
+   'No hay equipos registrados.' +
+   '</div>';
+
+  return;
+
+ }
+
+
+ $("equipmentList").innerHTML =
+  arr
+  .slice()
+  .reverse()
+  .map(function(o){
+
+   return (
+
+    '<div class="card">' +
+
+    '<b>' +
+    esc(
+     (o.brand || "Sin marca") +
+     " " +
+     (o.model || "")
+    ) +
+    '</b>' +
+
+    '<br>' +
+
+    'Serie: ' +
+    esc(o.serial || "Sin serie") +
+
+    '<br>' +
+
+    'Cliente: ' +
+    esc(clientName(o.clientId)) +
+
+    '<br>' +
+
+    'Estado: ' +
+    '<span class="status">' +
+    esc(o.status || "Pendiente") +
+    '</span>' +
+
+    '<div class="actions">' +
+
+    '<button onclick="editOrder(\'' +
+    o.id +
+    '\')">' +
+    'Abrir orden' +
+    '</button>' +
+
+    '</div>' +
+
+    '</div>'
+
+   );
+
+  })
+  .join("");
+
+};
+
+
+/* =========================
+   CAJA / FACTURACIÓN
+========================= */
+
+window.renderCash = function(){
+
+ var facturacion = 0;
+ var cobrado = 0;
+ var pendiente = 0;
+
+ var servicios = 0;
+ var mdf = 0;
+
+ var cobradoServicios = 0;
+ var cobradoMdf = 0;
+
+
+ db.orders.forEach(function(o){
+
+  var total =
+   Number(o.total) || 0;
+
+  var paid =
+   Number(o.paid) || 0;
+
+  var balance =
+   Number(o.balance);
+
+  if(isNaN(balance)){
+   balance =
+    Math.max(
+     0,
+     total - paid
+    );
   }
 
-  container.innerHTML =
-    list.map(function(g){
 
-      var c =
-        findClient(g.clientId);
-
-      var history =
-        g.orders
-          .slice()
-          .sort(function(a,b){
-            return String(b.createdAt || "")
-              .localeCompare(
-                String(a.createdAt || "")
-              );
-          });
-
-      return `
-        <div class="item">
-
-          <div class="item-title">
-            🖨️ ${esc(
-              [g.brand,g.model]
-                .filter(Boolean)
-                .join(" ")
-              || "Equipo"
-            )}
-          </div>
-
-          <div class="item-line">
-            👤 ${esc(c ? c.name : "Cliente eliminado")}
-          </div>
-
-          <div class="item-line">
-            Serie: ${esc(g.serial || "Sin número de serie")}
-          </div>
-
-          <div class="item-line">
-            Historial: ${history.length} servicio(s)
-          </div>
-
-          <div class="receipt-section">
-
-            ${history.map(function(o){
-
-              return `
-                <div class="item-line">
-                  #${esc(o.number)}
-                  · ${esc(o.status)}
-                  · ${money(o.total)}
-                  <button
-                    class="btn btn-secondary"
-                    style="padding:5px 8px;margin-left:5px"
-                    onclick="showReceipt('${o.id}')"
-                  >
-                    Ver
-                  </button>
-                </div>
-              `;
-            }).join("")}
-
-          </div>
-
-        </div>
-      `;
-    }).join("");
-}
+  facturacion += total;
+  cobrado += paid;
+  pendiente += balance;
 
 
-/* =========================================================
-   CAJA
-   ========================================================= */
+  if(o.type === "mdf"){
 
-function renderCash(){
+   mdf += total;
+   cobradoMdf += paid;
 
-  var serviceIncome =
-    db.orders
-      .filter(function(o){
-        return o.type === "Servicio";
-      })
-      .reduce(function(sum,o){
-        return sum + Number(o.deposit || 0);
-      },0);
+  }else{
 
-  var mdfIncome =
-    db.orders
-      .filter(function(o){
-        return o.type === "MDF";
-      })
-      .reduce(function(sum,o){
-        return sum + Number(o.deposit || 0);
-      },0);
+   servicios += total;
+   cobradoServicios += paid;
 
-  var totalIncome =
-    serviceIncome + mdfIncome;
-
-  var pending =
-    db.orders.reduce(function(sum,o){
-      return sum + Number(o.balance || 0);
-    },0);
-
-  var totalSales =
-    db.orders.reduce(function(sum,o){
-      return sum + Number(o.total || 0);
-    },0);
-
-  document.getElementById("cashStats").innerHTML = `
-
-    <div class="stat">
-      <div class="stat-label">Ingresos cobrados</div>
-      <div class="stat-value">${money(totalIncome)}</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">Ventas / servicios</div>
-      <div class="stat-value">${money(totalSales)}</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">Saldo pendiente</div>
-      <div class="stat-value">${money(pending)}</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">Órdenes</div>
-      <div class="stat-value">${db.orders.length}</div>
-    </div>
-  `;
-
-  var container =
-    document.getElementById("cashList");
-
-  var orders =
-    db.orders.slice();
-
-  if(!orders.length){
-
-    container.innerHTML =
-      '<div class="empty">No hay movimientos.</div>';
-
-    return;
   }
 
-  container.innerHTML =
-    orders.map(function(o){
-
-      var c =
-        findClient(o.clientId);
-
-      return `
-        <div class="item">
-
-          <div class="item-title">
-            #${esc(o.number)} · ${esc(o.type)}
-          </div>
-
-          <div class="item-line">
-            ${esc(c ? c.name : "Cliente eliminado")}
-          </div>
-
-          <div class="item-line">
-            Total: ${money(o.total)}
-          </div>
-
-          <div class="item-line">
-            Cobrado: <strong>${money(o.deposit)}</strong>
-          </div>
-
-          <div class="item-line">
-            Pendiente: ${money(o.balance)}
-          </div>
-
-          <span class="badge">
-            ${esc(o.status)}
-          </span>
-
-        </div>
-      `;
-    }).join("");
-}
+ });
 
 
-/* =========================================================
-   COMPROBANTE
-   ========================================================= */
+ $("cashSummary").innerHTML =
+
+  '<div class="grid">' +
+
+  '<div class="card">' +
+  '<div class="small">' +
+  'FACTURACIÓN TOTAL' +
+  '</div>' +
+  '<div class="total">' +
+  money(facturacion) +
+  '</div>' +
+  '</div>' +
+
+  '<div class="card">' +
+  '<div class="small">' +
+  'TOTAL COBRADO' +
+  '</div>' +
+  '<div class="total">' +
+  money(cobrado) +
+  '</div>' +
+  '</div>' +
+
+  '<div class="card">' +
+  '<div class="small">' +
+  'PENDIENTE DE COBRO' +
+  '</div>' +
+  '<div class="total">' +
+  money(pendiente) +
+  '</div>' +
+  '</div>' +
+
+  '</div>' +
+
+
+  '<div class="grid">' +
+
+  '<div class="card">' +
+  '<div class="small">' +
+  'SERVICIOS TÉCNICOS' +
+  '</div>' +
+  '<div class="money">' +
+  money(servicios) +
+  '</div>' +
+  '<div class="small">' +
+  'Cobrado: ' +
+  money(cobradoServicios) +
+  '</div>' +
+  '</div>' +
+
+  '<div class="card">' +
+  '<div class="small">' +
+  'PEDIDOS MDF' +
+  '</div>' +
+  '<div class="money">' +
+  money(mdf) +
+  '</div>' +
+  '<div class="small">' +
+  'Cobrado: ' +
+  money(cobradoMdf) +
+  '</div>' +
+  '</div>' +
+
+  '</div>';
+
+
+ var orders =
+  db.orders
+  .slice()
+  .reverse();
+
+
+ if(!orders.length){
+
+  $("cashList").innerHTML =
+   '<div class="card">' +
+   'Todavía no hay movimientos.' +
+   '</div>';
+
+  return;
+
+ }
+
+
+ $("cashList").innerHTML =
+  orders.map(function(o){
+
+   return (
+
+    '<div class="card">' +
+
+    '<b>Orden ' +
+    esc(o.number) +
+    '</b>' +
+
+    ' · ' +
+
+    (o.type === "mdf" ?
+     "MDF" :
+     "Servicio") +
+
+    '<br>' +
+
+    esc(clientName(o.clientId)) +
+
+    '<br>' +
+
+    'Facturado: ' +
+    money(o.total) +
+
+    '<br>' +
+
+    'Cobrado: ' +
+    money(o.paid) +
+
+    '<br>' +
+
+    'Saldo: ' +
+    money(o.balance) +
+
+    '<br>' +
+
+    (
+     o.paymentStatus === "paid" ?
+
+     '<span class="status ok">' +
+     'PAGADO' +
+     '</span>' :
+
+     '<span class="status warn">' +
+     'PENDIENTE' +
+     '</span>'
+    ) +
+
+    '</div>'
+
+   );
+
+  }).join("");
+
+};
+
+
+/* =========================
+   RECIBO
+========================= */
 
 window.showReceipt = function(id){
 
-  var order =
-    findOrder(id);
+ var o =
+  findOrder(id);
 
-  if(!order){
-    alert("Orden no encontrada.");
-    return;
-  }
+ if(!o){
+  return;
+ }
 
-  window._currentReceiptOrderId =
-    id;
+ var c =
+  findClient(o.clientId) ||
+  {};
 
-  var c =
-    findClient(order.clientId);
 
-  var html = `
-    <div class="receipt-header">
+ var html =
 
-      <div class="receipt-logo">
-        JUREMA
-      </div>
+  '<div class="card">' +
 
-      <div>
-        Servicio Técnico · MDF
-      </div>
+  '<h2>JUREMA</h2>' +
 
-      <div class="receipt-number">
-        Orden #${esc(order.number)}
-      </div>
+  '<p>' +
 
-      <div class="small">
-        ${esc(
-          new Date(
-            order.createdAt || Date.now()
-          ).toLocaleString("es-AR")
-        )}
-      </div>
+  'Orden Nº <b>' +
+  esc(o.number) +
+  '</b>' +
 
-    </div>
+  '<br>' +
 
-    <div class="receipt-section">
+  'Fecha: ' +
+  esc(o.date) +
 
-      <h3>Cliente</h3>
+  '</p>' +
 
-      <div>${esc(
-        c ? c.name : "Cliente eliminado"
-      )}</div>
+  '<hr>' +
 
-      <div>${esc(
-        order.phone ||
-        (c ? c.phone : "") ||
-        ""
-      )}</div>
+  '<b>Cliente:</b> ' +
+  esc(c.name || "") +
 
-      <div>${esc(
-        order.address ||
-        (c ? c.address : "") ||
-        ""
-      )}</div>
+  '<br>' +
 
-    </div>
-  `;
+  '<b>Teléfono:</b> ' +
+  esc(c.phone || "") +
 
-  if(order.type === "Servicio"){
+  '<br>' +
 
-    html += `
+  '<b>Dirección:</b> ' +
+  esc(c.address || "") +
 
-      <div class="receipt-section">
+  '<hr>';
 
-        <h3>Servicio Técnico</h3>
 
-        <div class="receipt-row">
-          <span>Marca / modelo</span>
-          <strong>${esc(
-            [order.brand,order.model]
-              .filter(Boolean)
-              .join(" ")
-          )}</strong>
-        </div>
+ if(o.type === "mdf"){
 
-        <div class="receipt-row">
-          <span>Serie</span>
-          <span>${esc(order.serial || "")}</span>
-        </div>
+  html +=
+   '<h3>Pedido MDF</h3>';
 
-        <div class="receipt-row">
-          <span>Problema</span>
-          <span>${esc(order.problem || "")}</span>
-        </div>
 
-        <div class="receipt-row">
-          <span>Estado exterior</span>
-          <span>${esc(order.condition || "")}</span>
-        </div>
+  (o.items || [])
+  .forEach(function(i){
 
-        <div class="receipt-row">
-          <span>Accesorios</span>
-          <span>${esc(order.accessories || "")}</span>
-        </div>
+   html +=
 
-      </div>
-    `;
+    esc(i.description) +
 
-  }else{
+    ' × ' +
 
-    html += `
+    esc(i.qty) +
 
-      <div class="receipt-section">
+    ' = ' +
 
-        <h3>Pedido MDF</h3>
+    money(i.subtotal) +
 
-        ${
-          (order.items || [])
-            .map(function(item){
+    '<br>';
 
-              return `
-                <div class="receipt-row">
+  });
 
-                  <span>
-                    ${esc(item.qty)} ×
-                    ${esc(item.description)}
-                  </span>
 
-                  <strong>
-                    ${money(item.subtotal)}
-                  </strong>
+ }else{
 
-                </div>
-              `;
-            }).join("")
-        }
+  html +=
 
-        ${
-          order.delivery
-          ? `
-            <div class="receipt-row">
-              <span>Entrega</span>
-              <span>${esc(order.delivery)}</span>
-            </div>
-          `
-          : ""
-        }
+   '<h3>Servicio técnico</h3>' +
 
-      </div>
-    `;
-  }
+   '<b>Marca:</b> ' +
+   esc(o.brand || "") +
 
-  html += `
+   '<br>' +
 
-    <div class="receipt-section">
+   '<b>Modelo:</b> ' +
+   esc(o.model || "") +
 
-      <div class="receipt-row">
-        <span>Total</span>
-        <strong class="money">
-          ${money(order.total)}
-        </strong>
-      </div>
+   '<br>' +
 
-      <div class="receipt-row">
-        <span>Pagado</span>
-        <strong>
-          ${money(order.deposit)}
-        </strong>
-      </div>
+   '<b>Serie:</b> ' +
+   esc(o.serial || "") +
 
-      <div class="receipt-row">
-        <span>Saldo</span>
-        <strong>
-          ${money(order.balance)}
-        </strong>
-      </div>
+   '<br>' +
 
-      <div class="receipt-row">
-        <span>Estado</span>
-        <strong>
-          ${esc(order.status)}
-        </strong>
-      </div>
+   '<b>Problema:</b> ' +
+   esc(o.problem || "");
 
-    </div>
-  `;
+ }
 
-  if(order.notes){
 
-    html += `
-      <div class="receipt-section">
-        <h3>Observaciones</h3>
-        <div>${esc(order.notes)}</div>
-      </div>
-    `;
-  }
+ html +=
 
-  if(
-    order.type === "Servicio" &&
-    Array.isArray(order.photos) &&
-    order.photos.length
-  ){
+  '<hr>' +
 
-    html += `
-      <div class="receipt-section">
-        <h3>Fotos</h3>
-        <div class="photo-grid">
-          ${order.photos.map(function(photo){
-            return `
-              <img src="${photo}" alt="Foto del equipo">
-            `;
-          }).join("")}
-        </div>
-      </div>
-    `;
-  }
+  '<div class="total">' +
+  'Total: ' +
+  money(o.total) +
+  '</div>' +
 
-  html += `
+  '<div>' +
+  'Pagado: ' +
+  money(o.paid) +
+  '</div>' +
 
-    <div class="receipt-section"
-         style="text-align:center">
-      Gracias por confiar en JUREMA.
-    </div>
-  `;
+  '<div>' +
+  'Saldo: ' +
+  money(o.balance) +
+  '</div>' +
 
-  document.getElementById("receipt").innerHTML =
-    html;
+  '<p>' +
 
-  document.getElementById("sharePhotosBtn").style.display =
-    order.type === "Servicio" &&
-    Array.isArray(order.photos) &&
-    order.photos.length
-    ? "inline-block"
-    : "none";
+  'Estado: ' +
+  esc(o.status || "") +
 
-  openScreen("result");
+  '<br>' +
+
+  'Pago: ' +
+
+  (
+   o.paymentStatus === "paid" ?
+
+   '<b>PAGADO</b>' :
+
+   '<b>PENDIENTE</b>'
+  ) +
+
+  '</p>' +
+
+  '<p>' +
+  esc(o.notes || "") +
+  '</p>' +
+
+  '</div>';
+
+
+ $("receiptContent").innerHTML =
+  html;
+
+
+ /*
+    Marcamos el recibo para impresión.
+ */
+
+ document
+ .querySelectorAll(".screen")
+ .forEach(function(s){
+  s.classList.remove("printing");
+ });
+
+ $("receipt")
+ .classList.add("printing");
+
+
+ openScreen(
+  "receipt"
+ );
+
 };
 
 
-/* =========================================================
-   COMPARTIR COMPROBANTE
-   ========================================================= */
+/* =========================
+   COMPARTIR RECIBO
+========================= */
 
-window.shareReceipt = async function(){
+window.shareReceipt = function(){
 
-  var order =
-    findOrder(
-      window._currentReceiptOrderId
-    );
+ if(!navigator.share){
 
-  if(!order){
-    return;
-  }
+  alert(
+   "Tu navegador no admite compartir."
+  );
 
-  var c =
-    findClient(order.clientId);
+  return;
 
-  var text =
-    "JUREMA\n" +
-    "Orden #"+order.number+"\n" +
-    "Cliente: "+(c ? c.name : "")+"\n" +
-    "Tipo: "+order.type+"\n" +
-    "Total: "+money(order.total)+"\n" +
-    "Pagado: "+money(order.deposit)+"\n" +
-    "Saldo: "+money(order.balance)+"\n" +
-    "Estado: "+order.status;
+ }
 
-  if(
-    navigator.share
-  ){
 
-    try{
+ var text =
+  $("receiptContent").innerText;
 
-      await navigator.share({
-        title:"JUREMA - Orden #"+order.number,
-        text:text
-      });
 
-    }catch(error){
-      console.log(error);
-    }
+ navigator.share({
 
-  }else{
+  title:
+   "JUREMA - Orden",
 
-    try{
+  text:text
 
-      await navigator.clipboard.writeText(text);
+ })
+ .catch(function(){});
 
-      alert(
-        "El comprobante fue copiado al portapapeles."
-      );
-
-    }catch(error){
-
-      alert(text);
-    }
-  }
 };
 
 
-/* =========================================================
-   COMPARTIR FOTOS
-   ========================================================= */
-
-window.sharePhotos = async function(){
-
-  var order =
-    findOrder(
-      window._currentReceiptOrderId
-    );
-
-  if(!order ||
-     !Array.isArray(order.photos) ||
-     !order.photos.length){
-
-    alert("Esta orden no tiene fotos.");
-    return;
-  }
-
-  if(!navigator.share){
-
-    alert(
-      "Tu navegador no permite compartir archivos."
-    );
-
-    return;
-  }
-
-  try{
-
-    var files = [];
-
-    for(
-      var i=0;
-      i<order.photos.length;
-      i++
-    ){
-
-      var response =
-        await fetch(order.photos[i]);
-
-      var blob =
-        await response.blob();
-
-      var file =
-        new File(
-          [blob],
-          "jurema_"+order.number+"_"+(i+1)+".jpg",
-          {type:"image/jpeg"}
-        );
-
-      files.push(file);
-    }
-
-    if(
-      navigator.canShare &&
-      !navigator.canShare({files:files})
-    ){
-
-      alert(
-        "Este dispositivo no permite compartir estas fotos."
-      );
-
-      return;
-    }
-
-    await navigator.share({
-      title:"JUREMA Orden #"+order.number,
-      text:"Fotos de la orden #"+order.number,
-      files:files
-    });
-
-  }catch(error){
-
-    console.error(error);
-
-    if(error.name !== "AbortError"){
-
-      alert(
-        "No se pudieron compartir las fotos."
-      );
-    }
-  }
-};
-
-
-/* =========================================================
-   BACKUP
-   ========================================================= */
+/* =========================
+   COPIA DE SEGURIDAD
+========================= */
 
 window.exportBackup = function(){
 
-  try{
+ try{
 
-    var data =
-      JSON.stringify(
-        {
-          app:"JUREMA",
-          version:3,
-          exportedAt:new Date().toISOString(),
-          database:db
-        },
-        null,
-        2
-      );
+  var data =
+   JSON.stringify(
+    db,
+    null,
+    2
+   );
 
-    var blob =
-      new Blob(
-        [data],
-        {type:"application/json"}
-      );
 
-    var url =
-      URL.createObjectURL(blob);
-
-    var a =
-      document.createElement("a");
-
-    a.href = url;
-
-    a.download =
-      "JUREMA_backup_"+today()+".json";
-
-    document.body.appendChild(a);
-
-    a.click();
-
-    a.remove();
-
-    setTimeout(function(){
-      URL.revokeObjectURL(url);
-    },1000);
-
-  }catch(error){
-
-    console.error(error);
-
-    alert(
-      "No se pudo crear la copia."
-    );
-  }
-};
-
-window.importBackup = function(input){
-
-  var file =
-    input.files &&
-    input.files[0];
-
-  if(!file){
-    return;
-  }
-
-  var reader =
-    new FileReader();
-
-  reader.onload = function(){
-
-    try{
-
-      var parsed =
-        JSON.parse(reader.result);
-
-      var imported =
-        parsed.database || parsed;
-
-      if(
-        !imported ||
-        !Array.isArray(imported.clients) ||
-        !Array.isArray(imported.orders)
-      ){
-
-        throw new Error(
-          "Formato de copia no válido."
-        );
-      }
-
-      if(!confirm(
-        "¿Importar esta copia?\n\n" +
-        "Los datos actuales de esta versión serán reemplazados."
-      )){
-        input.value = "";
-        return;
-      }
-
-      db.clients =
-        imported.clients;
-
-      db.orders =
-        imported.orders;
-
-      db.next =
-        Number(imported.next || 5);
-
-      if(db.next < 5){
-        db.next = 5;
-      }
-
-      if(!persist()){
-        return;
-      }
-
-      input.value = "";
-
-      alert(
-        "Copia importada correctamente."
-      );
-
-      renderBackupInfo();
-
-    }catch(error){
-
-      console.error(error);
-
-      alert(
-        "La copia no es válida o está dañada."
-      );
+  var blob =
+   new Blob(
+    [data],
+    {
+     type:
+      "application/json"
     }
-  };
+   );
 
-  reader.readAsText(file);
+
+  var url =
+   URL.createObjectURL(blob);
+
+
+  var a =
+   document.createElement("a");
+
+
+  a.href =
+   url;
+
+
+  a.download =
+   "jurema-backup-" +
+   new Date()
+   .toISOString()
+   .slice(0,10) +
+   ".json";
+
+
+  document.body
+   .appendChild(a);
+
+
+  a.click();
+
+
+  document.body
+   .removeChild(a);
+
+
+  setTimeout(
+   function(){
+    URL.revokeObjectURL(url);
+   },
+   1000
+  );
+
+
+ }catch(e){
+
+  alert(
+   "No se pudo crear la copia de seguridad."
+  );
+
+ }
+
 };
 
-function renderBackupInfo(){
 
-  var el =
-    document.getElementById("backupInfo");
+window.importBackup = function(ev){
 
-  if(!el){
-    return;
-  }
+ var file =
+  ev.target.files[0];
 
-  var photos = 0;
 
-  db.orders.forEach(function(o){
+ if(!file){
+  return;
+ }
+
+
+ var reader =
+  new FileReader();
+
+
+ reader.onload =
+  function(){
+
+   try{
+
+    var x =
+     JSON.parse(
+      reader.result
+     );
+
 
     if(
-      Array.isArray(o.photos)
+     !x ||
+     !Array.isArray(x.clients) ||
+     !Array.isArray(x.orders)
     ){
-      photos += o.photos.length;
+
+     throw new Error(
+      "Formato inválido"
+     );
+
     }
-  });
 
-  el.innerHTML = `
 
-    <div class="item-line">
-      👥 Clientes: <strong>${db.clients.length}</strong>
-    </div>
+    db = x;
 
-    <div class="item-line">
-      📋 Órdenes: <strong>${db.orders.length}</strong>
-    </div>
 
-    <div class="item-line">
-      📷 Fotos: <strong>${photos}</strong>
-    </div>
+    if(
+     !db.next ||
+     Number(db.next) < 5
+    ){
 
-    <div class="item-line">
-      🔢 Próximo número:
-      <strong>${String(db.next).padStart(5,"0")}</strong>
-    </div>
+     db.next = 5;
 
-    <div class="small" style="margin-top:8px">
-      Base: ${esc(KEY)}
-    </div>
-  `;
-}
+    }
 
-window.clearDatabase = function(){
 
-  var confirmation =
-    prompt(
-      "Esto borrará TODOS los clientes y órdenes de esta versión.\n\n" +
-      "Escribí BORRAR para confirmar."
+    if(
+     persist()
+    ){
+
+     alert(
+      "Copia restaurada correctamente."
+     );
+
+     renderBackupInfo();
+     fillClientSelect("sClient");
+     fillClientSelect("mClient");
+
+    }
+
+
+   }catch(e){
+
+    alert(
+     "El archivo no es una copia válida de JUREMA."
     );
 
-  if(confirmation !== "BORRAR"){
-    return;
-  }
+   }
 
-  db = {
-    clients:[],
-    orders:[],
-    next:5
   };
 
-  try{
 
-    localStorage.removeItem(KEY);
+ reader.readAsText(file);
 
-    alert(
-      "Todos los datos fueron eliminados."
-    );
-
-    renderBackupInfo();
-    renderClients();
-    renderOrders();
-    renderEquipment();
-    renderCash();
-
-  }catch(error){
-
-    alert(
-      "No se pudo borrar la base."
-    );
-  }
 };
 
 
-/* =========================================================
-   INICIALIZACIÓN
-   ========================================================= */
+/* =========================
+   INFORMACIÓN DE BACKUP
+========================= */
+
+window.renderBackupInfo =
+ function(){
+
+  $("backupInfo").innerHTML =
+
+   '<div class="card">' +
+
+   'Clientes: <b>' +
+   db.clients.length +
+   '</b>' +
+
+   '<br>' +
+
+   'Órdenes: <b>' +
+   db.orders.length +
+   '</b>' +
+
+   '<br>' +
+
+   'Próximo número: <b>' +
+   String(db.next)
+   .padStart(5,"0") +
+   '</b>' +
+
+   '</div>';
+
+ };
+
+
+/* =========================
+   BORRAR BASE
+========================= */
+
+window.clearDatabase =
+ function(){
+
+  var x =
+   prompt(
+    "Para borrar TODOS los datos escribí BORRAR"
+   );
+
+
+  if(x !== "BORRAR"){
+   return;
+  }
+
+
+  db = {
+   clients:[],
+   orders:[],
+   next:5
+  };
+
+
+  try{
+
+   localStorage.removeItem(
+    KEY
+   );
+
+  }catch(e){}
+
+
+  editingClientId = null;
+  editingOrderId = null;
+  tempPhotos = [];
+  stack = [];
+
+
+  alert(
+   "Todos los datos fueron borrados."
+  );
+
+
+  openScreen(
+   "home",
+   false
+  );
+
+ };
+
+
+/* =========================
+   INICIO
+========================= */
 
 loadDatabase();
 
-setupClientSelectListeners();
+setupSelects();
 
-fillClientSelect("sClient","");
-fillClientSelect("mClient","");
+fillClientSelect(
+ "sClient"
+);
+
+fillClientSelect(
+ "mClient"
+);
+
+renderClients();
+
+renderOrders();
+
+renderEquipment();
+
+renderCash();
 
 renderBackupInfo();
 
+
 })();
-
-
-/* =========================================================
-   FUNCIONES GLOBALES DE INICIO
-   ========================================================= */
-
-window.addEventListener("load",function(){
-
-  var serviceClient =
-    document.getElementById("sClient");
-
-  var mdfClient =
-    document.getElementById("mClient");
-
-  if(serviceClient){
-    serviceClient.addEventListener(
-      "change",
-      function(){
-        var c = this.value;
-        if(c){
-          var client = db.clients.find(function(x){
-            return x.id === c;
-          });
-
-          if(client){
-            document.getElementById("sPhone").value =
-              client.phone || "";
-
-            document.getElementById("sAddress").value =
-              client.address || "";
-          }
-        }
-      }
-    );
-  }
-
-  if(mdfClient){
-    mdfClient.addEventListener(
-      "change",
-      function(){
-        var c = this.value;
-        if(c){
-          var client = db.clients.find(function(x){
-            return x.id === c;
-          });
-
-          if(client){
-            document.getElementById("mPhone").value =
-              client.phone || "";
-
-            document.getElementById("mAddress").value =
-              client.address || "";
-          }
-        }
-      }
-    );
-  }
-
-  /*
-    Cuando se entra a Servicio o MDF desde el menú
-    se prepara un formulario nuevo.
-  */
-
-  var originalOpenScreen =
-    window.openScreen;
-
-  window.openScreen =
-    function(name,push){
-
-      if(
-        name === "service" &&
-        !window._editingOrderId
-      ){
-
-        resetService();
-      }
-
-      if(
-        name === "mdf" &&
-        !window._editingOrderId
-      ){
-
-        resetMdf();
-      }
-
-      originalOpenScreen(name,push);
-    };
-
-});
-
 </script>
 
 </body>
