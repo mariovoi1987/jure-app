@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#111827">
-<title>JUREMA V2.1</title>
+<title>JUREMA V2.1.1</title>
 
 <style>
 *{box-sizing:border-box}
@@ -198,814 +198,43 @@ button{
 }
 
 .producto{
- border:2px solid #e5e7eb;
- border-radius:12px;
- padding:12px;
- margin-top:12px;
- background:#fafafa;
-}
-
-.producto-header{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
-}
-
-.producto-header strong{
- font-size:16px;
-}
-
-.producto-header button{
- width:auto;
- padding:8px 12px;
- margin:0;
- font-size:13px;
-}
-
-.producto-grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
-}
-
-.producto-grid .full{
- grid-column:1 / -1;
-}
-
-.item-subtotal{
- font-size:18px;
- font-weight:bold;
- margin-top:10px;
-}
-
-.small{
- font-size:13px;
- color:#666;
-}
-
-.empty{
- text-align:center;
- padding:20px;
- color:#666;
-}
-
-.danger-text{
- color:#b91c1c;
- font-size:13px;
-}
-
-.success-text{
- color:#15803d;
- font-size:13px;
-}
-
-@media(max-width:480px){
- .row,
- .producto-grid{
-  grid-template-columns:1fr;
- }
-
- .filter-row{
-  grid-template-columns:1fr 1fr;
- }
-}
-
-@media print{
- body{
-  background:white;
- }
-
- .no-print{
-  display:none!important;
- }
-
- .comprobante{
-  box-shadow:none!important;
-  margin:0!important;
- }
-}
-</style>
-</head>
-
-<body>
-
-<header>
-<h1>JUREMA</h1>
-<p>Gestión de clientes y trabajos — V2.1</p>
-</header>
-
-<main>
-
-<!-- INICIO -->
-
-<section id="inicio" class="card menu">
-
-<h2>¿Qué querés hacer?</h2>
-
-<button class="btn" onclick="mostrar('servicio')">
-🖨️ SERVICIO TÉCNICO
-</button>
-
-<button class="btn" onclick="mostrar('mdf')">
-🪵 PEDIDO MDF / CORTE LÁSER
-</button>
-
-<button class="blue" onclick="mostrar('clientes')">
-👥 CLIENTES
-</button>
-
-<button class="blue" onclick="mostrar('ordenes')">
-📋 ÓRDENES
-</button>
-
-<button class="blue" onclick="mostrar('equipos')">
-🖨️ EQUIPOS / IMPRESORAS
-</button>
-
-<button class="green" onclick="mostrar('caja')">
-💰 CAJA JUREMA
-</button>
-
-<button class="gray" onclick="mostrar('backup')">
-💾 COPIA DE SEGURIDAD
-</button>
-
-</section>
-
-
-<!-- SERVICIO -->
-
-<section id="servicio" class="card hidden">
-
-<button class="top-back" onclick="volver()">
-⬅️ VOLVER
-</button>
-
-<h2 id="tituloServicio">🖨️ Servicio técnico</h2>
-
-<input id="servicioEditId" type="hidden">
-
-<label>Cliente guardado</label>
-
-<select id="scliente" onchange="cargarClienteServicio()">
-<option value="">-- Nuevo cliente --</option>
-</select>
-
-<label>Nombre del cliente</label>
-<input id="cliente">
-
-<label>Teléfono</label>
-<input id="telefono" type="tel">
-
-<label>Domicilio</label>
-<input id="domicilio">
-
-<label>Marca</label>
-<input id="marca">
-
-<label>Modelo</label>
-<input id="modelo">
-
-<label>Número de serie</label>
-<input id="serie">
-
-<label>Problema informado</label>
-<textarea id="problema"></textarea>
-
-<label>Estado exterior del equipo</label>
-<textarea id="estado"></textarea>
-
-<label>Accesorios entregados</label>
-<input id="accesorios" placeholder="Cable, fuente, bandeja, etc.">
-
-<label>Fotos del equipo</label>
-<input id="fotos" type="file" accept="image/*" capture="environment" multiple>
-
-<div id="fotosExistentes" class="fotos"></div>
-
-<label>Estado del trabajo</label>
-
-<select id="estadoTrabajo">
-
-<option>Recibido</option>
-<option>En diagnóstico</option>
-<option>Esperando repuesto</option>
-<option>En reparación</option>
-<option>Listo</option>
-<option>Entregado</option>
-
-</select>
-
-<div class="row">
-
-<div>
-<label>Costo</label>
-<input id="costo" type="number" value="0" min="0"
-oninput="calcularServicio()">
-</div>
-
-<div>
-<label>Seña / pago</label>
-<input id="sena" type="number" value="0" min="0"
-oninput="calcularServicio()">
-</div>
-
-</div>
-
-<p class="total">
-Saldo: $ <span id="saldoServicio">0</span>
-</p>
-
-<label>Observaciones</label>
-<textarea id="observaciones"></textarea>
-
-<button class="green" onclick="guardarServicio()">
-🧾 GUARDAR ORDEN
-</button>
-
-<button class="gray" onclick="limpiarServicio()">
-🧹 LIMPIAR FORMULARIO
-</button>
-
-</section>
-
-
-<!-- MDF -->
-
-<section id="mdf" class="card hidden">
-
-<button class="top-back" onclick="volver()">
-⬅️ VOLVER
-</button>
-
-<h2 id="tituloMDF">🪵 Pedido MDF / Corte láser</h2>
-
-<input id="mdfEditId" type="hidden">
-
-<label>Cliente guardado</label>
-
-<select id="mcliente" onchange="cargarClienteMDF()">
-<option value="">-- Nuevo cliente --</option>
-</select>
-
-<label>Nombre del cliente</label>
-<input id="mnombre">
-
-<label>Teléfono</label>
-<input id="mtelefono" type="tel">
-
-<label>Domicilio</label>
-<input id="mdomicilio">
-
-<div class="linea"></div>
-
-<h3>🪵 Productos del pedido</h3>
-
-<div id="listaProductos"></div>
-
-<button class="blue" onclick="agregarProducto()">
-➕ AGREGAR PRODUCTO
-</button>
-
-<div class="linea"></div>
-
-<p class="total">
-TOTAL DEL PEDIDO: $<span id="mdfTotal">0</span>
-</p>
-
-<label>Seña / pagos recibidos</label>
-<input id="msena" type="number" value="0" min="0"
-oninput="calcularMDF()">
-
-<p class="total">
-SALDO: $<span id="saldoMDF">0</span>
-</p>
-
-<label>Fecha de entrega</label>
-<input id="mentrega" type="date">
-
-<label>Estado del pedido</label>
-
-<select id="mestado">
-
-<option>Pedido recibido</option>
-<option>En producción</option>
-<option>Listo</option>
-<option>Entregado</option>
-
-</select>
-
-<label>Observaciones</label>
-<textarea id="mobservaciones"></textarea>
-
-<button class="green" onclick="guardarMDF()">
-🧾 GUARDAR PEDIDO
-</button>
-
-<button class="gray" onclick="limpiarMDF()">
-🧹 LIMPIAR PEDIDO
-</button>
-
-</section>
-
-
-<!-- CLIENTES -->
-
-<section id="clientes" class="card hidden">
-
-<button class="top-back" onclick="volver()">
-⬅️ VOLVER
-</button>
-
-<h2>👥 Clientes</h2>
-
-<label>Buscar cliente</label>
-
-<input id="buscarCliente"
-oninput="mostrarClientes()"
-placeholder="Nombre o teléfono">
-
-<div id="listaClientes"></div>
-
-<button class="green" onclick="nuevoCliente()">
-➕ AGREGAR CLIENTE
-</button>
-
-</section>
-
-
-<!-- ORDENES -->
-
-<section id="ordenes" class="card hidden">
-
-<button class="top-back" onclick="volver()">
-⬅️ VOLVER
-</button>
-
-<h2>📋 Órdenes</h2>
-
-<label>Buscar orden</label>
-
-<input id="buscarOrden"
-oninput="mostrarOrdenes()"
-placeholder="Número, cliente o serie">
-
-<div class="filter-row">
-
-<button id="fPendientes"
-onclick="filtroOrdenes='pendientes';actualizarFiltros();mostrarOrdenes()">
-⏳ PENDIENTES
-</button>
-
-<button id="fTerminadas"
-onclick="filtroOrdenes='terminadas';actualizarFiltros();mostrarOrdenes()">
-✅ TERMINADAS
-</button>
-
-<button id="fEntregadas"
-onclick="filtroOrdenes='entregadas';actualizarFiltros();mostrarOrdenes()">
-📦 ENTREGADAS
-</button>
-
-<button id="fTodas"
-onclick="filtroOrdenes='todas';actualizarFiltros();mostrarOrdenes()">
-📋 TODAS
-</button>
-
-</div>
-
-<div id="listaOrdenes"></div>
-
-</section>
-
-
-<!-- EQUIPOS -->
-
-<section id="equipos" class="card hidden">
-
-<button class="top-back" onclick="volver()">
-⬅️ VOLVER
-</button>
-
-<h2>🖨️ Equipos / Impresoras</h2>
-
-<label>Buscar equipo</label>
-
-<input id="buscarEquipo"
-oninput="mostrarEquipos()"
-placeholder="Marca, modelo, serie o cliente">
-
-<div id="listaEquipos"></div>
-
-</section>
-
-
-<!-- CAJA -->
-
-<section id="caja" class="card hidden">
-
-<button class="top-back" onclick="volver()">
-⬅️ VOLVER
-</button>
-
-<h2>💰 Caja JUREMA</h2>
-
-<div class="item">
-
-<b>Total facturado</b>
-
-<p class="total" id="cajaTotal">$0</p>
-
-</div>
-
-<div class="item">
-
-<b>Servicio técnico</b>
-
-<p id="cajaServicio">$0</p>
-
-</div>
-
-<div class="item">
-
-<b>Corte láser / MDF</b>
-
-<p id="cajaMDF">$0</p>
-
-</div>
-
-<div class="item">
-
-<b>Total cobrado</b>
-
-<p id="cajaCobrado">$0</p>
-
-</div>
-
-<div class="item">
-
-<b>Saldo pendiente</b>
-
-<p id="cajaPendiente">$0</p>
-
-</div>
-
-<div class="linea"></div>
-
-<h3>Movimientos actuales</h3>
-
-<div id="movimientosCaja"></div>
-
-</section>
-
-
-<!-- BACKUP -->
-
-<section id="backup" class="card hidden">
-
-<button class="top-back" onclick="volver()">
-⬅️ VOLVER
-</button>
-
-<h2>💾 Copia de seguridad</h2>
-
-<p>
-Guardá periódicamente una copia de JUREMA para no perder
-clientes, órdenes, equipos y datos.
-</p>
-
-<button class="green" onclick="exportarDatos()">
-📥 EXPORTAR COPIA
-</button>
-
-<label>Restaurar copia</label>
-
-<input type="file" id="archivoBackup" accept=".json">
-
-<button class="blue" onclick="importarDatos()">
-📤 RESTAURAR COPIA
-</button>
-
-<p class="nota">
-La información de esta versión se guarda en el navegador del dispositivo.
-La copia de seguridad es muy importante.
-</p>
-
-</section>
-
-
-<!-- RESULTADO -->
-
-<section id="resultado" class="hidden">
-
-<div id="comprobante" class="card comprobante"></div>
-
-<div class="no-print">
-
-<button class="green" onclick="window.print()">
-📄 GUARDAR / IMPRIMIR PDF
-</button>
-
-<button class="blue" onclick="compartirComprobante()">
-📲 COMPARTIR COMPROBANTE
-</button>
-
-<button class="blue" onclick="compartirFotos()">
-📸 COMPARTIR FOTOS
-</button>
-
-<button class="orange" onclick="editarOrdenActual()">
-✏️ MODIFICAR ORDEN
-</button>
-
-<button class="gray" onclick="volver()">
-⬅️ VOLVER
-</button>
-
-<button class="gray" onclick="inicioDirecto()">
-🏠 INICIO
-</button>
-
-</div>
-
-</section>
-
-</main>
-
-
-<script>
-
-/* =========================================================
-   DATOS
-========================================================= */
-
-let datos = JSON.parse(localStorage.getItem("jurema_v2")) || {
- clientes:[],
- ordenes:[],
- equipos:[],
- caja:[]
-};
-
-if(!Array.isArray(datos.clientes)) datos.clientes=[];
-if(!Array.isArray(datos.ordenes)) datos.ordenes=[];
-if(!Array.isArray(datos.equipos)) datos.equipos=[];
-if(!Array.isArray(datos.caja)) datos.caja=[];
-
-let ordenActual=null;
-let fotosActuales=[];
-let filtroOrdenes="todas";
-let historial=[];
-let productosMDF=[];
-
-
-/* =========================================================
-   GUARDAR
-========================================================= */
-
-function guardarDatos(){
- localStorage.setItem("jurema_v2",JSON.stringify(datos));
-}
-
-
-/* =========================================================
-   MIGRACIÓN MDF V2
-========================================================= */
-
-function migrarDatos(){
-
- datos.ordenes.forEach(o=>{
-
-  if(o.tipo==="Pedido MDF"){
-
-   if(!Array.isArray(o.items)){
-
-    o.items=[{
-     id:"item_"+Date.now()+"_"+Math.random(),
-     descripcion:o.producto||"MDF",
-     cantidad:Number(o.cantidad||1),
-     precio:Number(o.total||0),
-     subtotal:Number(o.total||0)
-    }];
-
-   }
-
-   if(!o.total){
-    o.total=o.items.reduce((s,i)=>s+Number(i.subtotal||0),0);
-   }
-
-   o.sena=Number(o.sena||0);
-   o.saldo=Math.max(0,o.total-o.sena);
-
-  }
-
- });
-
- guardarDatos();
-
-}
-
-migrarDatos();
-
-
-/* =========================================================
-   NAVEGACIÓN
-========================================================= */
-
-function ocultarTodo(){
-
- [
-  "inicio",
-  "servicio",
-  "mdf",
-  "clientes",
-  "ordenes",
-  "equipos",
-  "caja",
-  "backup",
-  "resultado"
- ].forEach(id=>{
-  let el=document.getElementById(id);
-  if(el)el.classList.add("hidden");
- });
-
-}
-
-
-function mostrar(id,guardarHistorial=true){
-
- let actual=document.querySelector("main > section:not(.hidden)");
-
- if(guardarHistorial && actual && actual.id!==id){
-
-  if(!historial.length || historial[historial.length-1]!==actual.id){
-   historial.push(actual.id);
-  }
-
- }
-
- ocultarTodo();
-
- let destino=document.getElementById(id);
-
- if(!destino)return;
-
- destino.classList.remove("hidden");
-
- if(id==="servicio"){
-  actualizarSelectClientes("scliente");
- }
-
- if(id==="mdf"){
-  actualizarSelectClientes("mcliente");
-  if(!document.getElementById("mdfEditId").value){
-   if(productosMDF.length===0){
-    agregarProducto();
-   }
-  }
- }
-
- if(id==="clientes")mostrarClientes();
-
- if(id==="ordenes"){
-  actualizarFiltros();
-  mostrarOrdenes();
- }
-
- if(id==="equipos")mostrarEquipos();
-
- if(id==="caja")mostrarCaja();
-
- window.scrollTo(0,0);
-
-}
-
-
-function volver(){
-
- if(historial.length){
-
-  let destino=historial.pop();
-
-  mostrar(destino,false);
-
- }else{
-
-  inicioDirecto();
-
- }
-
-}
-
-
-function inicioDirecto(){
-
- historial=[];
-
- ocultarTodo();
-
- document.getElementById("inicio").classList.remove("hidden");
-
- window.scrollTo(0,0);
-
-}
-
-
-function inicio(){
- inicioDirecto();
-}
-
-
-/* =========================================================
-   NUMERACIÓN
-========================================================= */
-
-function numeroOrden(){
-
- let ultimo=parseInt(
-  localStorage.getItem("jurema_numero") || "0"
- );
-
- let nuevo=ultimo+5;
-
- localStorage.setItem("jurema_numero",nuevo);
-
- return String(nuevo).padStart(5,"0");
-
-}
-
-
-/* =========================================================
-   DINERO
-========================================================= */
-
-function dinero(valor){
-
- return Number(valor||0).toLocaleString("es-AR",{
-  minimumFractionDigits:0,
-  maximumFractionDigits:0
- });
-
-}
-
-
-/* =========================================================
-   FECHA
-========================================================= */
-
-function fecha(){
-
- return new Date().toLocaleDateString("es-AR");
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(text){
-
- return String(text??"")
- .replace(/&/g,"&amp;")
- .replace(/</g,"&lt;")
- .replace(/>/g,"&gt;")
- .replace(/"/g,"&quot;")
- .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================================
+ border:2
+ /* =========================================================
    CLIENTES
 ========================================================= */
 
 function actualizarSelectClientes(id){
 
- let select=document.getElementById(id);
+ var select=document.getElementById(id);
 
  if(!select)return;
 
- let valorActual=select.value;
+ var valorActual=select.value;
 
  select.innerHTML=
- '<option value="">-- Nuevo cliente --</option>';
+  '<option value="">-- Nuevo cliente --</option>';
 
- datos.clientes.forEach(c=>{
+ datos.clientes.forEach(function(c){
 
-  let op=document.createElement("option");
+  var op=document.createElement("option");
 
   op.value=c.id;
 
   op.textContent=
-   c.nombre+" - "+(c.telefono||"");
+   (c.nombre || "")+
+   " - "+
+   (c.telefono || "");
 
   select.appendChild(op);
 
  });
 
- if(valorActual &&
-    datos.clientes.some(c=>c.id===valorActual)){
+ if(
+  valorActual &&
+  datos.clientes.some(function(c){
+   return c.id===valorActual;
+  })
+ ){
 
   select.value=valorActual;
 
@@ -1016,14 +245,21 @@ function actualizarSelectClientes(id){
 
 function guardarCliente(nombre,telefono,domicilio){
 
- nombre=(nombre||"").trim();
+ nombre=(nombre || "").trim();
+ telefono=telefono || "";
+ domicilio=domicilio || "";
 
  if(!nombre)return null;
 
- let existente=datos.clientes.find(c=>
-  c.nombre.toLowerCase()===nombre.toLowerCase() &&
-  (c.telefono||"")===telefono
- );
+ var existente=datos.clientes.find(function(c){
+
+  return(
+   (c.nombre || "").toLowerCase()===
+   nombre.toLowerCase() &&
+   (c.telefono || "")===telefono
+  );
+
+ });
 
  if(existente){
 
@@ -1037,11 +273,11 @@ function guardarCliente(nombre,telefono,domicilio){
 
  }
 
- let cliente={
+ var cliente={
   id:Date.now().toString(),
   nombre:nombre,
-  telefono:telefono||"",
-  domicilio:domicilio||""
+  telefono:telefono,
+  domicilio:domicilio
  };
 
  datos.clientes.push(cliente);
@@ -1055,49 +291,61 @@ function guardarCliente(nombre,telefono,domicilio){
 
 function cargarClienteServicio(){
 
- let id=document.getElementById("scliente").value;
+ var select=document.getElementById("scliente");
+
+ if(!select)return;
+
+ var id=select.value;
 
  if(!id)return;
 
- let c=datos.clientes.find(x=>x.id===id);
+ var c=datos.clientes.find(function(x){
+  return x.id===id;
+ });
 
  if(!c)return;
 
- document.getElementById("cliente").value=c.nombre;
- document.getElementById("telefono").value=c.telefono||"";
- document.getElementById("domicilio").value=c.domicilio||"";
+ document.getElementById("cliente").value=c.nombre || "";
+ document.getElementById("telefono").value=c.telefono || "";
+ document.getElementById("domicilio").value=c.domicilio || "";
 
 }
 
 
 function cargarClienteMDF(){
 
- let id=document.getElementById("mcliente").value;
+ var select=document.getElementById("mcliente");
+
+ if(!select)return;
+
+ var id=select.value;
 
  if(!id)return;
 
- let c=datos.clientes.find(x=>x.id===id);
+ var c=datos.clientes.find(function(x){
+  return x.id===id;
+ });
 
  if(!c)return;
 
- document.getElementById("mnombre").value=c.nombre;
- document.getElementById("mtelefono").value=c.telefono||"";
- document.getElementById("mdomicilio").value=c.domicilio||"";
+ document.getElementById("mnombre").value=c.nombre || "";
+ document.getElementById("mtelefono").value=c.telefono || "";
+ document.getElementById("mdomicilio").value=c.domicilio || "";
 
 }
 
 
 function nuevoCliente(){
 
- let nombre=prompt("Nombre del cliente:");
+ var nombre=prompt("Nombre del cliente:");
 
  if(nombre===null || !nombre.trim())return;
 
- let telefono=prompt("Teléfono:");
+ var telefono=prompt("Teléfono:");
 
  if(telefono===null)telefono="";
 
- let domicilio=prompt("Domicilio:");
+ var domicilio=prompt("Domicilio:");
 
  if(domicilio===null)domicilio="";
 
@@ -1114,35 +362,42 @@ function nuevoCliente(){
 
 function mostrarClientes(){
 
- let texto=(
-  document.getElementById("buscarCliente")?.value||""
- ).toLowerCase();
+ var buscar=document.getElementById("buscarCliente");
 
- let lista=document.getElementById("listaClientes");
+ var texto=
+  buscar ?
+  String(buscar.value || "").toLowerCase() :
+  "";
+
+ var lista=document.getElementById("listaClientes");
 
  if(!lista)return;
 
  lista.innerHTML="";
 
- let clientes=datos.clientes.filter(c=>
-  (c.nombre||"").toLowerCase().includes(texto) ||
-  (c.telefono||"").toLowerCase().includes(texto)
- );
+ var clientes=datos.clientes.filter(function(c){
 
- if(!clientes.length){
+  return(
+   String(c.nombre || "").toLowerCase().indexOf(texto)!==-1 ||
+   String(c.telefono || "").toLowerCase().indexOf(texto)!==-1
+  );
+
+ });
+
+ if(clientes.length===0){
 
   lista.innerHTML=
-  '<div class="empty">No hay clientes.</div>';
+   '<div class="empty">No hay clientes.</div>';
 
   return;
 
  }
 
- clientes.forEach(c=>{
+ clientes.forEach(function(c){
 
-  let cantidad=datos.ordenes.filter(
-   o=>o.clienteId===c.id
-  ).length;
+  var cantidad=datos.ordenes.filter(function(o){
+   return o.clienteId===c.id;
+  }).length;
 
   lista.innerHTML+=`
 
@@ -1150,9 +405,9 @@ function mostrarClientes(){
 
    <b>${escapeHTML(c.nombre)}</b><br>
 
-   📞 ${escapeHTML(c.telefono||"-")}<br>
+   📞 ${escapeHTML(c.telefono || "-")}<br>
 
-   🏠 ${escapeHTML(c.domicilio||"-")}<br>
+   🏠 ${escapeHTML(c.domicilio || "-")}<br>
 
    📋 ${cantidad} orden(es)
 
@@ -1166,7 +421,9 @@ function mostrarClientes(){
    🗑️ BORRAR
    </button>
 
-  </div>`;
+  </div>
+
+  `;
 
  });
 
@@ -1175,24 +432,29 @@ function mostrarClientes(){
 
 function editarCliente(id){
 
- let c=datos.clientes.find(x=>x.id===id);
+ var c=datos.clientes.find(function(x){
+  return x.id===id;
+ });
 
  if(!c)return;
 
- let nombre=prompt("Nombre:",c.nombre);
+ var nombre=prompt(
+  "Nombre:",
+  c.nombre || ""
+ );
 
  if(nombre===null)return;
 
- let telefono=prompt(
+ var telefono=prompt(
   "Teléfono:",
-  c.telefono||""
+  c.telefono || ""
  );
 
  if(telefono===null)return;
 
- let domicilio=prompt(
+ var domicilio=prompt(
   "Domicilio:",
-  c.domicilio||""
+  c.domicilio || ""
  );
 
  if(domicilio===null)return;
@@ -1201,12 +463,7 @@ function editarCliente(id){
  c.telefono=telefono;
  c.domicilio=domicilio;
 
- /*
-  Actualizamos también las órdenes antiguas de ese cliente
-  para que sus datos sigan coincidiendo.
- */
-
- datos.ordenes.forEach(o=>{
+ datos.ordenes.forEach(function(o){
 
   if(o.clienteId===id){
 
@@ -1227,18 +484,20 @@ function editarCliente(id){
 
 function borrarCliente(id){
 
- let tieneOrdenes=datos.ordenes.some(
-  o=>o.clienteId===id
- );
+ var tieneOrdenes=datos.ordenes.some(function(o){
+  return o.clienteId===id;
+ });
 
- let mensaje=tieneOrdenes
+ var mensaje=tieneOrdenes
   ? "Este cliente tiene órdenes registradas. ¿Querés borrar igualmente el cliente?"
   : "¿Borrar este cliente?";
 
  if(!confirm(mensaje))return;
 
  datos.clientes=
-  datos.clientes.filter(c=>c.id!==id);
+  datos.clientes.filter(function(c){
+   return c.id!==id;
+  });
 
  guardarDatos();
 
@@ -1248,20 +507,20 @@ function borrarCliente(id){
 
 
 /* =========================================================
-   SERVICIO
+   SERVICIO TÉCNICO
 ========================================================= */
 
 function calcularServicio(){
 
- let costo=Number(
-  document.getElementById("costo").value||0
+ var costo=Number(
+  document.getElementById("costo").value || 0
  );
 
- let sena=Number(
-  document.getElementById("sena").value||0
+ var sena=Number(
+  document.getElementById("sena").value || 0
  );
 
- let saldo=Math.max(0,costo-sena);
+ var saldo=Math.max(0,costo-sena);
 
  document.getElementById(
   "saldoServicio"
@@ -1270,35 +529,18 @@ function calcularServicio(){
 }
 
 
-async function cargarFotos(){
-
- let input=document.getElementById("fotos");
-
- if(!input.files.length)return;
-
- fotosActuales=[];
-
- for(let archivo of input.files){
-
-  let data=await leerArchivo(archivo);
-
-  fotosActuales.push(data);
-
- }
-
- mostrarFotosExistentes();
-
-}
-
-
 function leerArchivo(file){
 
- return new Promise(resolve=>{
+ return new Promise(function(resolve,reject){
 
-  let reader=new FileReader();
+  var reader=new FileReader();
 
-  reader.onload=e=>{
+  reader.onload=function(e){
    resolve(e.target.result);
+  };
+
+  reader.onerror=function(){
+   reject(new Error("No se pudo leer la foto"));
   };
 
   reader.readAsDataURL(file);
@@ -1308,30 +550,62 @@ function leerArchivo(file){
 }
 
 
-document.getElementById("fotos")
-.addEventListener("change",cargarFotos);
+async function cargarFotos(){
+
+ var input=document.getElementById("fotos");
+
+ if(!input || !input.files || !input.files.length)return;
+
+ try{
+
+  var nuevas=[];
+
+  for(var i=0;i<input.files.length;i++){
+
+   var data=await leerArchivo(input.files[i]);
+
+   nuevas.push(data);
+
+  }
+
+  fotosActuales=fotosActuales.concat(nuevas);
+
+  mostrarFotosExistentes();
+
+ }catch(error){
+
+  alert("No se pudo cargar una de las fotos.");
+
+ }
+
+}
 
 
 function mostrarFotosExistentes(){
 
- let cont=document.getElementById(
-  "fotosExistentes"
- );
+ var cont=document.getElementById("fotosExistentes");
+
+ if(!cont)return;
 
  cont.innerHTML="";
 
- fotosActuales.forEach((f,i)=>{
+ fotosActuales.forEach(function(f,i){
 
   cont.innerHTML+=`
+
    <div style="display:inline-block;position:relative">
+
     <img src="${f}">
+
     <button
      style="position:absolute;right:2px;top:2px;width:auto;margin:0;padding:5px"
      class="red"
      onclick="eliminarFoto(${i})">
      ✕
     </button>
+
    </div>
+
   `;
 
  });
@@ -1351,6 +625,7 @@ function eliminarFoto(index){
 function limpiarServicio(){
 
  document.getElementById("servicioEditId").value="";
+
  document.getElementById("tituloServicio").textContent=
   "🖨️ Servicio técnico";
 
@@ -1381,9 +656,9 @@ function limpiarServicio(){
 
 function guardarServicio(){
 
- let nombre=
-  document.getElementById("cliente")
-  .value.trim();
+ var nombre=document.getElementById(
+  "cliente"
+ ).value.trim();
 
  if(!nombre){
 
@@ -1393,25 +668,26 @@ function guardarServicio(){
 
  }
 
- let telefono=
-  document.getElementById("telefono").value;
+ var telefono=document.getElementById(
+  "telefono"
+ ).value;
 
- let domicilio=
-  document.getElementById("domicilio").value;
+ var domicilio=document.getElementById(
+  "domicilio"
+ ).value;
 
- let clienteId=
-  guardarCliente(
-   nombre,
-   telefono,
-   domicilio
-  );
-
- let costo=Number(
-  document.getElementById("costo").value||0
+ var clienteId=guardarCliente(
+  nombre,
+  telefono,
+  domicilio
  );
 
- let sena=Number(
-  document.getElementById("sena").value||0
+ var costo=Number(
+  document.getElementById("costo").value || 0
+ );
+
+ var sena=Number(
+  document.getElementById("sena").value || 0
  );
 
  if(sena>costo){
@@ -1422,99 +698,64 @@ function guardarServicio(){
 
  }
 
- let saldo=Math.max(0,costo-sena);
+ var saldo=Math.max(0,costo-sena);
 
- let editId=
-  document.getElementById("servicioEditId").value;
+ var editId=document.getElementById(
+  "servicioEditId"
+ ).value;
 
- let orden;
+ var orden=null;
 
  if(editId){
 
-  orden=datos.ordenes.find(
-   o=>o.id===editId
-  );
+  orden=datos.ordenes.find(function(o){
+   return o.id===editId;
+  });
 
-  if(!orden)return;
+  if(!orden){
 
-  orden.clienteId=clienteId;
-  orden.cliente=nombre;
-  orden.telefono=telefono;
-  orden.domicilio=domicilio;
-  orden.marca=document.getElementById("marca").value;
-  orden.modelo=document.getElementById("modelo").value;
-  orden.serie=document.getElementById("serie").value;
-  orden.problema=document.getElementById("problema").value;
-  orden.estado=document.getElementById("estado").value;
-  orden.accesorios=document.getElementById("accesorios").value;
-  orden.fotos=fotosActuales.slice();
-  orden.costo=costo;
-  orden.total=costo;
-  orden.sena=sena;
-  orden.saldo=saldo;
-  orden.estadoTrabajo=
-   document.getElementById("estadoTrabajo").value;
-  orden.observaciones=
-   document.getElementById("observaciones").value;
+   alert("No se encontró la orden para modificar.");
+
+   return;
+
+  }
 
  }else{
 
   orden={
-
    id:Date.now().toString(),
-
    numero:numeroOrden(),
-
    tipo:"Servicio técnico",
-
-   clienteId:clienteId,
-
-   cliente:nombre,
-
-   telefono:telefono,
-
-   domicilio:domicilio,
-
-   marca:document.getElementById("marca").value,
-
-   modelo:document.getElementById("modelo").value,
-
-   serie:document.getElementById("serie").value,
-
-   problema:document.getElementById("problema").value,
-
-   estado:document.getElementById("estado").value,
-
-   accesorios:
-    document.getElementById("accesorios").value,
-
-   fotos:fotosActuales.slice(),
-
-   costo:costo,
-
-   total:costo,
-
-   sena:sena,
-
-   saldo:saldo,
-
-   estadoTrabajo:
-    document.getElementById("estadoTrabajo").value,
-
-   observaciones:
-    document.getElementById("observaciones").value,
-
    fecha:fecha()
-
   };
 
   datos.ordenes.push(orden);
 
  }
 
+ orden.clienteId=clienteId;
+ orden.cliente=nombre;
+ orden.telefono=telefono;
+ orden.domicilio=domicilio;
+ orden.marca=document.getElementById("marca").value;
+ orden.modelo=document.getElementById("modelo").value;
+ orden.serie=document.getElementById("serie").value;
+ orden.problema=document.getElementById("problema").value;
+ orden.estado=document.getElementById("estado").value;
+ orden.accesorios=document.getElementById("accesorios").value;
+ orden.fotos=fotosActuales.slice();
+ orden.costo=costo;
+ orden.total=costo;
+ orden.sena=sena;
+ orden.saldo=saldo;
+ orden.estadoTrabajo=
+  document.getElementById("estadoTrabajo").value;
+ orden.observaciones=
+  document.getElementById("observaciones").value;
+
  actualizarEquipoDesdeOrden(orden);
 
- guardarDatos();
+ if(!guardarDatos())return;
 
  ordenActual=orden;
 
@@ -1525,13 +766,22 @@ function guardarServicio(){
 
 function actualizarEquipoDesdeOrden(o){
 
- if(!o.marca && !o.modelo && !o.serie)return;
+ if(
+  !o.marca &&
+  !o.modelo &&
+  !o.serie
+ )return;
 
- let equipo=datos.equipos.find(e=>
-  e.clienteId===o.clienteId &&
-  (e.serie||"") === (o.serie||"") &&
-  (e.serie || o.serie)
- );
+ var equipo=datos.equipos.find(function(e){
+
+  return(
+   e.clienteId===o.clienteId &&
+   String(e.serie || "")===
+   String(o.serie || "") &&
+   String(e.serie || "")!==""
+  );
+
+ });
 
  if(equipo){
 
@@ -1583,49 +833,51 @@ function cargarServicioParaEditar(o){
  actualizarSelectClientes("scliente");
 
  document.getElementById("scliente").value=
-  o.clienteId||"";
+  o.clienteId || "";
 
  document.getElementById("cliente").value=
-  o.cliente||"";
+  o.cliente || "";
 
  document.getElementById("telefono").value=
-  o.telefono||"";
+  o.telefono || "";
 
  document.getElementById("domicilio").value=
-  o.domicilio||"";
+  o.domicilio || "";
 
  document.getElementById("marca").value=
-  o.marca||"";
+  o.marca || "";
 
  document.getElementById("modelo").value=
-  o.modelo||"";
+  o.modelo || "";
 
  document.getElementById("serie").value=
-  o.serie||"";
+  o.serie || "";
 
  document.getElementById("problema").value=
-  o.problema||"";
+  o.problema || "";
 
  document.getElementById("estado").value=
-  o.estado||"";
+  o.estado || "";
 
  document.getElementById("accesorios").value=
-  o.accesorios||"";
+  o.accesorios || "";
 
  document.getElementById("estadoTrabajo").value=
-  o.estadoTrabajo||"Recibido";
+  o.estadoTrabajo || "Recibido";
 
  document.getElementById("costo").value=
-  Number(o.costo||o.total||0);
+  Number(o.costo || o.total || 0);
 
  document.getElementById("sena").value=
-  Number(o.sena||0);
+  Number(o.sena || 0);
 
  document.getElementById("observaciones").value=
-  o.observaciones||"";
+  o.observaciones || "";
 
  fotosActuales=
-  Array.isArray(o.fotos)?o.fotos.slice():[];
+  Array.isArray(o.fotos) ?
+  o.fotos.slice() :
+  [];
 
  mostrarFotosExistentes();
 
@@ -1637,22 +889,54 @@ function cargarServicioParaEditar(o){
 
 
 /* =========================================================
-   MDF - PRODUCTOS
+   MDF — PRODUCTOS
 ========================================================= */
 
-function agregarProducto(item=null){
+function agregarProducto(item){
 
- let id=
-  item?.id ||
+ if(!item)item=null;
+
+ var id=
+  item && item.id ?
+  item.id :
   "item_"+Date.now()+"_"+Math.random();
 
- let producto={
+ var producto={
+
   id:id,
-  descripcion:item?.descripcion||"",
-  cantidad:Number(item?.cantidad||1),
-  precio:Number(item?.precio||0),
-  subtotal:Number(item?.subtotal||0)
+
+  descripcion:
+   item && item.descripcion ?
+   item.descripcion :
+   "",
+
+  cantidad:
+   item && item.cantidad ?
+   Number(item.cantidad) :
+   1,
+
+  precio:
+   item && item.precio ?
+   Number(item.precio) :
+   0,
+
+  subtotal:
+   item && item.subtotal ?
+   Number(item.subtotal) :
+   0
+
  };
+
+ if(producto.cantidad<1){
+  producto.cantidad=1;
+ }
+
+ if(producto.precio<0){
+  producto.precio=0;
+ }
+
+ producto.subtotal=
+  producto.cantidad*producto.precio;
 
  productosMDF.push(producto);
 
@@ -1665,14 +949,18 @@ function eliminarProducto(id){
 
  if(productosMDF.length<=1){
 
-  alert("El pedido debe tener al menos un producto.");
+  alert(
+   "El pedido debe tener al menos un producto."
+  );
 
   return;
 
  }
 
  productosMDF=
-  productosMDF.filter(x=>x.id!==id);
+  productosMDF.filter(function(x){
+   return x.id!==id;
+  });
 
  renderProductosMDF();
 
@@ -1681,13 +969,15 @@ function eliminarProducto(id){
 
 function renderProductosMDF(){
 
- let cont=document.getElementById(
+ var cont=document.getElementById(
   "listaProductos"
  );
 
+ if(!cont)return;
+
  cont.innerHTML="";
 
- productosMDF.forEach((p,index)=>{
+ productosMDF.forEach(function(p,index){
 
   cont.innerHTML+=`
 
@@ -1743,9 +1033,12 @@ function renderProductosMDF(){
    </div>
 
    <div class="item-subtotal">
-    Subtotal: $<span id="subtotal_${p.id}">
+
+    Subtotal:
+    $<span id="subtotal_${p.id}">
     ${dinero(p.subtotal)}
     </span>
+
    </div>
 
   </div>
@@ -1761,18 +1054,28 @@ function renderProductosMDF(){
 
 function actualizarProducto(id,campo,valor){
 
- let p=productosMDF.find(
-  x=>x.id===id
- );
+ var p=productosMDF.find(function(x){
+  return x.id===id;
+ });
 
  if(!p)return;
 
  if(campo==="cantidad"){
-  p.cantidad=Math.max(1,Number(valor||1));
+
+  p.cantidad=Math.max(
+   1,
+   Number(valor || 1)
+  );
+
  }
 
  if(campo==="precio"){
-  p.precio=Math.max(0,Number(valor||0));
+
+  p.precio=Math.max(
+   0,
+   Number(valor || 0)
+  );
+
  }
 
  if(campo==="descripcion"){
@@ -1782,13 +1085,15 @@ function actualizarProducto(id,campo,valor){
  p.subtotal=
   p.cantidad*p.precio;
 
- let subtotal=document.getElementById(
+ var subtotal=document.getElementById(
   "subtotal_"+id
  );
 
  if(subtotal){
+
   subtotal.textContent=
    dinero(p.subtotal);
+
  }
 
  calcularMDF();
@@ -1798,8 +1103,10 @@ function actualizarProducto(id,campo,valor){
 
 function calcularMDF(){
 
- let total=productosMDF.reduce(
-  (s,p)=>s+Number(p.subtotal||0),
+ var total=productosMDF.reduce(
+  function(s,p){
+   return s+Number(p.subtotal || 0);
+  },
   0
  );
 
@@ -1807,17 +1114,17 @@ function calcularMDF(){
   "mdfTotal"
  ).textContent=dinero(total);
 
- let sena=Number(
-  document.getElementById("msena").value||0
+ var sena=Number(
+  document.getElementById("msena").value || 0
  );
 
- let saldo=Math.max(0,total-sena);
+ var saldo=Math.max(0,total-sena);
 
  document.getElementById(
   "saldoMDF"
  ).textContent=dinero(saldo);
 
- return {
+ return{
   total:total,
   sena:sena,
   saldo:saldo
@@ -1826,779 +1133,962 @@ function calcularMDF(){
 }
 
 
-/* =========================================================
-   LIMPIAR MDF
-========================================================= */
-
 function limpiarMDF(){
 
- document.getElementById("mdfEditId").value="";
+ document.getElementById(
+  "mdfEditId"
+ ).value="";
 
- document.getElementById("tituloMDF").textContent=
+ document.getElementById(
+  "tituloMDF"
+ ).textContent=
   "🪵 Pedido MDF / Corte láser";
 
  document.getElementById("mcliente").value="";
  document.getElementById("mnombre").value="";
  document.getElementById("mtelefono").value="";
  document.getElementById("mdomicilio").value="";
-
  document.getElementById("msena").value="0";
-
  document.getElementById("mentrega").value="";
-
  document.getElementById("mestado").value=
   "Pedido recibido";
-
  document.getElementById("mobservaciones").value="";
 
  productosMDF=[];
 
  agregarProducto();
 
-}
-
-
-/* =========================================================
-   GUARDAR MDF
-========================================================= */
-
 function guardarMDF(){
+  var cliente=document.getElementById("clienteMDF").value;
+  var telefono=document.getElementById("telefonoMDF").value;
+  var direccion=document.getElementById("direccionMDF").value;
+  var observaciones=document.getElementById("observacionesMDF").value;
 
- let nombre=
-  document.getElementById("mnombre")
-  .value.trim();
+  if(!cliente){
+    alert("Seleccioná un cliente.");
+    return;
+  }
 
- if(!nombre){
+  if(productsMDF.length===0){
+    alert("Agregá al menos un producto.");
+    return;
+  }
 
-  alert("Ingresá el nombre del cliente.");
+  calcularMDF();
 
-  return;
+  var total=Number(document.getElementById("mdfTotal").value)||0;
+  var adelanto=Number(document.getElementById("adelantoMDF").value)||0;
 
- }
+  if(adelanto<0) adelanto=0;
+  if(adelanto>total) adelanto=total;
 
- if(!productosMDF.length){
+  var saldo=total-adelanto;
 
-  alert("Agregá al menos un producto.");
+  var fecha=new Date().toISOString();
 
-  return;
+  if(editandoMDF){
+    var existente=buscarOrden(editandoMDF);
 
- }
+    if(existente){
+      existente.cliente=cliente;
+      existente.telefono=telefono;
+      existente.direccion=direccion;
+      existente.observaciones=observaciones;
+      existente.productos=JSON.parse(JSON.stringify(productsMDF));
+      existente.total=total;
+      existente.adelanto=adelanto;
+      existente.saldo=saldo;
 
- let hayDescripcionVacia=
-  productosMDF.some(
-   p=>!String(p.descripcion||"").trim()
-  );
+      guardarDatos();
 
- if(hayDescripcionVacia){
+      alert("Pedido MDF actualizado correctamente
+            /* =========================
+   CAJA JUREMA
+========================= */
 
-  alert(
-   "Completá la descripción de todos los productos."
-  );
+function mostrarCaja(){
 
-  return;
+  var cont=document.getElementById("listaCaja");
 
- }
+  if(!cont) return;
 
- let telefono=
-  document.getElementById("mtelefono").value;
+  var totalServicios=0;
+  var totalMDF=0;
+  var cobradoServicios=0;
+  var cobradoMDF=0;
+  var pendienteServicios=0;
+  var pendienteMDF=0;
 
- let domicilio=
-  document.getElementById("mdomicilio").value;
+  var i;
 
- let clienteId=
-  guardarCliente(
-   nombre,
-   telefono,
-   domicilio
-  );
+  for(i=0;i<datos.ordenes.length;i++){
 
- let calculo=calcularMDF();
+    var o=datos.ordenes[i];
 
- if(calculo.sena>calculo.total){
+    var total=Number(o.total)||0;
+    var adelanto=Number(o.adelanto)||0;
+    var saldo=Number(o.saldo)||0;
 
-  if(!confirm(
-   "La seña es mayor que el total. ¿Querés continuar?"
-  ))return;
+    if(o.tipo==="Servicio"){
 
- }
+      totalServicios+=total;
+      cobradoServicios+=adelanto;
+      pendienteServicios+=saldo;
 
- let entrega=
-  document.getElementById("mentrega").value;
+    }else if(o.tipo==="MDF"){
 
- if(entrega){
+      totalMDF+=total;
+      cobradoMDF+=adelanto;
+      pendienteMDF+=saldo;
+    }
+  }
 
-  entrega=
-   new Date(
-    entrega+"T12:00:00"
-   ).toLocaleDateString("es-AR");
+  var totalGeneral=totalServicios+totalMDF;
+  var cobradoGeneral=cobradoServicios+cobradoMDF;
+  var pendienteGeneral=pendienteServicios+pendienteMDF;
 
- }else{
+  var html="";
 
-  entrega="A confirmar";
+  html+="<div class='resumen-caja'>";
 
- }
+  html+="<div class='caja-total'>";
+  html+="<span>Total vendido</span>";
+  html+="<b>$"+formatearDinero(totalGeneral)+"</b>";
+  html+="</div>";
 
- let editId=
-  document.getElementById("mdfEditId").value;
+  html+="<div class='caja-total'>";
+  html+="<span>Total cobrado</span>";
+  html+="<b>$"+formatearDinero(cobradoGeneral)+"</b>";
+  html+="</div>";
 
- let orden;
+  html+="<div class='caja-total'>";
+  html+="<span>Total pendiente</span>";
+  html+="<b>$"+formatearDinero(pendienteGeneral)+"</b>";
+  html+="</div>";
 
- if(editId){
+  html+="</div>";
 
-  orden=datos.ordenes.find(
-   o=>o.id===editId
-  );
+  html+="<hr>";
 
-  if(!orden)return;
+  html+="<div class='card'>";
 
-  orden.clienteId=clienteId;
-  orden.cliente=nombre;
-  orden.telefono=telefono;
-  orden.domicilio=domicilio;
+  html+="<h3>🔧 Servicio Técnico</h3>";
 
-  orden.items=JSON.parse(
-   JSON.stringify(productosMDF)
-  );
+  html+="<div>Total: <b>$"+
+    formatearDinero(totalServicios)+
+    "</b></div>";
 
-  orden.total=calculo.total;
-  orden.sena=calculo.sena;
-  orden.saldo=calculo.saldo;
+  html+="<div>Cobrado: <b>$"+
+    formatearDinero(cobradoServicios)+
+    "</b></div>";
 
-  orden.entrega=entrega;
+  html+="<div>Pendiente: <b>$"+
+    formatearDinero(pendienteServicios)+
+    "</b></div>";
 
-  orden.estadoTrabajo=
-   document.getElementById("mestado").value;
+  html+="</div>";
 
-  orden.observaciones=
-   document.getElementById("mobservaciones").value;
+  html+="<div class='card'>";
 
- }else{
+  html+="<h3>🪵 Pedidos MDF</h3>";
 
-  orden={
+  html+="<div>Total: <b>$"+
+    formatearDinero(totalMDF)+
+    "</b></div>";
 
-   id:Date.now().toString(),
+  html+="<div>Cobrado: <b>$"+
+    formatearDinero(cobradoMDF)+
+    "</b></div>";
 
-   numero:numeroOrden(),
+  html+="<div>Pendiente: <b>$"+
+    formatearDinero(pendienteMDF)+
+    "</b></div>";
 
-   tipo:"Pedido MDF",
+  html+="</div>";
 
-   clienteId:clienteId,
+  html+="<h3>Últimas operaciones</h3>";
 
-   cliente:nombre,
+  var ordenadas=datos.ordenes.slice();
 
-   telefono:telefono,
+  ordenadas.sort(function(a,b){
+    return Number(b.id)-Number(a.id);
+  });
 
-   domicilio:domicilio,
+  var limite=Math.min(ordenadas.length,20);
 
-   items:JSON.parse(
-    JSON.stringify(productosMDF)
-   ),
+  if(limite===0){
 
-   total:calculo.total,
+    html+="<div class='vacio'>Todavía no hay movimientos.</div>";
 
-   sena:calculo.sena,
+  }else{
 
-   saldo:calculo.saldo,
+    for(i=0;i<limite;i++){
 
-   entrega:entrega,
+      var mov=ordenadas[i];
 
-   estadoTrabajo:
-    document.getElementById("mestado").value,
+      html+="<div class='card'>";
 
-   observaciones:
-    document.getElementById("mobservaciones").value,
+      html+="<b>Orden "+escapeHTML(String(mov.id))+"</b>";
 
-   fecha:fecha(),
+      html+=" - "+escapeHTML(mov.cliente||"");
 
-   fotos:[]
+      html+="<div class='small'>";
 
-  };
+      html+=mov.tipo==="Servicio"
+        ?"🔧 Servicio Técnico"
+        :"🪵 Pedido MDF";
 
-  datos.ordenes.push(orden);
+      html+="</div>";
 
- }
+      html+="<div>";
 
- guardarDatos();
+      html+="Cobrado: <b>$"+
+        formatearDinero(mov.adelanto||0)+
+        "</b>";
 
- ordenActual=orden;
+      html+="</div>";
 
- generarComprobanteMDF(orden);
+      html+="</div>";
+    }
+  }
 
+  cont.innerHTML=html;
 }
 
 
-/* =========================================================
-   EDITAR MDF
-========================================================= */
+/* =========================
+   CLIENTES
+========================= */
 
-function cargarMDFParaEditar(o){
+function mostrarClientes(){
 
- document.getElementById("mdfEditId").value=o.id;
+  var cont=document.getElementById("listaClientes");
 
- document.getElementById("tituloMDF").textContent=
-  "✏️ Modificar pedido — Nº "+o.numero;
+  if(!cont) return;
 
- actualizarSelectClientes("mcliente");
+  var busqueda=document.getElementById("buscarClientes").value.toLowerCase().trim();
 
- document.getElementById("mcliente").value=
-  o.clienteId||"";
+  var clientes=datos.clientes.slice();
 
- document.getElementById("mnombre").value=
-  o.cliente||"";
+  clientes.sort(function(a,b){
 
- document.getElementById("mtelefono").value=
-  o.telefono||"";
+    return String(a.nombre||"").localeCompare(
+      String(b.nombre||"")
+    );
 
- document.getElementById("mdomicilio").value=
-  o.domicilio||"";
+  });
 
- document.getElementById("msena").value=
-  Number(o.sena||0);
+  var filtrados=[];
+  var i;
 
- /*
-  Convertimos la fecha de entrega guardada
-  nuevamente al formato YYYY-MM-DD.
- */
+  for(i=0;i<clientes.length;i++){
 
- let fechaEntrega="";
+    var c=clientes[i];
 
- if(o.entrega && o.entrega!=="A confirmar"){
+    var texto=
+      String(c.nombre||"")+" "+
+      String(c.telefono||"")+" "+
+      String(c.direccion||"");
 
-  let partes=o.entrega.split("/");
+    if(busqueda &&
+       texto.toLowerCase().indexOf(busqueda)===-1){
 
-  if(partes.length===3){
+      continue;
+    }
 
-   fechaEntrega=
-    partes[2]+"-"+
-    partes[1].padStart(2,"0")+"-"+
-    partes[0].padStart(2,"0");
+    filtrados.push(c);
+  }
+
+  if(filtrados.length===0){
+
+    cont.innerHTML=
+      "<div class='vacio'>No hay clientes registrados.</div>";
+
+    return;
+  }
+
+  var html="";
+
+  for(i=0;i<filtrados.length;i++){
+
+    var cliente=filtrados[i];
+
+    html+="<div class='card'>";
+
+    html+="<b>"+escapeHTML(cliente.nombre||"")+"</b>";
+
+    if(cliente.telefono){
+
+      html+="<div>📞 "+
+        escapeHTML(cliente.telefono)+
+        "</div>";
+    }
+
+    if(cliente.direccion){
+
+      html+="<div>📍 "+
+        escapeHTML(cliente.direccion)+
+        "</div>";
+    }
+
+    html+="<div class='acciones'>";
+
+    html+="<button onclick=\"editarCliente('"+
+      cliente.id+
+      "')\">✏️</button>";
+
+    html+="<button class='danger' onclick=\"eliminarCliente('"+
+      cliente.id+
+      "')\">🗑️</button>";
+
+    html+="</div>";
+
+    html+="</div>";
+  }
+
+  cont.innerHTML=html;
+}
+
+
+/* =========================
+   GUARDAR CLIENTE
+========================= */
+
+function guardarCliente(){
+
+  var nombre=document.getElementById("nombreCliente").value.trim();
+  var telefono=document.getElementById("telefonoCliente").value.trim();
+  var direccion=document.getElementById("direccionCliente").value.trim();
+
+  if(!nombre){
+
+    alert("Ingresá el nombre del cliente.");
+
+    return;
+  }
+
+  if(editandoCliente){
+
+    var encontrado=null;
+    var i;
+
+    for(i=0;i<datos.clientes.length;i++){
+
+      if(String(datos.clientes[i].id)===String(editandoCliente)){
+
+        encontrado=datos.clientes[i];
+
+        break;
+      }
+    }
+
+    if(encontrado){
+
+      encontrado.nombre=nombre;
+      encontrado.telefono=telefono;
+      encontrado.direccion=direccion;
+
+      guardarDatos();
+
+      alert("Cliente actualizado.");
+
+    }
+
+    editandoCliente=null;
+
+  }else{
+
+    datos.clientes.push({
+
+      id:String(Date.now()),
+
+      nombre:nombre,
+
+      telefono:telefono,
+
+      direccion:direccion
+
+    });
+
+    guardarDatos();
+
+    alert("Cliente guardado.");
 
   }
 
- }
+  document.getElementById("nombreCliente").value="";
+  document.getElementById("telefonoCliente").value="";
+  document.getElementById("direccionCliente").value="";
 
- document.getElementById("mentrega").value=
-  fechaEntrega;
+  mostrarClientes();
 
- document.getElementById("mestado").value=
-  o.estadoTrabajo||"Pedido recibido";
-
- document.getElementById("mobservaciones").value=
-  o.observaciones||"";
-
- productosMDF=[];
-
- /*
-  Compatibilidad con V2 anterior:
-  si no tiene items, armamos uno usando
-  producto + cantidad + total.
- */
-
- if(Array.isArray(o.items) && o.items.length){
-
-  o.items.forEach(item=>{
-   agregarProducto(item);
-  });
-
- }else{
-
-  agregarProducto({
-   descripcion:o.producto||"MDF",
-   cantidad:Number(o.cantidad||1),
-   precio:Number(o.total||0),
-   subtotal:Number(o.total||0)
-  });
-
- }
-
- calcularMDF();
-
- mostrar("mdf");
-
+  actualizarSelectClientes();
 }
 
 
-/* =========================================================
-   COMPROBANTE SERVICIO
-========================================================= */
+/* =========================
+   EDITAR CLIENTE
+========================= */
 
-function generarComprobanteServicio(o){
+function editarCliente(id){
 
- let fotos="";
+  var cliente=null;
+  var i;
 
- if(Array.isArray(o.fotos) && o.fotos.length){
+  for(i=0;i<datos.clientes.length;i++){
 
-  fotos=
-   '<div class="linea"></div>'+
-   '<b>FOTOS DEL EQUIPO</b>'+
-   '<div class="fotos">';
+    if(String(datos.clientes[i].id)===String(id)){
 
-  o.fotos.forEach(f=>{
+      cliente=datos.clientes[i];
 
-   fotos+=
-    `<img src="${f}">`;
+      break;
+    }
+  }
 
-  });
+  if(!cliente) return;
 
-  fotos+="</div>";
+  editandoCliente=cliente.id;
 
- }
+  document.getElementById("nombreCliente").value=
+    cliente.nombre||"";
 
- document.getElementById(
-  "comprobante"
- ).innerHTML=`
+  document.getElementById("telefonoCliente").value=
+    cliente.telefono||"";
 
- <h1 style="text-align:center">
- JUREMA
- </h1>
+  document.getElementById("direccionCliente").value=
+    cliente.direccion||"";
 
- <p style="text-align:center">
+  mostrar("clientes");
 
- <b>SERVICIO TÉCNICO</b><br>
-
- Orden Nº <b>${escapeHTML(o.numero)}</b><br>
-
- Fecha: ${escapeHTML(o.fecha)}
-
- </p>
-
- <div class="linea"></div>
-
- <b>CLIENTE</b><br>
-
- ${escapeHTML(o.cliente)}<br>
-
- 📞 ${escapeHTML(o.telefono||"-")}<br>
-
- 🏠 ${escapeHTML(o.domicilio||"-")}
-
- <div class="linea"></div>
-
- <b>EQUIPO</b><br>
-
- Marca: ${escapeHTML(o.marca||"-")}<br>
-
- Modelo: ${escapeHTML(o.modelo||"-")}<br>
-
- Serie: ${escapeHTML(o.serie||"-")}
-
- <div class="linea"></div>
-
- <b>PROBLEMA INFORMADO</b><br>
-
- ${escapeHTML(o.problema||"-")}
-
- <br><br>
-
- <b>ESTADO EXTERIOR</b><br>
-
- ${escapeHTML(o.estado||"-")}
-
- <br><br>
-
- <b>ACCESORIOS</b><br>
-
- ${escapeHTML(o.accesorios||"-")}
-
- <div class="linea"></div>
-
- <b>ESTADO:</b>
- ${escapeHTML(o.estadoTrabajo||"-")}
-
- <br><br>
-
- <b>COSTO:</b>
- $${dinero(o.costo||o.total)}
-
- <br>
-
- <b>SEÑA / PAGADO:</b>
- $${dinero(o.sena)}
-
- <br>
-
- <span class="total">
- SALDO: $${dinero(o.saldo)}
- </span>
-
- <div class="linea"></div>
-
- <b>OBSERVACIONES</b><br>
-
- ${escapeHTML(o.observaciones||"-")}
-
- ${fotos}
-
- <div class="linea"></div>
-
- <p class="nota">
-
- El costo indicado puede modificarse luego del
- diagnóstico y/o autorización del cliente.
-
- </p>
-
- <p style="margin-top:45px">
-
- Firma del cliente:
- __________________________
-
- </p>
-
- `;
-
- mostrar("resultado");
-
+  window.scrollTo(0,0);
 }
 
 
-/* =========================================================
-   COMPROBANTE MDF
-========================================================= */
+/* =========================
+   ELIMINAR CLIENTE
+========================= */
 
-function generarComprobanteMDF(o){
+function eliminarCliente(id){
 
- let filas="";
+  var cliente=null;
+  var i;
 
- let items=Array.isArray(o.items)
-  ? o.items
-  : [{
-   descripcion:o.producto||"MDF",
-   cantidad:o.cantidad||1,
-   precio:o.total||0,
-   subtotal:o.total||0
-  }];
+  for(i=0;i<datos.clientes.length;i++){
 
- items.forEach((p,i)=>{
+    if(String(datos.clientes[i].id)===String(id)){
 
-  filas+=`
+      cliente=datos.clientes[i];
 
-  <div class="item">
+      break;
+    }
+  }
 
-   <b>${i+1}. ${escapeHTML(p.descripcion)}</b><br>
+  if(!cliente) return;
 
-   Cantidad: ${Number(p.cantidad||0)}<br>
-
-   Precio unitario:
-   $${dinero(p.precio)}
-
-   <br>
-
-   <b>
-   Subtotal:
-   $${dinero(p.subtotal)}
-   </b>
-
-  </div>
-
-  `;
-
- });
-
- document.getElementById(
-  "comprobante"
- ).innerHTML=`
-
- <h1 style="text-align:center">
- JUREMA CORTE LÁSER
- </h1>
-
- <p style="text-align:center">
-
- <b>PEDIDO MDF</b><br>
-
- Pedido Nº <b>${escapeHTML(o.numero)}</b><br>
-
- Fecha: ${escapeHTML(o.fecha)}
-
- </p>
-
- <div class="linea"></div>
-
- <b>CLIENTE</b><br>
-
- ${escapeHTML(o.cliente)}<br>
-
- 📞 ${escapeHTML(o.telefono||"-")}<br>
-
- 🏠 ${escapeHTML(o.domicilio||"-")}
-
- <div class="linea"></div>
-
- <b>PRODUCTOS DEL PEDIDO</b>
-
- ${filas}
-
- <div class="linea"></div>
-
- <b>IMPORTE TOTAL:</b>
- $${dinero(o.total)}
-
- <br>
-
- <b>SEÑA / PAGADO:</b>
- $${dinero(o.sena)}
-
- <br>
-
- <span class="total">
- SALDO: $${dinero(o.saldo)}
- </span>
-
- <br><br>
-
- <b>ESTADO:</b>
- ${escapeHTML(o.estadoTrabajo||"-")}
-
- <br><br>
-
- <b>FECHA DE ENTREGA:</b><br>
-
- ${escapeHTML(o.entrega||"A confirmar")}
-
- <br><br>
-
- <b>OBSERVACIONES</b><br>
-
- ${escapeHTML(o.observaciones||"-")}
-
- <div class="linea"></div>
-
- <p class="nota">
-
- Este comprobante acredita el pedido y el importe recibido.
- La fecha de entrega indicada es estimada.
-
- </p>
-
- `;
-
- mostrar("resultado");
-
-}
-
-
-/* =========================================================
-   ÓRDENES
-========================================================= */
-
-function esPendiente(o){
-
- let estados=[
-  "Recibido",
-  "En diagnóstico",
-  "Esperando repuesto",
-  "En reparación",
-  "Pedido recibido",
-  "En producción"
- ];
-
- return estados.includes(o.estadoTrabajo);
-
-}
-
-
-function esTerminada(o){
-
- return o.estadoTrabajo==="Listo";
-
-}
-
-
-function esEntregada(o){
-
- return o.estadoTrabajo==="Entregado";
-
-}
-
-
-function coincideFiltro(o){
-
- if(filtroOrdenes==="pendientes"){
-  return esPendiente(o);
- }
-
- if(filtroOrdenes==="terminadas"){
-  return esTerminada(o);
- }
-
- if(filtroOrdenes==="entregadas"){
-  return esEntregada(o);
- }
-
- return true;
-
-}
-
-
-function actualizarFiltros(){
-
- [
-  "fPendientes",
-  "fTerminadas",
-  "fEntregadas",
-  "fTodas"
- ].forEach(id=>{
-
-  let b=document.getElementById(id);
-
-  if(b)b.classList.remove("filter-active");
-
- });
-
- let activo={
-  pendientes:"fPendientes",
-  terminadas:"fTerminadas",
-  entregadas:"fEntregadas",
-  todas:"fTodas"
- }[filtroOrdenes];
-
- let b=document.getElementById(activo);
-
- if(b)b.classList.add("filter-active");
-
-}
-
-
-function mostrarOrdenes(){
-
- let texto=(
-  document.getElementById("buscarOrden")
-  ?.value||""
- ).toLowerCase();
-
- let lista=document.getElementById(
-  "listaOrdenes"
- );
-
- lista.innerHTML="";
-
- let ordenes=
-  datos.ordenes
-  .slice()
-  .reverse()
-  .filter(coincideFiltro)
-  .filter(o=>
-
-   String(o.numero||"")
-    .toLowerCase()
-    .includes(texto) ||
-
-   String(o.cliente||"")
-    .toLowerCase()
-    .includes(texto) ||
-
-   String(o.serie||"")
-    .toLowerCase()
-    .includes(texto)
-
+  var confirmar=confirm(
+    "¿Eliminar al cliente "+(cliente.nombre||"")+"?"
   );
 
- if(!ordenes.length){
+  if(!confirmar) return;
 
-  lista.innerHTML=
-   '<div class="empty">No hay órdenes en esta categoría.</div>';
+  var nuevaLista=[];
 
-  return;
+  for(i=0;i<datos.clientes.length;i++){
 
- }
+    if(String(datos.clientes[i].id)!==String(id)){
 
- ordenes.forEach(o=>{
+      nuevaLista.push(datos.clientes[i]);
 
-  let total=Number(
-   o.total??o.costo??0
+    }
+  }
+
+  datos.clientes=nuevaLista;
+
+  guardarDatos();
+
+  mostrarClientes();
+
+  actualizarSelectClientes();
+}
+
+
+/* =========================
+   SELECCIONAR CLIENTE
+========================= */
+
+function clienteSeleccionado(){
+
+  var id=document.getElementById("cliente").value;
+
+  var cliente=null;
+
+  var i;
+
+  for(i=0;i<datos.clientes.length;i++){
+
+    if(String(datos.clientes[i].id)===String(id)){
+
+      cliente=datos.clientes[i];
+
+      break;
+    }
+  }
+
+  if(!cliente) return;
+
+  document.getElementById("telefono").value=
+    cliente.telefono||"";
+
+  document.getElementById("direccion").value=
+    cliente.direccion||"";
+}
+
+
+function clienteSeleccionadoMDF(){
+
+  var id=document.getElementById("clienteMDF").value;
+
+  var cliente=null;
+
+  var i;
+
+  for(i=0;i<datos.clientes.length;i++){
+
+    if(String(datos.clientes[i].id)===String(id)){
+
+      cliente=datos.clientes[i];
+
+      break;
+    }
+  }
+
+  if(!cliente) return;
+
+  document.getElementById("telefonoMDF").value=
+    cliente.telefono||"";
+
+  document.getElementById("direccionMDF").value=
+    cliente.direccion||"";
+}
+
+
+/* =========================
+   COPIA DE SEGURIDAD
+========================= */
+
+function exportarBackup(){
+
+  var copia={
+    version:2,
+    fecha:new Date().toISOString(),
+    datos:datos
+  };
+
+  var texto=JSON.stringify(copia,null,2);
+
+  var blob=new Blob(
+    [texto],
+    {type:"application/json"}
   );
 
-  lista.innerHTML+=`
+  var url=URL.createObjectURL(blob);
 
-  <div class="item">
+  var enlace=document.createElement("a");
 
-   <b>Orden Nº ${escapeHTML(o.numero)}</b>
+  enlace.href=url;
 
-   <br>
+  enlace.download=
+    "JUREMA_BACKUP_"+
+    fechaArchivo()+
+    ".json";
 
-   ${escapeHTML(o.tipo)}
+  document.body.appendChild(enlace);
 
-   <br>
+  enlace.click();
 
-   👤 ${escapeHTML(o.cliente)}
+  document.body.removeChild(enlace);
 
-   <br>
+  setTimeout(function(){
 
-   📅 ${escapeHTML(o.fecha)}
+    URL.revokeObjectURL(url);
 
-   <br>
-
-   <span class="badge">
-    ${escapeHTML(o.estadoTrabajo||"-")}
-   </span>
-
-   <br><br>
-
-   💰 Total: $${dinero(total)}
-
-   <br>
-
-   💵 Seña: $${dinero(o.sena)}
-
-   <br>
-
-   ⚠️ Saldo: $${dinero(o.saldo)}
-
-   <button
-    class="blue"
-    onclick="verOrden('${o.id}')">
-
-    👁️ VER ORDEN
-
-   </button>
-
-   <button
-    class="orange"
-    onclick="editarOrden('${o.id}')">
-
-    ✏️ MODIFICAR ORDEN
-
-   </button>
-
-  </div>`;
-
- });
-
+  },1000);
 }
 
 
-function verOrden(id){
+function importarBackup(event){
 
- let o=datos.ordenes.find(
-  x=>x.id===id
- );
+  var archivo=event.target.files[0];
 
- if(!o)return;
+  if(!archivo) return;
 
- ordenActual=o;
+  var lector=new FileReader();
 
- if(o.tipo==="Servicio técnico"){
+  lector.onload=function(e){
 
-  generarComprobanteServicio(o);
+    try{
 
- }else{
+      var copia=JSON.parse(e.target.result);
 
-  generarComprobanteMDF(o);
+      var nuevosDatos=null;
 
- }
+      if(copia && copia.datos){
 
+        nuevosDatos=copia.datos;
+
+      }else if(copia && copia.ordenes){
+
+        nuevosDatos=copia;
+
+      }
+
+      if(!nuevosDatos ||
+         !Array.isArray(nuevosDatos.ordenes) ||
+         !Array.isArray(nuevosDatos.clientes)){
+
+        alert("El archivo no parece ser una copia de JUREMA.");
+
+        return;
+      }
+
+      var confirmar=confirm(
+        "La importación reemplazará los datos actuales de JUREMA. ¿Continuar?"
+      );
+
+      if(!confirmar) return;
+
+      datos=nuevosDatos;
+
+      if(!Array.isArray(datos.clientes)){
+        datos.clientes=[];
+      }
+
+      if(!Array.isArray(datos.ordenes)){
+        datos.ordenes=[];
+      }
+
+      guardarDatos();
+
+      actualizarSelectClientes();
+
+      mostrarOrdenes();
+
+      mostrarClientes();
+
+      mostrarEquipos();
+
+      mostrarCaja();
+
+      alert("Copia restaurada correctamente.");
+
+    }catch(error){
+
+      alert(
+        "No se pudo leer la copia de seguridad."
+      );
+
+    }
+
+  };
+
+  lector.readAsText(archivo);
+
+  event.target.value="";
 }
 
 
-function editarOrden(id){
+function fechaArchivo(){
 
- let o=datos.ordenes.find(
-  x=>x.id===id
- );
+  var d=new Date();
 
- if(!o)return;
+  var y=d.getFullYear();
 
- ordenActual=o;
+  var m=String(d.getMonth()+1);
 
- if(o.tipo==="Servicio
+  if(m.length<2) m="0"+m;
+
+  var dia=String(d.getDate());
+
+  if(dia.length<2) dia="0"+dia;
+
+  return y+"-"+m+"-"+dia;
+}
+
+
+/* =========================
+   COMPARTIR FOTOS
+========================= */
+
+function compartirFotos(id){
+
+  var o=buscarOrden(id);
+
+  if(!o){
+
+    alert("No se encontró la orden.");
+
+    return;
+  }
+
+  if(!o.fotos || o.fotos.length===0){
+
+    alert("Esta orden no tiene fotos.");
+
+    return;
+  }
+
+  if(!navigator.share){
+
+    alert(
+      "Tu navegador no permite compartir archivos directamente."
+    );
+
+    return;
+  }
+
+  var archivos=[];
+
+  var pendientes=o.fotos.length;
+
+  var terminadas=0;
+
+  for(var i=0;i<o.fotos.length;i++){
+
+    convertirFotoAArchivo(
+      o.fotos[i],
+      "foto_"+o.id+"_"+(i+1)+".jpg",
+      function(archivo){
+
+        if(archivo){
+
+          archivos.push(archivo);
+
+        }
+
+        terminadas++;
+
+        if(terminadas===pendientes){
+
+          compartirArchivos(
+            archivos,
+            o
+          );
+
+        }
+
+      }
+    );
+  }
+}
+
+
+function convertirFotoAArchivo(dataURL,nombre,callback){
+
+  try{
+
+    var partes=dataURL.split(",");
+
+    var mime="image/jpeg";
+
+    if(partes[0].indexOf("image/")!==-1){
+
+      var encontrado=
+        partes[0].match(/data:(image\/[^;]+)/);
+
+      if(encontrado){
+        mime=encontrado[1];
+      }
+    }
+
+    var binario=atob(partes[1]);
+
+    var longitud=binario.length;
+
+    var bytes=new Uint8Array(longitud);
+
+    var i;
+
+    for(i=0;i<longitud;i++){
+
+      bytes[i]=binario.charCodeAt(i);
+
+    }
+
+    var blob=new Blob(
+      [bytes],
+      {type:mime}
+    );
+
+    var archivo=new File(
+      [blob],
+      nombre,
+      {type:mime}
+    );
+
+    callback(archivo);
+
+  }catch(error){
+
+    callback(null);
+
+  }
+}
+
+
+function compartirArchivos(archivos,o){
+
+  if(archivos.length===0){
+
+    alert("No se pudieron preparar las fotos.");
+
+    return;
+  }
+
+  var datosCompartir={
+    title:"JUREMA - Orden "+o.id,
+    text:
+      "Cliente: "+(o.cliente||"")+
+      "\nOrden: "+o.id
+  };
+
+  try{
+
+    if(navigator.canShare &&
+       navigator.canShare({files:archivos})){
+
+      datosCompartir.files=archivos;
+
+      navigator.share(datosCompartir)
+        .catch(function(){});
+
+    }else{
+
+      navigator.share({
+        title:datosCompartir.title,
+        text:datosCompartir.text
+      }).catch(function(){});
+
+      alert(
+        "Tu navegador no permite compartir las fotos como archivos."
+      );
+    }
+
+  }catch(error){
+
+    alert(
+      "No se pudieron compartir las fotos."
+    );
+
+  }
+}
+
+
+/* =========================
+   EVENTOS
+========================= */
+
+document.getElementById("fotos").addEventListener(
+  "change",
+  cargarFotos
+);
+
+
+document.getElementById("buscarClientes").addEventListener(
+  "input",
+  mostrarClientes
+);
+
+
+document.getElementById("buscarOrdenes").addEventListener(
+  "input",
+  mostrarOrdenes
+);
+
+
+document.getElementById("filtroOrdenes").addEventListener(
+  "change",
+  mostrarOrdenes
+);
+
+
+document.getElementById("buscarEquipos").addEventListener(
+  "input",
+  mostrarEquipos
+);
+
+
+document.getElementById("cliente").addEventListener(
+  "change",
+  clienteSeleccionado
+);
+
+
+document.getElementById("clienteMDF").addEventListener(
+  "change",
+  clienteSeleccionadoMDF
+);
+
+
+document.getElementById("costo").addEventListener(
+  "input",
+  calcularServicio
+);
+
+
+document.getElementById("adelanto").addEventListener(
+  "input",
+  calcularServicio
+);
+
+
+document.getElementById("adelantoMDF").addEventListener(
+  "input",
+  calcularMDF
+);
+
+
+document.getElementById("backupFile").addEventListener(
+  "change",
+  importarBackup
+);
+
+
+/* =========================
+   INICIO
+========================= */
+
+actualizarSelectClientes();
+
+mostrarOrdenes();
+
+mostrarClientes();
+
+mostrarEquipos();
+
+mostrarCaja();
+
+calcularServicio();
+
+calcularMDF();
+
+
+/* =========================
+   PROTECCIÓN DE ERRORES
+========================= */
+
+window.addEventListener(
+  "error",
+  function(event){
+
+    console.error(
+      "Error JUREMA:",
+      event.error || event.message
+    );
+
+  }
+);
+
+</script>
+
+</body>
+</html>
